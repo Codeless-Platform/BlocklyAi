@@ -9,7 +9,7 @@ This file can also be imported as a module and contains the following
 functions:
 
     * dataframe_return - list of Dataframes from dataframe_visualizer
-    * root - returns the index page
+    * root - returns the index pages
 """
 from flask import Flask, render_template, request
 import dash_bootstrap_components as dbc
