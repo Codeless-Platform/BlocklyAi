@@ -123,7 +123,7 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 
 # Thanks to
-[![Stargazers repo roster for @chekoduadarsh/BlocklyML]([https://reporoster.com/stars/chekoduadarsh/BlocklyML](https://github.com/Mohamed991-1))](https://github.com/chekoduadarsh/BlocklyML/stargazers)
+[![Stargazers repo roster for @chekoduadarsh/BlocklyML](https://reporoster.com/stars/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML/stargazers)
 [![Forkers repo roster for @chekoduadarsh/BlocklyML](https://reporoster.com/forks/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML/network/members)
 
 
