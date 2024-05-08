@@ -1936,7 +1936,113 @@ Blockly.defineBlocksWithJsonArray([
             "tooltip": "",
             "helpUrl": ""
           }
-    ]);   
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "conv2d",
+            "message0": "CONV2D - N. of filters: %1 filter size %2 Activation function: %3 %4",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "filters",
+                "text": "default"
+              },
+              {
+                "type": "field_dropdown",
+                "name": "filter_size",
+                "options": [
+                  [
+                    "1 X 1",
+                    "1_1"
+                  ],
+                  [
+                    "3 X 3",
+                    "3_3"
+                  ],
+                  [
+                    "5 X 5",
+                    "5_5"
+                  ],
+                  [
+                    "7 X 7",
+                    "7_7"
+                  ],
+                  [
+                    "9 X 9",
+                    "9_9"
+                  ]
+                ]
+              },
+              {
+                "type": "field_input",
+                "name": "activation function",
+                "text": "relu"
+              },
+              {
+                "type": "input_value",
+                "name": "conv2d"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "maxpooling2d",
+            "message0": "MaxPooling2D %1 %2",
+            "args0": [
+              {
+                "type": "field_dropdown",
+                "name": "maxpooling",
+                "options": [
+                  [
+                    "2 x 2",
+                    "2_2"
+                  ],
+                  [
+                    "3 x 3",
+                    "3_3"
+                  ],
+                  [
+                    "4 X 4",
+                    "4_4"
+                  ]
+                ]
+              },
+              {
+                "type": "input_value",
+                "name": "maxpooling2d"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "flatten",
+        "message0": "Flatten %1",
+        "args0": [
+          {
+            "type": "input_value",
+            "name": "flatten_input"
+          }
+        ],
+        "output": null,
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+      }
+    ]);
+
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "fit",
@@ -2204,6 +2310,69 @@ Blockly.defineBlocksWithJsonArray([
             "helpUrl": ""
           }
         ]);
+        Blockly.defineBlocksWithJsonArray([
+            {
+                "type": "cnn",
+                "message0": "CNN Model  %1 Dataset %2 %3 layers %4 Model compile %5 Model fit %6 Model evaluate %7",
+                "args0": [
+                  {
+                    "type": "input_dummy"
+                  },
+                  {
+                    "type": "field_dropdown",
+                    "name": "dataset",
+                    "options": [
+                      [
+                        "CIFAR-10",
+                        "cifar-10"
+                      ],
+                      [
+                        "CIFAR-100",
+                        "cifar-100"
+                      ],
+                      [
+                        "MNIST",
+                        "mnist"
+                      ],
+                      [
+                        "Fashion-MNIST",
+                        "fashion-mnist"
+                      ],
+                      [
+                        "IMDB Movie Reviews",
+                        "imdb"
+                      ],
+                      [
+                        "Boston Housing Prices",
+                        "boston"
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "input_dummy"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "layers"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "compile"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "fit"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "evaluate"
+                  }
+                ],
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+              }
+            ]);
 
     Blockly.defineBlocksWithJsonArray([
     {

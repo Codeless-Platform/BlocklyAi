@@ -53,7 +53,7 @@
         class="navbar navbar-expand-lg  navbar-expand-sm  navbar-expand-md  navbar-expand-xl navbar-light bg-light nav-colors">
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <img src="{{ url_for('static', filename='images/codeless.png') }}" height=40 width="130"> &nbsp;
+            <img src="{{ url_for('static', filename='images/codeless-3.png') }}" height=40 width="130"> &nbsp;
             &nbsp;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown active">
@@ -760,10 +760,22 @@
          <block type="sequential">
              <field type="sequential">Sequentiale Model</field>
             </block>
+         <block type="cnn">
+                <field type="cnn">CNN Model</field>
+            </block>
         </category>
         <category name="Layers" colour="%{BKY_LOGIC_HUE}">
             <block type="dense">
                 <field type="dense">Dense</field>
+            </block>
+            <block type="conv2d">
+                <field type="conv2d">CONV2D</field>
+            </block>
+            <block type="maxpooling2d">
+                <field type="maxpooling2d">MaxPooling2D</field>
+            </block>
+            <block type="flatten">
+                <field type="flatten">Flatten</field>
             </block>
            </category>
            <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
@@ -772,9 +784,6 @@
             </block>
             <block type="fit">
                 <field type="fit">Model fit</field>
-            </block>
-            <block type="sequential">
-                <field type="sequential">Sequentiale Model</field>
             </block>
             <block type="compile">
                 <field type="compile">Model compile</field>
