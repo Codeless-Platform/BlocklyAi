@@ -2406,6 +2406,7 @@ Blockly.Python['cnn_model'] = function(block) {
     var training_path = block.getFieldValue('training_path');
     var test_path = block.getFieldValue('test_path');
 
+<<<<<<< HEAD
     var trainAug = Blockly.Python.valueToCode(block, 'trainAug', Blockly.Python.ORDER_ATOMIC) || '';
     var testAug = Blockly.Python.valueToCode(block, 'testAug', Blockly.Python.ORDER_ATOMIC) || '';
 
@@ -2537,6 +2538,94 @@ Blockly.Python['Conv2D'] = function(block) {
 
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+=======
+Blockly.Python['cnn'] = function(block) {
+    var dropdown_dataset = block.getFieldValue('dataset');
+    var data_preprocessing = Blockly.Python.valueToCode(block, 'data_Preprocessing', Blockly.Python.ORDER_ATOMIC) || '';
+    var layers = Blockly.Python.valueToCode(block, 'layers', Blockly.Python.ORDER_ATOMIC) || '';
+    var compile = Blockly.Python.valueToCode(block, 'compile', Blockly.Python.ORDER_ATOMIC) || '';
+    var fit = Blockly.Python.valueToCode(block, 'fit', Blockly.Python.ORDER_ATOMIC) || '';
+    var evaluate = Blockly.Python.valueToCode(block, 'evaluate', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = 'import numpy as np\nimport pandas as pd\n' +
+               'from tensorflow.keras.models import Sequential\n\n'
+
+    if (layers) {
+        code += 'from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense\n\n';
+    }
+
+    var dataset = '';
+    var preprocessing = '';
+    switch (dropdown_dataset) {
+        case 'cifar-10':
+            dataset = 'cifar10';
+            preprocessing = '(train_images, train_labels), (test_images, test_labels) = datasets.'+dataset+'.load_data()\n\n'+
+                            '# Normalize pixel values to be between 0 and 1\n'+
+                            'train_images = train_images / 255.0\n'+
+                            'test_images = test_images / 255.0';
+            break;
+        case 'cifar-100':
+            dataset = 'cifar100';
+            preprocessing = '(train_images, train_labels), (test_images, test_labels) = datasets.'+dataset+'.load_data()\n\n'+
+                            '# Normalize pixel values to be between 0 and 1\n'+
+                            'train_images = train_images / 255.0\n'+
+                            'test_images = test_images / 255.0';
+            break;
+        case 'mnist':
+            dataset = 'mnist';
+            preprocessing = '(train_images, train_labels), (test_images, test_labels) = datasets.'+dataset+'.load_data()\n\n'+
+                            '# Normalize pixel values to be between 0 and 1\n'+
+                            'train_images = train_images / 255.0\n'+
+                            'test_images = test_images / 255.0';
+            break;
+        case 'fashion-mnist':
+            dataset = 'fashion_mnist';
+            preprocessing = '(train_images, train_labels), (test_images, test_labels) = datasets.'+dataset+'.load_data()\n\n'+
+                            '# Normalize pixel values to be between 0 and 1\n'+
+                            'train_images = train_images / 255.0\n'+
+                            'test_images = test_images / 255.0';
+            break;
+        case 'imdb':
+            dataset = 'imdb';
+            preprocessing = '(X_train, y_train), (X_test, y_test) = datasets.'+dataset+'.load_data(num_words=max_features)'+
+                            '# Pad sequences to ensure uniform length\n'+
+                            'X_train = preprocessing.sequence.pad_sequences(X_train, maxlen=maxlen)\n'+
+                            'X_test = preprocessing.sequence.pad_sequences(X_test, maxlen=maxlen)';
+            break;
+        case 'boston':
+            dataset = 'boston_housing';
+            preprocessing = 'from sklearn.datasets import load_boston\n' +
+                            'from sklearn.model_selection import train_test_split\n' +
+                            'from sklearn.preprocessing import StandardScaler\n\n' +
+                            '# Load Boston Housing Prices dataset\n' +
+                            'boston = load_boston()\n' +
+                            'X, y = boston.data, boston.target\n\n' +
+                            '# Reshape the input data to 2D array to mimic image data (assuming each feature is a "pixel")\n' +
+                            'X = X.reshape(X.shape[0], X.shape[1], 1, 1)\n\n' +
+                            '# Normalize features using StandardScaler\n' +
+                            'scaler = StandardScaler()\n' +
+                            'X = scaler.fit_transform(X)\n\n' +
+                            '# Split the data into training and testing sets\n' +
+                            'X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n'
+            break;
+        default:
+            dataset = 'cifar10';
+    }
+
+    code += preprocessing;
+    if (layers) {
+        code += `\n\nmodel = Sequential([\n`;
+        code += layers;
+        code += `\n])\n`;
+    }
+    code += '\n'+compile;
+    code += '\n'+fit;
+    code += '\n'+evaluate;
+    
+    return code;
+};
+
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
   Blockly.Python['dense'] = function(block) {
     var neuron_number = block.getFieldValue('neuron_number');
     var activation = block.getFieldValue('activation');
@@ -2552,6 +2641,7 @@ Blockly.Python['Conv2D'] = function(block) {
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
 
+<<<<<<< HEAD
   Blockly.Python['flatten'] = function(block) {
  var input = Blockly.Python.valueToCode(block, 'flatten_input', Blockly.Python.ORDER_ATOMIC) || '';
 
@@ -2562,10 +2652,136 @@ Blockly.Python['Conv2D'] = function(block) {
 
     if (!layersFlag.includes("flatten"))
         {layersFlag.push("flatten")}
+=======
+  Blockly.Python['conv2d'] = function(block) {
+    var text_filters = block.getFieldValue('filters');
+    var dropdown_filter_size = block.getFieldValue('filter_size');
+    var text_activation_function = block.getFieldValue('activation function');
+    var conv2d_input = Blockly.Python.valueToCode(block, 'conv2d', Blockly.Python.ORDER_ATOMIC) || '';
+    var filter_size = 0;
+
+    switch (dropdown_filter_size) {
+        case '1_1':
+            filter_size = 1;
+            break;
+        case '3_3':
+            filter_size = 3;
+            break;
+        case '5_5':
+            filter_size = 5;
+            break;
+        case '7_7':
+            filter_size = 7;
+            break;
+        case '9_9':
+            filter_size = 9;
+            break;
+        default:
+            filter_size = 3;
+            break;
+    }
+    
+    if (text_filters = 'default') {
+        text_filters = 32;
+    }
+
+    var code = `Conv2D(${text_filters}, (${filter_size}, ${filter_size})), activation='${text_activation_function}'), input_shape=(${text_filters}, ${text_filters}, ${filter_size}))`;
+    
+    // If there is an input value, append it to the code
+    if (conv2d_input) {
+        code += `,\n${conv2d_input}`;
+      }
 
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
 
+  Blockly.Python['maxpooling2d'] = function(block) {
+    var dropdown_maxpooling = block.getFieldValue('maxpooling');
+    var maxpooling2d_input = Blockly.Python.valueToCode(block, 'maxpooling2d', Blockly.Python.ORDER_ATOMIC) || '';
+    var pooling_value = 0;
+
+    switch (dropdown_maxpooling) {
+        case '2_2':
+            pooling_value = 2;
+            break;
+        case '3_3':
+            pooling_value = 3;
+            break;
+        case '4_4':
+            pooling_value = 4;
+            break;
+        default:
+            pooling_value = 2;
+    }
+
+    var code = `MaxPooling2D(${pooling_value}, ${pooling_value})`;
+
+    // If there is an input value, append it to the code
+    if (maxpooling2d_input) {
+        code += `,\n${maxpooling2d_input}`;
+      }
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['flatten'] = function(block) {
+    var flatten_input = Blockly.Python.valueToCode(block, 'flatten', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var code = `Flatten()`;
+
+    // If there is an input value, append it to the code
+    if (flatten_input) {
+        code += `,\n${flatten_input}`;
+      }
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+
+  Blockly.Python['conv2d'] = function(block) {
+    var text_filters = block.getFieldValue('filters');
+    var dropdown_filter_size = block.getFieldValue('filter_size');
+    var text_activation_function = block.getFieldValue('activation function');
+    var conv2d_input = Blockly.Python.valueToCode(block, 'conv2d', Blockly.Python.ORDER_ATOMIC) || '';
+    var filter_size = 0;
+
+    switch (dropdown_filter_size) {
+        case '1_1':
+            filter_size = 1;
+            break;
+        case '3_3':
+            filter_size = 3;
+            break;
+        case '5_5':
+            filter_size = 5;
+            break;
+        case '7_7':
+            filter_size = 7;
+            break;
+        case '9_9':
+            filter_size = 9;
+            break;
+        default:
+            filter_size = 3;
+            break;
+    }
+    
+    if (text_filters = 'default') {
+        text_filters = 32;
+    }
+
+    var code = `Conv2D(${text_filters}, (${filter_size}, ${filter_size})), activation='${text_activation_function}'), input_shape=(${text_filters}, ${text_filters}, ${filter_size}))`;
+    
+    // If there is an input value, append it to the code
+    if (conv2d_input) {
+        code += `,\n${conv2d_input}`;
+      }
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+<<<<<<< HEAD
   Blockly.Python['dropout'] = function(block) {
     var text_rate = block.getFieldValue('rate');
     var input = Blockly.Python.valueToCode(block, 'dropout', Blockly.Python.ORDER_ATOMIC) || '';
@@ -3270,6 +3486,8 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
 
 //   // begin Model Evaluation blocks
 /////////////////////////////////// FITING //////////////////////////////////////////////////////////
+=======
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
   Blockly.Python['fit'] = function(block) {
     var x_train = block.getFieldValue('X_train');
     var y_train = block.getFieldValue('y_train');

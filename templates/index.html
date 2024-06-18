@@ -25,7 +25,11 @@
 
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
 
+<<<<<<< HEAD
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+=======
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/github_white.png') }}">
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
@@ -873,17 +877,23 @@
          <block type="sequential">
              <field type="sequential">Sequentiale Model</field>
             </block>
+<<<<<<< HEAD
          <!-- <block type="cnn">
                 <field type="cnn">CNN Model</field>
             </block> -->
             <block type="cnn_model">
                 <field type="cnn_model">CNN Model</field>
+=======
+         <block type="cnn">
+                <field type="cnn">CNN Model</field>
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
             </block>
         </category>
         <category name="Layers" colour="%{BKY_LOGIC_HUE}">
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
+<<<<<<< HEAD
             <!-- <block type="conv2d">
                 <field type="conv2d">CONV2D</field>
             </block>
@@ -900,6 +910,17 @@
                 <field type="flatten">Flatten</field>
             </block>
  -->
+=======
+            <block type="conv2d">
+                <field type="conv2d">CONV2D</field>
+            </block>
+            <block type="maxpooling2d">
+                <field type="maxpooling2d">MaxPooling2D</field>
+            </block>
+            <block type="flatten">
+                <field type="flatten">Flatten</field>
+            </block>
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
            </category>
            <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
             <block type="evaluate">
@@ -911,12 +932,15 @@
             <block type="fit">
                 <field type="fit">Model fit</field>
             </block>
+<<<<<<< HEAD
             <block type="cnn_fit">
                 <field type="cnn_fit">Cnn fit</field>
             </block>
             <block type="sequential">
                 <field type="sequential">Sequentiale Model</field>
             </block>            
+=======
+>>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
             <block type="compile">
                 <field type="compile">Model compile</field>
             </block>
