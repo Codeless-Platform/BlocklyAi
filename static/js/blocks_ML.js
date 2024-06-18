@@ -1876,10 +1876,29 @@ Blockly.defineBlocksWithJsonArray([
             output: "Sklearn_Model"
         }
     ]);
-
+    // codeless blockly
     // Blockly.defineBlocksWithJsonArray([
 
     // ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "prediction",
+            "message0": "Make Prediction with input data: %1",
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "input_data",
+                    "text": "input_data"
+                }
+            ],
+            "output": "Prediction" ,
+            "colour": 230,
+            "tooltip": "Make a prediction using the trained model",
+            "helpUrl": ""
+        }
+    ]);
+
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "input_output",
@@ -1902,10 +1921,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "input_output"
+                "name": "input_output",
+                "check": "Preprocessing"
               }
             ],
-            "output": null,
+            "output": "Preprocessing",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -1930,192 +1950,17 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "Dense"
+                "name": "Dense",
+                "check": "Layers"
               }
             ],
-            "output": null,
+            "output":"Layers",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
           }
     ]);
 
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "conv2d",
-    //         "message0": "CONV2D - N. of filters: %1 filter size %2 Activation function: %3 %4",
-    //         "args0": [
-    //           {
-    //             "type": "field_input",
-    //             "name": "filters",
-    //             "text": "default"
-    //           },
-    //           {
-    //             "type": "field_dropdown",
-    //             "name": "filter_size",
-    //             "options": [
-    //               [
-    //                 "1 X 1",
-    //                 "1_1"
-    //               ],
-    //               [
-    //                 "3 X 3",
-    //                 "3_3"
-    //               ],
-    //               [
-    //                 "5 X 5",
-    //                 "5_5"
-    //               ],
-    //               [
-    //                 "7 X 7",
-    //                 "7_7"
-    //               ],
-    //               [
-    //                 "9 X 9",
-    //                 "9_9"
-    //               ]
-    //             ]
-    //           },
-    //           {
-    //             "type": "field_input",
-    //             "name": "activation function",
-    //             "text": "relu"
-    //           },
-    //           {
-    //             "type": "input_value",
-    //             "name": "conv2d"
-    //           }
-    //         ],
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
-
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "conv1d",
-    //         "message0": "CONV1D - N. of filters: %1 filter size %2 Activation function: %3 %4",
-    //         "args0": [
-    //           {
-    //             "type": "field_input",
-    //             "name": "filters",
-    //             "text": "default"
-    //           },
-    //           {
-    //             "type": "field_dropdown",
-    //             "name": "filter_size",
-    //             "options": [
-    //               [
-    //                 "1",
-    //                 "1"
-    //               ],
-    //               [
-    //                 "3",
-    //                 "3"
-    //               ],
-    //               [
-    //                 "5",
-    //                 "5"
-    //               ],
-    //               [
-    //                 "7",
-    //                 "7"
-    //               ],
-    //               [
-    //                 "9",
-    //                 "9"
-    //               ]
-    //             ]
-    //           },
-    //           {
-    //             "type": "field_input",
-    //             "name": "activation function",
-    //             "text": "relu"
-    //           },
-    //           {
-    //             "type": "input_value",
-    //             "name": "conv1d"
-    //           }
-    //         ],
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
-
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "maxpooling2d",
-    //         "message0": "MaxPooling2D %1 %2",
-    //         "args0": [
-    //           {
-    //             "type": "field_dropdown",
-    //             "name": "maxpooling",
-    //             "options": [
-    //               [
-    //                 "2 x 2",
-    //                 "2_2"
-    //               ],
-    //               [
-    //                 "3 x 3",
-    //                 "3_3"
-    //               ],
-    //               [
-    //                 "4 X 4",
-    //                 "4_4"
-    //               ]
-    //             ]
-    //           },
-    //           {
-    //             "type": "input_value",
-    //             "name": "maxpooling2d"
-    //           }
-    //         ],
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
-
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "maxpooling1d",
-    //         "message0": "MaxPooling1D %1 %2",
-    //         "args0": [
-    //           {
-    //             "type": "field_dropdown",
-    //             "name": "maxpooling",
-    //             "options": [
-    //               [
-    //                 "2",
-    //                 "2"
-    //               ],
-    //               [
-    //                 "3",
-    //                 "3"
-    //               ],
-    //               [
-    //                 "4",
-    //                 "4"
-    //               ]
-    //             ]
-    //           },
-    //           {
-    //             "type": "input_value",
-    //             "name": "maxpooling1d"
-    //           }
-    //         ],
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
-    // // end layers blocks
 //////////////////////////////////////Fiting Blocks////////////////////////////////////////////////////
     Blockly.defineBlocksWithJsonArray([
         {
@@ -2143,11 +1988,12 @@ Blockly.defineBlocksWithJsonArray([
                 "text": "1"
               }
             ],
-            "output": null,
+            "output": "Fit",
             "colour": 230,
             "tooltip": "Fit model with training data and labels",
             "helpUrl": ""
-          },{
+          },
+          {
             "type": "cnn_fit",
             "message0": "Cnn fit , epochs %1 verbose %2 %3",
             "args0": [
@@ -2166,40 +2012,13 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "cnn_fit"
               }
             ],
-            "output": null,
+            "output": "Fit",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
           }
           
     ]);   
-
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "cnn_fit",
-    //         "message0": "CNN Fit %1",
-    //         "args0": [
-    //           {
-    //             "type": "field_dropdown",
-    //             "name": "cnn_fit_dropdown",
-    //             "options": [
-    //               [
-    //                 "text/audio",
-    //                 "text_audio"
-    //               ],
-    //               [
-    //                 "image",
-    //                 "image"
-    //               ]
-    //             ]
-    //           }
-    //         ],
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
 
     Blockly.defineBlocksWithJsonArray([
         {
@@ -2217,7 +2036,7 @@ Blockly.defineBlocksWithJsonArray([
                 "text": "y_test"
               }
             ],
-            "output": null,
+            "output": "Evaluation",
             "colour": 230,
             "tooltip": "Evaluate model with test data and labels",
             "helpUrl": ""
@@ -2283,7 +2102,7 @@ Blockly.defineBlocksWithJsonArray([
                 ]
               }
             ],
-            "output": null,
+            "output": "Compile",
             "colour": 230,
             "tooltip": "Specify optimizer, loss, and metrics for compiling the model",
             "helpUrl": ""
@@ -2321,7 +2140,7 @@ Blockly.defineBlocksWithJsonArray([
                 "text": "0.2"
               }
             ],
-            "output": null,
+            "output": "Preprocessing",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2368,23 +2187,28 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "Data_Preprocessing"
+                "name": "Data_Preprocessing",
+                "check": "Preprocessing"
               },
               {
                 "type": "input_value",
-                "name": "Model_Training"
+                "name": "Model_Training",
+                "check": "Training"
               },
               {
                 "type": "input_value",
-                "name": "Model_Evaluation"
+                "name": "Model_Evaluation",
+                "check": "Evaluation"
               },
               {
                 "type": "input_value",
-                "name": "Model_Prediction"
+                "name": "Model_Prediction",
+                "check": "Prediction"
               },
               {
                 "type": "input_value",
-                "name": "Visualization"
+                "name": "Visualization",
+                "check" : "Visualization"
               }
             ],
             "colour": 230,
@@ -2393,16 +2217,6 @@ Blockly.defineBlocksWithJsonArray([
           }
     ]);
 
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         "type": "cnn_split",
-    //         "message0": "CNN data splitting",
-    //         "output": null,
-    //         "colour": 230,
-    //         "tooltip": "",
-    //         "helpUrl": ""
-    //       }
-    // ]);
 
     Blockly.defineBlocksWithJsonArray([
         {
@@ -2422,23 +2236,28 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "data_Preprocessing"
+                "name": "data_Preprocessing",
+                "check" : "Preprocessing"
               },
               {
                 "type": "input_value",
-                "name": "layers"
+                "name": "layers",
+                "check" : "Layers"
               },
               {
                 "type": "input_value",
-                "name": "compile"
+                "name": "compile",
+                "check" : "Compile"
               },
               {
                 "type": "input_value",
-                "name": "fit"
+                "name": "fit",
+                "check" : "Fit"
               },
               {
                 "type": "input_value",
-                "name": "evaluate"
+                "name": "evaluate",
+                "check" : "Evaluation"
               }
             ],
             "colour": 230,
@@ -2446,133 +2265,8 @@ Blockly.defineBlocksWithJsonArray([
             "helpUrl": ""
           }
         ]);
-        // Blockly.defineBlocksWithJsonArray([
-        //     {
-        //         "type": "cnn",
-        //         "message0": "CNN model %1 Dataset folder path: %2 %3 Dataset type: %4 %5 Data Splitting %6 layers %7 Model compile %8 Model fit %9 Model evaluate %10",
-        //         "args0": [
-        //             {
-        //                 "type": "input_dummy"
-        //               },
-        //               {
-        //                 "type": "field_input",
-        //                 "name": "NAME",
-        //                 "text": "default"
-        //               },
-        //               {
-        //                 "type": "input_dummy"
-        //               },
-        //           {
-        //             "type": "field_dropdown",
-        //             "name": "dataset",
-        //             "options": [
-        //               [
-        //                 "Image",
-        //                 "image"
-        //               ],
-        //               [
-        //                 "Audio",
-        //                 "audio"
-        //               ],
-        //               [
-        //                 "Text",
-        //                 "text"
-        //               ]
-        //             ]
-        //           },
-        //           {
-        //             "type": "input_dummy"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "data_splitting"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "layers"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "compile"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "cnn_fit"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "evaluate"
-        //           }
-        //         ],
-        //         "colour": 230,
-        //         "tooltip": "",
-        //         "helpUrl": ""
-        //       }
-        //     ]);
-
-        // Blockly.defineBlocksWithJsonArray([
-        //     {
-        //         "type": "cnn",
-        //         "message0": "CNN model %1 Dataset folder path: %2 %3 Dataset type: %4 %5 Data Splitting %6 layers %7 Model compile %8 Model fit %9 Model evaluate %10",
-        //         "args0": [
-        //             {
-        //                 "type": "input_dummy"
-        //               },
-        //               {
-        //                 "type": "field_input",
-        //                 "name": "NAME",
-        //                 "text": "default"
-        //               },
-        //               {
-        //                 "type": "input_dummy"
-        //               },
-        //           {
-        //             "type": "field_dropdown",
-        //             "name": "dataset",
-        //             "options": [
-        //               [
-        //                 "Image",
-        //                 "image"
-        //               ],
-        //               [
-        //                 "Audio",
-        //                 "audio"
-        //               ],
-        //               [
-        //                 "Text",
-        //                 "text"
-        //               ]
-        //             ]
-        //           },
-        //           {
-        //             "type": "input_dummy"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "data_splitting"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "layers"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "compile"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "cnn_fit"
-        //           },
-        //           {
-        //             "type": "input_value",
-        //             "name": "evaluate"
-        //           }
-        //         ],
-        //         "colour": 230,
-        //         "tooltip": "",
-        //         "helpUrl": ""
-        //       }
-        //     ]);
+        
+        
         Blockly.defineBlocksWithJsonArray([
             {
                 "type": "cnn_model",
@@ -2599,35 +2293,43 @@ Blockly.defineBlocksWithJsonArray([
                   },
                   {
                     "type": "input_value",
-                    "name": "trainAug"
+                    "name": "trainAug",
+                    "check": "Augmentation"
                   },
                   {
                     "type": "input_value",
-                    "name": "testAug"
+                    "name": "testAug",
+                    "check": "Augmentation"
                   },
                   {
                     "type": "input_value",
-                    "name": "trainGen"
+                    "name": "trainGen",
+                    "check": "Generating"
                   },
                   {
                     "type": "input_value",
-                    "name": "testGen"
+                    "name": "testGen",
+                    "check": "Generating"
                   },
                   {
                     "type": "input_value",
-                    "name": "layers"
+                    "name": "layers",
+                    "check": "Layers"
                   },
                   {
                     "type": "input_value",
-                    "name": "cnnCompile"
+                    "name": "cnnCompile",
+                    "check": "Compile"
                   },
                   {
                     "type": "input_value",
-                    "name": "cnnFit"
+                    "name": "cnnFit",
+                    "check": "Fit"
                   },
                   {
                     "type": "input_value",
-                    "name": "cnnEvaluate"
+                    "name": "cnnEvaluate",
+                    "check": "Evaluation"
                   }
                 ],
                 "colour": 230,
@@ -2643,10 +2345,11 @@ Blockly.defineBlocksWithJsonArray([
         "args0": [
           {
             "type": "input_value",
-            "name": "metric"
+            "name": "metric",
+            "check": "Metric"
           }
         ],
-        "output": null,
+        "output": "Metric",
         "colour": 230,
         "tooltip": "",
         "helpUrl": ""
@@ -2664,10 +2367,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "rescale"
+                "name": "rescale",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2682,10 +2386,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "shear_range"
+                "name": "shear_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2700,10 +2405,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "zoom_range"
+                "name": "zoom_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2718,10 +2424,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "rotation_range"
+                "name": "rotation_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2736,10 +2443,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "width_shift_range"
+                "name": "width_shift_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2754,10 +2462,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "height_shift_range"
+                "name": "height_shift_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2772,10 +2481,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "channel_shift_range"
+                "name": "channel_shift_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2789,10 +2499,11 @@ Blockly.defineBlocksWithJsonArray([
                 "args0": [
                   {
                     "type": "input_value",
-                    "name": "horizontal_flip"
+                    "name": "horizontal_flip",
+                    "check": "Augmentation"
                   }
                 ],
-                "output": null,
+                "output": "Augmentation",
                 "colour": 230,
                 "tooltip": "",
                 "helpUrl": ""
@@ -2803,10 +2514,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "vertical_flip"
+                "name": "vertical_flip",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2817,10 +2529,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "featurewise_center"
+                "name": "featurewise_center",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "Apply featurewise centering to the dataset",
             "helpUrl": ""
@@ -2830,10 +2543,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "featurewise_std_normalization"
+                "name": "featurewise_std_normalization",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "Apply featurewise standard normalization to the dataset",
             "helpUrl": ""
@@ -2843,10 +2557,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "samplewise_std_normalization"
+                "name": "samplewise_std_normalization",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "Apply samplewise standard normalization to each sample",
             "helpUrl": ""
@@ -2856,10 +2571,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "samplewise_center"
+                "name": "samplewise_center",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "Apply samplewise centering to each sample",
             "helpUrl": ""
@@ -2869,10 +2585,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "zca_whitening"
+                "name": "zca_whitening",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "Apply ZCA whitening to the dataset",
             "helpUrl": ""
@@ -2892,10 +2609,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "brightness_range"
+                "name": "brightness_range",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2927,10 +2645,11 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "fill_mode"
+                "name": "fill_mode",
+                "check": "Augmentation"
               }
             ],
-            "output": null,
+            "output": "Augmentation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2961,10 +2680,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "color_mode"
+        "name": "color_mode",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -2996,10 +2716,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "interpolation"
+        "name": "interpolation",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3023,10 +2744,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "subset"
+        "name": "subset",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3036,10 +2758,11 @@ Blockly.defineBlocksWithJsonArray([{
     "args0": [
       {
         "type": "input_value",
-        "name": "shuffle"
+        "name": "shuffle",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3049,10 +2772,11 @@ Blockly.defineBlocksWithJsonArray([{
     "args0": [
       {
         "type": "input_value",
-        "name": "augment"
+        "name": "augment",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3076,10 +2800,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "save_format"
+        "name": "save_format",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3094,10 +2819,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "seed"
+        "name": "seed",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3112,10 +2838,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "save_to_dir"
+        "name": "save_to_dir",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3130,10 +2857,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "save_prefix"
+        "name": "save_prefix",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3161,10 +2889,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "class_mode"
+        "name": "class_mode",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3184,10 +2913,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "target_size"
+        "name": "target_size",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3202,10 +2932,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "batch_size"
+        "name": "batch_size",
+        "check": "Generating"
       }
     ],
-    "output": null,
+    "output": "Generating",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3240,10 +2971,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "Conv2D"
+        "name": "Conv2D",
+        "check": "Layers"
       }
     ],
-    "output": null,
+    "output": "Layers",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3288,10 +3020,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "Conv2Dfirst"
+        "name": "Conv2Dfirst",
+        "check": "Layers"
       }
     ],
-    "output": null,
+    "output": "Layers",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3321,10 +3054,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "AveragePooling2D"
+        "name": "AveragePooling2D",
+        "check": "Layers"
       }
     ],
-    "output": null,
+    "output": "Layers",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3354,10 +3088,11 @@ Blockly.defineBlocksWithJsonArray([{
       },
       {
         "type": "input_value",
-        "name": "MaxPooling2D"
+        "name": "MaxPooling2D",
+        "check": "Layers"
       }
     ],
-    "output": null,
+    "output": "Layers",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
@@ -3368,10 +3103,11 @@ Blockly.defineBlocksWithJsonArray([{
         "args0": [
           {
             "type": "input_value",
-            "name": "flatten_input"
+            "name": "flatten_input",
+            "check": "Layers"
           }
         ],
-        "output": null,
+        "output": "Layers",
         "colour": 230,
         "tooltip": "",
         "helpUrl": ""
@@ -3386,10 +3122,11 @@ Blockly.defineBlocksWithJsonArray([{
           },
           {
             "type": "input_value",
-            "name": "dropout"
+            "name": "dropout",
+            "check": "Layers"
           }
         ],
-        "output": null,
+        "output": "Layers",
         "colour": 230,
         "tooltip": "",
         "helpUrl": ""
@@ -3406,10 +3143,11 @@ Blockly.defineBlocksWithJsonArray([
         "args0": [
           {
             "type": "input_value",
-            "name": "metric"
+            "name": "metric",
+            "check": "Metric"
           }
         ],
-        "output": null,
+        "output": "Metric",
         "colour": 230,
         "tooltip": "",
         "helpUrl": ""
@@ -3422,10 +3160,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output":"Metric",
             "colour": 230,
             "tooltip": "Compute R-Squared (Coefficient of Determination)",
             "helpUrl": ""
@@ -3439,10 +3178,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output": "Metric",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3456,10 +3196,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output": "Metric",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3473,10 +3214,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output": "Metric",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3491,10 +3233,11 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output": "Metric" ,
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3514,17 +3257,18 @@ Blockly.defineBlocksWithJsonArray([
               },
               {
                 "type": "input_value",
-                "name": "metric"
+                "name": "metric",
+                "check": "Metric"
               }
             ],
-            "output": null,
+            "output": "Evaluation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
           },{
             "type": "cnn_evaluation",
             "message0": "Cnn evaluation",
-            "output": null,
+            "output": "Evaluation",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3532,106 +3276,113 @@ Blockly.defineBlocksWithJsonArray([
 
      ]);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Blockly.defineBlocksWithJsonArray([
-        {
-            "type": "training",
-            "message0": "Traning input : %1 Trainig output :  %2 %3",
-            "args0": [
-              {
-                "type": "field_input",
-                "name": "Training_input",
-                "text": "X_train"
-              },
-              {
-                "type": "field_input",
-                "name": "Training_output",
-                "text": "y_train"
-              },
-              {
-                "type": "input_dummy"
-              }
-            ],
-            "output": null,
-            "colour": 230,
-            "tooltip": "",
-            "helpUrl": ""
-          }
-
-     ]);
-
-
-    Blockly.defineBlocksWithJsonArray([
+Blockly.defineBlocksWithJsonArray([
     {
-        "type": "classification_models",
-        "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8",
+        "type": "training",
+        "message0": "Training input : %1 Training output :  %2 %3",
         "args0": [
           {
-            "type": "field_dropdown",
-            "name": "c_algorithms",
-            "options": [
-              [
-                "Logistic Regression",
-                "LogisticRegression"
-              ],
-              [
-                "K-Nearest Neighbors (KNN)",
-                "Knn"
-              ],
-              [
-                "Decision Trees",
-                "DecisionTrees"
-              ],
-              [
-                "Random Forest",
-                "RandomForest"
-              ],
-              [
-                "Support Vector Machines (SVM)",
-                "Svm"
-              ],
-              [
-                "Naive Bayes",
-                "NaiveBayes"
-              ],
-              [
-                "Gradient Boosting algorithms",
-                "XGboost"
-              ]
-            ]
+            "type": "field_input",
+            "name": "Training_input",
+            "text": "X_train"
           },
           {
             "type": "field_input",
-            "name": "dataset_path",
-            "text": ""
+            "name": "Training_output",
+            "text": "y_train"
           },
           {
             "type": "input_dummy"
-          },
-          {
-            "type": "input_value",
-            "name": "Data_Preprocessing"
-          },
-          {
-            "type": "input_value",
-            "name": "Model_Training"
-          },
-          {
-            "type": "input_value",
-            "name": "Model_Evaluation"
-          },
-          {
-            "type": "input_value",
-            "name": "Model_Prediction"
-          },
-          {
-            "type": "input_value",
-            "name": "Visualization"
           }
         ],
+        "output": "Training" ,
         "colour": 230,
         "tooltip": "",
         "helpUrl": ""
-      }]);
+      }
+
+ ]);
+
+
+Blockly.defineBlocksWithJsonArray([
+{
+    "type": "classification_models",
+    "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "c_algorithms",
+        "options": [
+          [
+            "Logistic Regression",
+            "LogisticRegression"
+          ],
+          [
+            "K-Nearest Neighbors (KNN)",
+            "Knn"
+          ],
+          [
+            "Decision Trees",
+            "DecisionTrees"
+          ],
+          [
+            "Random Forest",
+            "RandomForest"
+          ],
+          [
+            "Support Vector Machines (SVM)",
+            "Svm"
+          ],
+          [
+            "Naive Bayes",
+            "NaiveBayes"
+          ],
+          [
+            "Gradient Boosting algorithms",
+            "XGboost"
+          ]
+        ]
+      },
+      {
+        "type": "field_input",
+        "name": "dataset_path",
+        "text": ""
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_value",
+        "name": "Data_Preprocessing",
+        "check": "Preprocessing"
+      },
+      {
+        "type": "input_value",
+        "name": "Model_Training",
+        "check": "Training"
+      },
+      {
+        "type": "input_value",
+        "name": "Model_Evaluation",
+        "check":"Evaluation"
+      },
+      {
+        "type": "input_value",
+        "name": "Model_Prediction",
+        "check": "Prediction"
+
+      },
+      {
+        "type": "input_value",
+        "name": "Visualization",
+        "check": "Visualization"
+
+      }
+    ],
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }]);
 
     Blockly.defineBlocksWithJsonArray([
         {

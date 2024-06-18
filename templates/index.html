@@ -747,6 +747,9 @@
     </category>
 
         <category name="Codeless (neural network)" colour="%{BKY_LOGIC_HUE}">
+            <block type="prediction">
+                <field type="prediction">Prediction</field>
+            </block>
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
@@ -812,9 +815,6 @@
             <block type="input_output">
                 <field type="input_output"> input output</field>
             </block>
-            <!-- <block type="cnn_split">
-                <field type="cnn_split"> CNN data splitting</field>
-            </block> -->
         </category>
         <sep></sep>
         <category name="Classical Machine Learning"></category>
@@ -834,6 +834,9 @@
             </block>
             <block type="evaluation">
                 <field type="evaluation"> Evaluation</field>
+            </block>
+            <block type="prediction">
+                <field type="prediction">Prediction</field>
             </block>
         </category>
         <category name="Classification Metrics " colour="%{BKY_LOGIC_HUE}">
@@ -873,9 +876,6 @@
          <block type="sequential">
              <field type="sequential">Sequentiale Model</field>
             </block>
-         <!-- <block type="cnn">
-                <field type="cnn">CNN Model</field>
-            </block> -->
             <block type="cnn_model">
                 <field type="cnn_model">CNN Model</field>
             </block>
@@ -884,22 +884,6 @@
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
-            <!-- <block type="conv2d">
-                <field type="conv2d">CONV2D</field>
-            </block>
-            <block type="conv1d">
-                <field type="conv1d">CONV1D</field>
-            </block>
-            <block type="maxpooling2d">
-                <field type="maxpooling2d">MaxPooling2D</field>
-            </block>
-            <block type="maxpooling1d">
-                <field type="maxpooling1d">MaxPooling1D</field>
-            </block>
-            <block type="flatten">
-                <field type="flatten">Flatten</field>
-            </block>
- -->
            </category>
            <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
             <block type="evaluate">
