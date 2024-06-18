@@ -1940,7 +1940,6 @@ Blockly.defineBlocksWithJsonArray([
           }
     ]);
 
-<<<<<<< HEAD
     // Blockly.defineBlocksWithJsonArray([
     //     {
     //         "type": "conv2d",
@@ -2118,113 +2117,6 @@ Blockly.defineBlocksWithJsonArray([
     // ]);
     // // end layers blocks
 //////////////////////////////////////Fiting Blocks////////////////////////////////////////////////////
-=======
-    Blockly.defineBlocksWithJsonArray([
-        {
-            "type": "conv2d",
-            "message0": "CONV2D - N. of filters: %1 filter size %2 Activation function: %3 %4",
-            "args0": [
-              {
-                "type": "field_input",
-                "name": "filters",
-                "text": "default"
-              },
-              {
-                "type": "field_dropdown",
-                "name": "filter_size",
-                "options": [
-                  [
-                    "1 X 1",
-                    "1_1"
-                  ],
-                  [
-                    "3 X 3",
-                    "3_3"
-                  ],
-                  [
-                    "5 X 5",
-                    "5_5"
-                  ],
-                  [
-                    "7 X 7",
-                    "7_7"
-                  ],
-                  [
-                    "9 X 9",
-                    "9_9"
-                  ]
-                ]
-              },
-              {
-                "type": "field_input",
-                "name": "activation function",
-                "text": "relu"
-              },
-              {
-                "type": "input_value",
-                "name": "conv2d"
-              }
-            ],
-            "output": null,
-            "colour": 230,
-            "tooltip": "",
-            "helpUrl": ""
-          }
-    ]);
-
-    Blockly.defineBlocksWithJsonArray([
-        {
-            "type": "maxpooling2d",
-            "message0": "MaxPooling2D %1 %2",
-            "args0": [
-              {
-                "type": "field_dropdown",
-                "name": "maxpooling",
-                "options": [
-                  [
-                    "2 x 2",
-                    "2_2"
-                  ],
-                  [
-                    "3 x 3",
-                    "3_3"
-                  ],
-                  [
-                    "4 X 4",
-                    "4_4"
-                  ]
-                ]
-              },
-              {
-                "type": "input_value",
-                "name": "maxpooling2d"
-              }
-            ],
-            "output": null,
-            "colour": 230,
-            "tooltip": "",
-            "helpUrl": ""
-          }
-    ]);
-
-    Blockly.defineBlocksWithJsonArray([
-    {
-        "type": "flatten",
-        "message0": "Flatten %1",
-        "args0": [
-          {
-            "type": "input_value",
-            "name": "flatten_input"
-          }
-        ],
-        "output": null,
-        "colour": 230,
-        "tooltip": "",
-        "helpUrl": ""
-      }
-    ]);
-
->>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "fit",
@@ -2554,7 +2446,6 @@ Blockly.defineBlocksWithJsonArray([
             "helpUrl": ""
           }
         ]);
-<<<<<<< HEAD
         // Blockly.defineBlocksWithJsonArray([
         //     {
         //         "type": "cnn",
@@ -2686,57 +2577,19 @@ Blockly.defineBlocksWithJsonArray([
             {
                 "type": "cnn_model",
                 "message0": "CNN model  %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test  generator %9 Layers  %10 Model compile %11 Model fit %12 Model evaluate %13",
-=======
-        Blockly.defineBlocksWithJsonArray([
-            {
-                "type": "cnn",
-                "message0": "CNN Model  %1 Dataset %2 %3 layers %4 Model compile %5 Model fit %6 Model evaluate %7",
->>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
                 "args0": [
                   {
                     "type": "input_dummy"
                   },
                   {
-<<<<<<< HEAD
                     "type": "field_input",
                     "name": "training_path",
                     "text": "/path/to/data/train"
-=======
-                    "type": "field_dropdown",
-                    "name": "dataset",
-                    "options": [
-                      [
-                        "CIFAR-10",
-                        "cifar-10"
-                      ],
-                      [
-                        "CIFAR-100",
-                        "cifar-100"
-                      ],
-                      [
-                        "MNIST",
-                        "mnist"
-                      ],
-                      [
-                        "Fashion-MNIST",
-                        "fashion-mnist"
-                      ],
-                      [
-                        "IMDB Movie Reviews",
-                        "imdb"
-                      ],
-                      [
-                        "Boston Housing Prices",
-                        "boston"
-                      ]
-                    ]
->>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
                   },
                   {
                     "type": "input_dummy"
                   },
                   {
-<<<<<<< HEAD
                     "type": "field_input",
                     "name": "test_path",
                     "text": "/path/to/data/test"
@@ -2761,14 +2614,11 @@ Blockly.defineBlocksWithJsonArray([
                     "name": "testGen"
                   },
                   {
-=======
->>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
                     "type": "input_value",
                     "name": "layers"
                   },
                   {
                     "type": "input_value",
-<<<<<<< HEAD
                     "name": "cnnCompile"
                   },
                   {
@@ -2778,17 +2628,6 @@ Blockly.defineBlocksWithJsonArray([
                   {
                     "type": "input_value",
                     "name": "cnnEvaluate"
-=======
-                    "name": "compile"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "fit"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "evaluate"
->>>>>>> 3715b06c7db1e121e0df186b2b38f4b6e8da74cd
                   }
                 ],
                 "colour": 230,
