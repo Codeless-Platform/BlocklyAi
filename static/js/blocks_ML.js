@@ -1911,6 +1911,8 @@ Blockly.defineBlocksWithJsonArray([
             "helpUrl": ""
           }
     ]);  
+
+    // begin layers blocks
        Blockly.defineBlocksWithJsonArray([
         {
             "type": "dense",
@@ -1936,7 +1938,185 @@ Blockly.defineBlocksWithJsonArray([
             "tooltip": "",
             "helpUrl": ""
           }
-    ]);   
+    ]);
+
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "conv2d",
+    //         "message0": "CONV2D - N. of filters: %1 filter size %2 Activation function: %3 %4",
+    //         "args0": [
+    //           {
+    //             "type": "field_input",
+    //             "name": "filters",
+    //             "text": "default"
+    //           },
+    //           {
+    //             "type": "field_dropdown",
+    //             "name": "filter_size",
+    //             "options": [
+    //               [
+    //                 "1 X 1",
+    //                 "1_1"
+    //               ],
+    //               [
+    //                 "3 X 3",
+    //                 "3_3"
+    //               ],
+    //               [
+    //                 "5 X 5",
+    //                 "5_5"
+    //               ],
+    //               [
+    //                 "7 X 7",
+    //                 "7_7"
+    //               ],
+    //               [
+    //                 "9 X 9",
+    //                 "9_9"
+    //               ]
+    //             ]
+    //           },
+    //           {
+    //             "type": "field_input",
+    //             "name": "activation function",
+    //             "text": "relu"
+    //           },
+    //           {
+    //             "type": "input_value",
+    //             "name": "conv2d"
+    //           }
+    //         ],
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "conv1d",
+    //         "message0": "CONV1D - N. of filters: %1 filter size %2 Activation function: %3 %4",
+    //         "args0": [
+    //           {
+    //             "type": "field_input",
+    //             "name": "filters",
+    //             "text": "default"
+    //           },
+    //           {
+    //             "type": "field_dropdown",
+    //             "name": "filter_size",
+    //             "options": [
+    //               [
+    //                 "1",
+    //                 "1"
+    //               ],
+    //               [
+    //                 "3",
+    //                 "3"
+    //               ],
+    //               [
+    //                 "5",
+    //                 "5"
+    //               ],
+    //               [
+    //                 "7",
+    //                 "7"
+    //               ],
+    //               [
+    //                 "9",
+    //                 "9"
+    //               ]
+    //             ]
+    //           },
+    //           {
+    //             "type": "field_input",
+    //             "name": "activation function",
+    //             "text": "relu"
+    //           },
+    //           {
+    //             "type": "input_value",
+    //             "name": "conv1d"
+    //           }
+    //         ],
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "maxpooling2d",
+    //         "message0": "MaxPooling2D %1 %2",
+    //         "args0": [
+    //           {
+    //             "type": "field_dropdown",
+    //             "name": "maxpooling",
+    //             "options": [
+    //               [
+    //                 "2 x 2",
+    //                 "2_2"
+    //               ],
+    //               [
+    //                 "3 x 3",
+    //                 "3_3"
+    //               ],
+    //               [
+    //                 "4 X 4",
+    //                 "4_4"
+    //               ]
+    //             ]
+    //           },
+    //           {
+    //             "type": "input_value",
+    //             "name": "maxpooling2d"
+    //           }
+    //         ],
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "maxpooling1d",
+    //         "message0": "MaxPooling1D %1 %2",
+    //         "args0": [
+    //           {
+    //             "type": "field_dropdown",
+    //             "name": "maxpooling",
+    //             "options": [
+    //               [
+    //                 "2",
+    //                 "2"
+    //               ],
+    //               [
+    //                 "3",
+    //                 "3"
+    //               ],
+    //               [
+    //                 "4",
+    //                 "4"
+    //               ]
+    //             ]
+    //           },
+    //           {
+    //             "type": "input_value",
+    //             "name": "maxpooling1d"
+    //           }
+    //         ],
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+    // // end layers blocks
+//////////////////////////////////////Fiting Blocks////////////////////////////////////////////////////
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "fit",
@@ -1967,9 +2147,60 @@ Blockly.defineBlocksWithJsonArray([
             "colour": 230,
             "tooltip": "Fit model with training data and labels",
             "helpUrl": ""
+          },{
+            "type": "cnn_fit",
+            "message0": "Cnn fit , epochs %1 verbose %2 %3",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "cnn_epochs",
+                "text": "10"
+              },
+              {
+                "type": "field_input",
+                "name": "cnn_verbose",
+                "text": "1"
+              },
+              {
+                "type": "input_dummy",
+                "name": "cnn_fit"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
           }
           
     ]);   
+
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "cnn_fit",
+    //         "message0": "CNN Fit %1",
+    //         "args0": [
+    //           {
+    //             "type": "field_dropdown",
+    //             "name": "cnn_fit_dropdown",
+    //             "options": [
+    //               [
+    //                 "text/audio",
+    //                 "text_audio"
+    //               ],
+    //               [
+    //                 "image",
+    //                 "image"
+    //               ]
+    //             ]
+    //           }
+    //         ],
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "evaluate",
@@ -2162,6 +2393,17 @@ Blockly.defineBlocksWithJsonArray([
           }
     ]);
 
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         "type": "cnn_split",
+    //         "message0": "CNN data splitting",
+    //         "output": null,
+    //         "colour": 230,
+    //         "tooltip": "",
+    //         "helpUrl": ""
+    //       }
+    // ]);
+
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "sequential",
@@ -2204,6 +2446,195 @@ Blockly.defineBlocksWithJsonArray([
             "helpUrl": ""
           }
         ]);
+        // Blockly.defineBlocksWithJsonArray([
+        //     {
+        //         "type": "cnn",
+        //         "message0": "CNN model %1 Dataset folder path: %2 %3 Dataset type: %4 %5 Data Splitting %6 layers %7 Model compile %8 Model fit %9 Model evaluate %10",
+        //         "args0": [
+        //             {
+        //                 "type": "input_dummy"
+        //               },
+        //               {
+        //                 "type": "field_input",
+        //                 "name": "NAME",
+        //                 "text": "default"
+        //               },
+        //               {
+        //                 "type": "input_dummy"
+        //               },
+        //           {
+        //             "type": "field_dropdown",
+        //             "name": "dataset",
+        //             "options": [
+        //               [
+        //                 "Image",
+        //                 "image"
+        //               ],
+        //               [
+        //                 "Audio",
+        //                 "audio"
+        //               ],
+        //               [
+        //                 "Text",
+        //                 "text"
+        //               ]
+        //             ]
+        //           },
+        //           {
+        //             "type": "input_dummy"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "data_splitting"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "layers"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "compile"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "cnn_fit"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "evaluate"
+        //           }
+        //         ],
+        //         "colour": 230,
+        //         "tooltip": "",
+        //         "helpUrl": ""
+        //       }
+        //     ]);
+
+        // Blockly.defineBlocksWithJsonArray([
+        //     {
+        //         "type": "cnn",
+        //         "message0": "CNN model %1 Dataset folder path: %2 %3 Dataset type: %4 %5 Data Splitting %6 layers %7 Model compile %8 Model fit %9 Model evaluate %10",
+        //         "args0": [
+        //             {
+        //                 "type": "input_dummy"
+        //               },
+        //               {
+        //                 "type": "field_input",
+        //                 "name": "NAME",
+        //                 "text": "default"
+        //               },
+        //               {
+        //                 "type": "input_dummy"
+        //               },
+        //           {
+        //             "type": "field_dropdown",
+        //             "name": "dataset",
+        //             "options": [
+        //               [
+        //                 "Image",
+        //                 "image"
+        //               ],
+        //               [
+        //                 "Audio",
+        //                 "audio"
+        //               ],
+        //               [
+        //                 "Text",
+        //                 "text"
+        //               ]
+        //             ]
+        //           },
+        //           {
+        //             "type": "input_dummy"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "data_splitting"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "layers"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "compile"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "cnn_fit"
+        //           },
+        //           {
+        //             "type": "input_value",
+        //             "name": "evaluate"
+        //           }
+        //         ],
+        //         "colour": 230,
+        //         "tooltip": "",
+        //         "helpUrl": ""
+        //       }
+        //     ]);
+        Blockly.defineBlocksWithJsonArray([
+            {
+                "type": "cnn_model",
+                "message0": "CNN model  %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test  generator %9 Layers  %10 Model compile %11 Model fit %12 Model evaluate %13",
+                "args0": [
+                  {
+                    "type": "input_dummy"
+                  },
+                  {
+                    "type": "field_input",
+                    "name": "training_path",
+                    "text": "/path/to/data/train"
+                  },
+                  {
+                    "type": "input_dummy"
+                  },
+                  {
+                    "type": "field_input",
+                    "name": "test_path",
+                    "text": "/path/to/data/test"
+                  },
+                  {
+                    "type": "input_dummy"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "trainAug"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "testAug"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "trainGen"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "testGen"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "layers"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "cnnCompile"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "cnnFit"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "cnnEvaluate"
+                  }
+                ],
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+              }
+            ]);
 
     Blockly.defineBlocksWithJsonArray([
     {
@@ -2221,7 +2652,754 @@ Blockly.defineBlocksWithJsonArray([
         "helpUrl": ""
       }
     ]);
-    Blockly.defineBlocksWithJsonArray([
+/////////////////////////////////////////// Augmentation Blocks////////////////////////////////////////////////
+        Blockly.defineBlocksWithJsonArray([{
+            "type": "rescale",
+            "message0": "Rescale %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "rescale",
+                "text": "1.0/255"
+              },
+              {
+                "type": "input_value",
+                "name": "rescale"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "shear_range",
+            "message0": "Shear range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "shear_range",
+                "text": "0.2"
+              },
+              {
+                "type": "input_value",
+                "name": "shear_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "zoom_range",
+            "message0": "Zoom range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "zoom_range",
+                "text": "0.2"
+              },
+              {
+                "type": "input_value",
+                "name": "zoom_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "rotation_range",
+            "message0": "Rotation range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "rotation_range",
+                "text": "40"
+              },
+              {
+                "type": "input_value",
+                "name": "rotation_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "width_shift_range",
+            "message0": "Width shift range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "width_shift_range",
+                "text": "0.2"
+              },
+              {
+                "type": "input_value",
+                "name": "width_shift_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "height_shift_range",
+            "message0": "Height shift range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "height_shift_range",
+                "text": "0.2"
+              },
+              {
+                "type": "input_value",
+                "name": "height_shift_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "channel_shift_range",
+            "message0": "Channel shift range %1 %2",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "channel_shift_range",
+                "text": "0.2"
+              },
+              {
+                "type": "input_value",
+                "name": "channel_shift_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+            ]);
+
+        Blockly.defineBlocksWithJsonArray([
+            {
+                "type": "horizontal_flip",
+                "message0": "Horizontal flip %1",
+                "args0": [
+                  {
+                    "type": "input_value",
+                    "name": "horizontal_flip"
+                  }
+                ],
+                "output": null,
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+              },
+              {
+            "type": "vertical_flip",
+            "message0": "Vertical flip %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "vertical_flip"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },
+          {
+            "type": "featurewise_center",
+            "message0": "Featurewise center %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "featurewise_center"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "Apply featurewise centering to the dataset",
+            "helpUrl": ""
+          },{
+            "type": "featurewise_std_normalization",
+            "message0": "Featurewise standard normalization %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "featurewise_std_normalization"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "Apply featurewise standard normalization to the dataset",
+            "helpUrl": ""
+          },{
+            "type": "samplewise_std_normalization",
+            "message0": "Samplewise standard normalization %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "samplewise_std_normalization"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "Apply samplewise standard normalization to each sample",
+            "helpUrl": ""
+          },{
+            "type": "samplewise_center",
+            "message0": "Samplewise center %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "samplewise_center"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "Apply samplewise centering to each sample",
+            "helpUrl": ""
+          },{
+            "type": "zca_whitening",
+            "message0": "ZCA whitening %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "zca_whitening"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "Apply ZCA whitening to the dataset",
+            "helpUrl": ""
+          },{
+            "type": "brightness_range",
+            "message0": "Brightness range %1 , %2 %3",
+            "args0": [
+              {
+                "type": "field_input",
+                "name": "brightness_min",
+                "text": "0.2"
+              },
+              {
+                "type": "field_input",
+                "name": "brightness_max",
+                "text": "1.0"
+              },
+              {
+                "type": "input_value",
+                "name": "brightness_range"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "fill_mode",
+            "message0": "Fill mode %1 %2",
+            "args0": [
+              {
+                "type": "field_dropdown",
+                "name": "fill_mode",
+                "options": [
+                  [
+                    "Constant",
+                    "constant"
+                  ],
+                  [
+                    "Nearest",
+                    "nearest"
+                  ],
+                  [
+                    "Reflect",
+                    "reflect"
+                  ],
+                  [
+                    "Wrap",
+                    "wrap"
+                  ]
+                ]
+              },
+              {
+                "type": "input_value",
+                "name": "fill_mode"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }                                     
+            ]);
+/////////////////////////////////////////// Generators Blocks////////////////////////////////////////////////
+Blockly.defineBlocksWithJsonArray([{
+    "type": "color_mode",
+    "message0": "Color mode %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "color_mode",
+        "options": [
+          [
+            "rgb",
+            "rgb"
+          ],
+          [
+            "rgba",
+            "rgba"
+          ],
+          [
+            "grayscale",
+            "grayscale"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "color_mode"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "interpolation",
+    "message0": "Interpolation %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "interpolation",
+        "options": [
+          [
+            "nearest",
+            "nearest"
+          ],
+          [
+            "bilinear",
+            "bilinear"
+          ],
+          [
+            "bicubic",
+            "bicubic"
+          ],
+          [
+            "lanczos",
+            "lanczos"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "interpolation"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "subset",
+    "message0": "Subset %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "subset",
+        "options": [
+          [
+            "training",
+            "training"
+          ],
+          [
+            "validation",
+            "validation"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "subset"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "shuffle",
+    "message0": "Shuffle %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "shuffle"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "augment",
+    "message0": "Augment %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "augment"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "save_format",
+    "message0": "Save format %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "save_format",
+        "options": [
+          [
+            "png",
+            "png"
+          ],
+          [
+            "jpeg",
+            "jpeg"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "save_format"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "seed",
+    "message0": "Seed %1 %2",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "seed",
+        "text": "42"
+      },
+      {
+        "type": "input_value",
+        "name": "seed"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "save_to_dir",
+    "message0": "Save to %1 %2",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "save_to_dir",
+        "text": "/path/to/save/directorys"
+      },
+      {
+        "type": "input_value",
+        "name": "save_to_dir"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "save_prefix",
+    "message0": "Save prefix %1 %2",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "save_prefix",
+        "text": "image"
+      },
+      {
+        "type": "input_value",
+        "name": "save_prefix"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "class_mode",
+    "message0": "Class mode %1 %2",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "class_mode",
+        "options": [
+          [
+            "categorical",
+            "categorical"
+          ],
+          [
+            "binaryn",
+            "binary"
+          ],
+          [
+            "sparse",
+            "sparse"
+          ]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "class_mode"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "target_size",
+    "message0": "Target size %1 , %2 %3",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "target_size1",
+        "text": "32"
+      },
+      {
+        "type": "field_input",
+        "name": "target_size2",
+        "text": "32"
+      },
+      {
+        "type": "input_value",
+        "name": "target_size"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "batch_size",
+    "message0": "Batch size %1 %2",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "batch_size",
+        "text": "32"
+      },
+      {
+        "type": "input_value",
+        "name": "batch_size"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+    ]); 
+    
+///////////////////////////////////////Layers///////////////////////////////////////  
+
+Blockly.defineBlocksWithJsonArray([{
+    "type": "Conv2D",
+    "message0": "Conv2D , Number of filters %1 Size %2 , %3 Activation Function %4 %5",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "filters",
+        "text": "32"
+      },
+      {
+        "type": "field_input",
+        "name": "size1",
+        "text": "3"
+      },
+      {
+        "type": "field_input",
+        "name": "size2",
+        "text": "3"
+      },
+      {
+        "type": "field_input",
+        "name": "activation",
+        "text": "relu"
+      },
+      {
+        "type": "input_value",
+        "name": "Conv2D"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "Conv2Dfirst",
+    "message0": "Conv input layer , Number of filters %1 Size %2 , %3 Activation function %4 Input size %5 %6 %7 %8",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "filters_number",
+        "text": "32"
+      },
+      {
+        "type": "field_input",
+        "name": "f_size1",
+        "text": "3"
+      },
+      {
+        "type": "field_input",
+        "name": "f_size2",
+        "text": "3"
+      },
+      {
+        "type": "field_input",
+        "name": "activation_function",
+        "text": "relu"
+      },
+      {
+        "type": "field_input",
+        "name": "input_size1",
+        "text": "32"
+      },
+      {
+        "type": "field_input",
+        "name": "input_size2",
+        "text": "32"
+      },
+      {
+        "type": "field_input",
+        "name": "input_size3",
+        "text": "3"
+      },
+      {
+        "type": "input_value",
+        "name": "Conv2Dfirst"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "averagepooling2d",
+    "message0": "AveragePooling2D , Size %1 , %2 ,Stride %3 , %4 %5",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "size1",
+        "text": "2"
+      },
+      {
+        "type": "field_input",
+        "name": "size2",
+        "text": "2"
+      },
+      {
+        "type": "field_input",
+        "name": "stride1",
+        "text": "1"
+      },
+      {
+        "type": "field_input",
+        "name": "stride2",
+        "text": "1"
+      },
+      {
+        "type": "input_value",
+        "name": "AveragePooling2D"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },{
+    "type": "maxpooling2d",
+    "message0": "MaxPooling2D , Size %1 , %2 ,Stride %3 , %4 %5",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "size1",
+        "text": "2"
+      },
+      {
+        "type": "field_input",
+        "name": "size2",
+        "text": "2"
+      },
+      {
+        "type": "field_input",
+        "name": "stride1",
+        "text": "1"
+      },
+      {
+        "type": "field_input",
+        "name": "stride2",
+        "text": "1"
+      },
+      {
+        "type": "input_value",
+        "name": "MaxPooling2D"
+      }
+    ],
+    "output": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  },   
+   {
+        "type": "flatten",
+        "message0": "Flatten %1",
+        "args0": [
+          {
+            "type": "input_value",
+            "name": "flatten_input"
+          }
+        ],
+        "output": null,
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+      }, {
+        "type": "dropout",
+        "message0": "Dropout %1 %2",
+        "args0": [
+          {
+            "type": "field_input",
+            "name": "rate",
+            "text": "0.5"
+          },
+          {
+            "type": "input_value",
+            "name": "dropout"
+          }
+        ],
+        "output": null,
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+      }
+])
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+Blockly.defineBlocksWithJsonArray([
     {
         "type": "mse",
         "message0": "Mean Squared Error %1",
@@ -2323,6 +3501,7 @@ Blockly.defineBlocksWithJsonArray([
           }
 
      ]);
+     /////////////////////////////////////////////////////Evaluation Blocks//////////////////////////////////
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "evaluation",
@@ -2342,10 +3521,17 @@ Blockly.defineBlocksWithJsonArray([
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
+          },{
+            "type": "cnn_evaluation",
+            "message0": "Cnn evaluation",
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
           }
 
      ]);
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "training",

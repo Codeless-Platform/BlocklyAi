@@ -25,7 +25,7 @@
 
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/ac.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
@@ -53,7 +53,7 @@
         class="navbar navbar-expand-lg  navbar-expand-sm  navbar-expand-md  navbar-expand-xl navbar-light bg-light nav-colors">
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <img src="{{ url_for('static', filename='images/codeless.png') }}" height=40 width="130"> &nbsp;
+            <img src="{{ url_for('static', filename='images/codeless-3.png') }}" height=40 width="130"> &nbsp;
             &nbsp;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown active">
@@ -635,6 +635,116 @@
         </category>
         <sep></sep>
         <sep></sep>
+        <category name="Shoghl" colour="%{BKY_LOGIC_HUE}">
+            <category name="Agu" colour="%{BKY_LOGIC_HUE}">
+                <block type="rescale">
+                    <field name="rescale">1.0/255</field>
+                </block>
+                <block type="vertical_flip">
+                    <field name="vertical_flip"></field>
+                </block>
+                <block type="zoom_range">
+                    <field name="zoom_range">0.2</field>
+                </block>
+                <block type="shear_range">
+                    <field name="shear_range">0.2</field>
+                </block>
+                <block type="width_shift_range">
+                    <field name="width_shift_range">0.2</field>
+                </block>
+                <block type="rotation_range">
+                    <field name="rotation_range">40</field>
+                </block>
+                <block type="height_shift_range">
+                    <field name="height_shift_range">0.2</field>
+                </block>
+                <block type="channel_shift_range">
+                    <field name="channel_shift_range">0.2</field>
+                </block>
+                <block type="horizontal_flip">
+                    <field name="horizontal_flip"></field>
+                </block>
+                <block type="featurewise_center">
+                    <field name="featurewise_center"></field>
+                </block>
+                <block type="featurewise_std_normalization">
+                    <field name="featurewise_std_normalization"></field>
+                </block>
+                <block type="samplewise_std_normalization">
+                    <field name="samplewise_std_normalization"></field>
+                </block>
+                <block type="samplewise_center">
+                    <field name="samplewise_center"></field>
+                </block>
+                <block type="zca_whitening">
+                    <field name="zca_whitening"></field>
+                </block>
+                <block type="brightness_range">
+                    <field name="brightness_min">0.2</field>
+                    <field name="brightness_max">1.0</field>
+                </block>
+                <block type="fill_mode">
+                    <field name="fill_mode">constant</field>
+                </block>
+            </category>
+            <category name="Gen" colour="%{BKY_LOGIC_HUE}">
+                <block type="color_mode">
+                    <field name="color_mode">rgb</field>
+                </block>
+                <block type="interpolation">
+                    <field name="interpolation">bilinear</field>
+                </block>
+                <block type="subset">
+                    <field name="subset">training</field>
+                </block>
+                <block type="shuffle">
+                </block>
+                <block type="augment">
+                </block>
+                <block type="save_format">
+                    <field name="save_format">png</field>
+                </block>
+                <block type="seed">
+                    <field name="seed">42</field>
+                </block>
+                <block type="save_to_dir">
+                    <field name="save_to_dir">/path/to/save/directories</field>
+                </block>
+                <block type="save_prefix">
+                    <field name="save_prefix">image</field>
+                </block>
+                <block type="class_mode">
+                    <field name="class_mode">Class mode</field>
+                </block>
+                <block type="target_size">
+                    <field name="target_size">Target size</field>
+                </block>
+                <block type="batch_size">
+                    <field name="batch_size">32</field>
+                </block>
+            </category>
+            <category name="layers" colour="%{BKY_LOGIC_HUE}">
+                <block type="averagepooling2d">
+                    <field name="averagepooling2d">Averagepooling2d</field>
+                </block>
+                <block type="maxpooling2d">
+                    <field name="maxpooling2d">Maxpooling2d</field>
+                </block>
+                <block type="Conv2D">
+                    <field name="Conv2D">Conv2D</field>
+                </block>
+                <block type="Conv2Dfirst">
+                    <field name="Conv2Dfirst">Conv input layer</field>
+                </block>
+                <block type="flatten">
+                    <field name="flatten">flatten</field>
+                </block>
+                <block type="dropout">
+                    <field type="dropout">Dropout</field>
+                </block>
+                
+        </category>
+    </category>
 
         <category name="Codeless (neural network)" colour="%{BKY_LOGIC_HUE}">
             <block type="dense">
@@ -702,6 +812,9 @@
             <block type="input_output">
                 <field type="input_output"> input output</field>
             </block>
+            <!-- <block type="cnn_split">
+                <field type="cnn_split"> CNN data splitting</field>
+            </block> -->
         </category>
         <sep></sep>
         <category name="Classical Machine Learning"></category>
@@ -760,22 +873,50 @@
          <block type="sequential">
              <field type="sequential">Sequentiale Model</field>
             </block>
+         <!-- <block type="cnn">
+                <field type="cnn">CNN Model</field>
+            </block> -->
+            <block type="cnn_model">
+                <field type="cnn_model">CNN Model</field>
+            </block>
         </category>
         <category name="Layers" colour="%{BKY_LOGIC_HUE}">
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
+            <!-- <block type="conv2d">
+                <field type="conv2d">CONV2D</field>
+            </block>
+            <block type="conv1d">
+                <field type="conv1d">CONV1D</field>
+            </block>
+            <block type="maxpooling2d">
+                <field type="maxpooling2d">MaxPooling2D</field>
+            </block>
+            <block type="maxpooling1d">
+                <field type="maxpooling1d">MaxPooling1D</field>
+            </block>
+            <block type="flatten">
+                <field type="flatten">Flatten</field>
+            </block>
+ -->
            </category>
            <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
             <block type="evaluate">
                 <field type="evaluate">Model evaluate</field>
             </block>
+            <block type="cnn_evaluation">
+                <field type="evaluate">Cnn evaluate</field>
+            </block>
             <block type="fit">
                 <field type="fit">Model fit</field>
             </block>
+            <block type="cnn_fit">
+                <field type="cnn_fit">Cnn fit</field>
+            </block>
             <block type="sequential">
                 <field type="sequential">Sequentiale Model</field>
-            </block>
+            </block>            
             <block type="compile">
                 <field type="compile">Model compile</field>
             </block>

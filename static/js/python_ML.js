@@ -2401,7 +2401,142 @@ Blockly.Python['sequential'] = function(block) {
     
     return code;
 };
+var layersFlag = []
+Blockly.Python['cnn_model'] = function(block) {
+    var training_path = block.getFieldValue('training_path');
+    var test_path = block.getFieldValue('test_path');
 
+    var trainAug = Blockly.Python.valueToCode(block, 'trainAug', Blockly.Python.ORDER_ATOMIC) || '';
+    var testAug = Blockly.Python.valueToCode(block, 'testAug', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var trainGen = Blockly.Python.valueToCode(block, 'trainGen', Blockly.Python.ORDER_ATOMIC) || '';
+    var testGen = Blockly.Python.valueToCode(block, 'testGen', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var layers = Blockly.Python.valueToCode(block, 'layers', Blockly.Python.ORDER_ATOMIC) || '';
+    var compile = Blockly.Python.valueToCode(block, 'cnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
+    var fit = Blockly.Python.valueToCode(block, 'cnnFit', Blockly.Python.ORDER_ATOMIC) || '';
+    var evaluate = Blockly.Python.valueToCode(block, 'cnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `from tensorflow.keras.models import Sequential\n`;
+
+    if (trainAug||testAug) {
+        code += `from tensorflow.keras.preprocessing.image import ImageDataGenerator\n\n`;
+    }
+
+
+    if(layers && layersFlag.includes("MaxPooling2D")){code+='from tensorflow.keras.layers import MaxPooling2D\n'}
+    if(layers && layersFlag.includes("AveragePooling2D")){code+='from tensorflow.keras.layers import AveragePooling2D\n'}
+    if(layers && layersFlag.includes("Conv2d")){code+='from tensorflow.keras.layers import Conv2D\n'}
+    if(layers && layersFlag.includes("Dense")){code+='from tensorflow.keras.layers import Dense\n'}
+    if(layers && layersFlag.includes("flatten")){code+='from tensorflow.keras.layers import Flatten\n'}
+    if(layers && layersFlag.includes("dropout")){code+='from tensorflow.keras.layers import Dropout\n'}
+    
+    code += `\ntrain_dir = '${training_path}'\nvalidation_dir = '${test_path }'\n\n`
+    
+    if (trainAug) {
+        code += `train_datagen = ImageDataGenerator( `;
+        code += trainAug;
+        code += `\n)\n`;
+    }
+    if (testAug) {
+        code += `test_datagen = ImageDataGenerator(`;
+        code += testAug;
+        code += `\n)\n`;
+    }
+
+
+    if (trainGen) {
+        code += `train_generator = train_datagen.flow_from_directory(train_dir,\n`;
+        code += trainGen;
+        code += `\n)\n`;
+    }
+    if (testGen) {
+        code += `test_generator = test_datagen.flow_from_directory(validation_dir,\n`;
+        code += testGen;
+        code += `\n)\n`;
+    }
+
+    if (layers) {
+        code += `model = Sequential([\n`;
+        code += layers;
+        code += `\n])\n`;
+    }
+
+
+     code += compile;
+     code += fit;
+     code += evaluate;
+    
+    return code;
+};
+///////////////////////////////////////////LAYERS///////////////////////////////////////////////////////   
+Blockly.Python['Conv2D'] = function(block) {
+    var filters = block.getFieldValue('filters');
+    var size1 = block.getFieldValue('size1');
+    var size2 = block.getFieldValue('size2');
+    var activation = block.getFieldValue('activation');
+    var input = Blockly.Python.valueToCode(block, 'Conv2D', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `Conv2D(${filters} , (${size1}, ${size2}), activation='${activation}')`;
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    if (!layersFlag.includes("Conv2d")){layersFlag.push("Conv2d")}
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  Blockly.Python['Conv2Dfirst'] = function(block) {
+    var filters = block.getFieldValue('filters_number');
+    var size1 = block.getFieldValue('f_size1');
+    var size2 = block.getFieldValue('f_size2');
+    var activation = block.getFieldValue('activation_function');
+    var input_size1 = block.getFieldValue('input_size1');
+    var input_size2 = block.getFieldValue('input_size2');
+    var input_size3 = block.getFieldValue('input_size3');
+    var input = Blockly.Python.valueToCode(block, 'Conv2Dfirst', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `Conv2D(${filters} , (${size1}, ${size2}), activation='${activation}',input_shape=(${input_size1}, ${input_size2}, ${input_size3 }))`;
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    if (!layersFlag.includes("Conv2d")){layersFlag.push("Conv2d")}
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['averagepooling2d'] = function(block) {
+    var size1 = block.getFieldValue('size1');
+    var size2 = block.getFieldValue('size2');
+    var stride1 = block.getFieldValue('stride1');
+    var stride2 = block.getFieldValue('stride2');
+    var input = Blockly.Python.valueToCode(block, 'AveragePooling2D', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'AveragePooling2D(pool_size=(' + size1 + ', ' + size2 + '), strides=(' + stride1 + ', ' + stride2 + '))';
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    if (!layersFlag.includes("AveragePooling2D")){layersFlag.push("AveragePooling2D")}
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['maxpooling2d'] = function(block) {
+    var size1 = block.getFieldValue('size1');
+    var size2 = block.getFieldValue('size2');
+    var stride1 = block.getFieldValue('stride1');
+    var stride2 = block.getFieldValue('stride2');
+    var input = Blockly.Python.valueToCode(block, 'MaxPooling2D', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var code = 'MaxPooling2D(pool_size=(' + size1 + ', ' + size2 + '), strides=(' + stride1 + ', ' + stride2 + '))';
+    if (input) {
+      code += `,\n${input}`;
+    }
+
+    if (!layersFlag.includes("MaxPooling2D"))
+        {layersFlag.push("MaxPooling2D")}
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
   Blockly.Python['dense'] = function(block) {
     var neuron_number = block.getFieldValue('neuron_number');
     var activation = block.getFieldValue('activation');
@@ -2413,9 +2548,728 @@ Blockly.Python['sequential'] = function(block) {
     if (dense_input) {
       code += `,\n${dense_input}`;
     }
-    
+    if (!layersFlag.includes("Dense")){layersFlag.push("Dense")}
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+
+  Blockly.Python['flatten'] = function(block) {
+ var input = Blockly.Python.valueToCode(block, 'flatten_input', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var code = 'Flatten()';
+    if (input) {
+      code += `,\n${input}`;
+    }
+
+    if (!layersFlag.includes("flatten"))
+        {layersFlag.push("flatten")}
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['dropout'] = function(block) {
+    var text_rate = block.getFieldValue('rate');
+    var input = Blockly.Python.valueToCode(block, 'dropout', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `Dropout(${text_rate})`;
+    if (input) {
+      code += `,\n${input}`;
+    }
+
+    if (!layersFlag.includes("dropout"))
+        {layersFlag.push("dropout")}
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+////////////////////////////////////////////////Augmentation/////////////////////////////////////////////////
+Blockly.Python['rescale'] = function(block) {
+    var rescale = block.getFieldValue('rescale');
+    var input = Blockly.Python.valueToCode(block, 'rescale', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `rescale= ${rescale}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['shear_range'] = function(block) {
+    var shear_range = block.getFieldValue('shear_range');
+    var input = Blockly.Python.valueToCode(block, 'shear_range', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `shear_range= ${ shear_range}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['zoom_range'] = function(block) {
+    var zoom_range = block.getFieldValue('zoom_range');
+    var input = Blockly.Python.valueToCode(block, 'zoom_range', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var code = `zoom_range= ${zoom_range}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['rotation_range'] = function(block) {
+    var rotation_range = block.getFieldValue('rotation_range');
+    var input = Blockly.Python.valueToCode(block, 'rotation_range', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `rotation_range= ${rotation_range}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['width_shift_range'] = function(block) {
+    var width_shift_range = block.getFieldValue('width_shift_range');
+    var input = Blockly.Python.valueToCode(block, 'width_shift_range', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `width_shift_range= ${width_shift_range}`;
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['height_shift_range'] = function(block) {
+    var height_shift_range = block.getFieldValue('height_shift_range');
+    var input = Blockly.Python.valueToCode(block, 'height_shift_range', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `height_shift_range= ${height_shift_range}`;
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['channel_shift_range'] = function(block) {
+    var channel_shift_range = block.getFieldValue('channel_shift_range');
+    var input = Blockly.Python.valueToCode(block, 'channel_shift_range', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `channel_shift_range= ${channel_shift_range}`;
+    
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['horizontal_flip'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'horizontal_flip', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'horizontal_flip=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['vertical_flip'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'vertical_flip', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'vertical_flip=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['featurewise_center'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'featurewise_center', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'featurewise_center=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['featurewise_std_normalization'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'featurewise_std_normalization', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'featurewise_std_normalization=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['samplewise_std_normalization'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'samplewise_std_normalization', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'samplewise_std_normalization=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['samplewise_center'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'samplewise_center', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'samplewise_center=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  
+  Blockly.Python['zca_whitening'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'zca_whitening', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = 'zca_whitening=True';
+    if (input) {
+        code += `,\n${input}`;
+      }
+      return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  Blockly.Python['brightness_range'] = function(block) {
+    var brightness_min = block.getFieldValue('brightness_min');
+    var brightness_max = block.getFieldValue('brightness_max');
+    var input = Blockly.Python.valueToCode(block, 'brightness_range', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = `brightness_range=[ ${brightness_min} , ${brightness_max} ]`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['fill_mode'] = function(block) {
+    var fill_mode = block.getFieldValue('fill_mode');
+    var input = Blockly.Python.valueToCode(block, 'fill_mode', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `fill_mode=${fill_mode}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+//////////////////////////////////////////////////Generators///////////////////////////////////////////////
+Blockly.Python['color_mode'] = function(block) {
+    var color_mode = block.getFieldValue('color_mode');
+    var input = Blockly.Python.valueToCode(block, 'color_mode', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `color_mode='${color_mode}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['interpolation'] = function(block) {
+    var interpolation = block.getFieldValue('interpolation');
+    var input = Blockly.Python.valueToCode(block, 'interpolation', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `interpolation='${interpolation}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['subset'] = function(block) {
+    var subset = block.getFieldValue('subset');
+    var input = Blockly.Python.valueToCode(block, 'subset', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `subset='${subset}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['shuffle'] = function(block) {
+var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `shuffle= True`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['augment'] = function(block) {
+    var input = Blockly.Python.valueToCode(block, 'augment', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `augment = True`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['save_format'] = function(block) {
+    var save_format = block.getFieldValue('save_format');
+    var input = Blockly.Python.valueToCode(block, 'save_format', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `save_format= '${save_format}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['seed'] = function(block) {
+    var seed = block.getFieldValue('seed');
+    var input = Blockly.Python.valueToCode(block, 'seed', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `seed= ${seed}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['save_to_dir'] = function(block) {
+    var save_to_dir = block.getFieldValue('save_to_dir');
+    var input = Blockly.Python.valueToCode(block, 'save_to_dir', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `save_to_dir= '${save_to_dir}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['save_prefix'] = function(block) {
+    var save_prefix = block.getFieldValue('save_prefix');
+    var input = Blockly.Python.valueToCode(block, 'save_prefix', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `save_prefix= '${save_prefix}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['class_mode'] = function(block) {
+    var class_mode = block.getFieldValue('class_mode');
+    var input = Blockly.Python.valueToCode(block, 'class_mode', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `class_mode = '${class_mode}'`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['target_size'] = function(block) {
+    var target_size1 = block.getFieldValue('target_size1');
+    var target_size2 = block.getFieldValue('target_size2');
+    var input = Blockly.Python.valueToCode(block, 'target_size', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `target_size = (${target_size1},${target_size2})`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['batch_size'] = function(block) {
+    var batch_size = block.getFieldValue('batch_size');
+    var input = Blockly.Python.valueToCode(block, 'batch_size', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `batch_size = ${batch_size}`;
+    if (input) {
+        code += `,\n${input}`;
+      }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Blockly.Python['cnn'] = function(block) {
+//     var dataset_path = block.getFieldValue('dataset_path');
+//     var dropdown_dataset = block.getFieldValue('dataset');
+//     var data_splitting = Blockly.Python.valueToCode(block, 'data_splitting', Blockly.Python.ORDER_ATOMIC) || '';
+//     var layers = Blockly.Python.valueToCode(block, 'layers', Blockly.Python.ORDER_ATOMIC) || '';
+//     var compile = Blockly.Python.valueToCode(block, 'compile', Blockly.Python.ORDER_ATOMIC) || '';
+//     var fit = Blockly.Python.valueToCode(block, 'cnn_fit', Blockly.Python.ORDER_ATOMIC) || '';
+//     var evaluate = Blockly.Python.valueToCode(block, 'evaluate', Blockly.Python.ORDER_ATOMIC) || '';
+//     var function_name = '';
+
+//     // add needed libraries
+//     var code =  'import os\n' +
+//                 'import numpy as np\n' +
+//                 'import pandas as pd\n' +
+//                 'from tensorflow.keras.models import Sequential\n' +
+//                 'from keras.callbacks import EarlyStopping\n';
+
+//     // add layers libraries
+//     if (layers) {
+//         code += 'from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, Embedding, LSTM\n';
+//     }
+
+//     var dataset = '';
+//     switch (dropdown_dataset) {
+//         case 'image':
+//             function_name = 'load_image_data';
+//             code += 'from keras.preprocessing import image\n' +
+//                     'from keras.preprocessing.image import ImageDataGenerator\n\n' +
+//                     '# Load image data\n' +
+//                     'def '+function_name+'(folder_path, target_size=(224, 224)):\n' +
+//                     '    images = []\n' +
+//                     '    labels = []\n' +
+//                     '    for root, _, files in os.walk(folder_path):\n' +
+//                     '        for file in files:\n' +
+//                     '            if file.lower().endswith((\'.jpg\', \'.jpeg\', \'.png\')):\n' +
+//                     '                img_path = os.path.join(root, file)\n' +
+//                     '                label = os.path.basename(root)\n' +
+//                     '                img = image.load_img(img_path, target_size=target_size)\n' +
+//                     '                img_array = image.img_to_array(img)\n' +
+//                     '                images.append(img_array)\n' +
+//                     '                labels.append(label)\n' +
+//                     '    print("Total images loaded:", len(images))\n' +
+//                     '    return np.array(images), np.array(labels)\n\n';
+
+//             var convert_labels_code =   '# Convert labels to integers\n' +
+//                                         'y_train = (y_train == "label_you_are_interested_in").astype(int)\n' +
+//                                         'y_test = (y_test == "label_you_are_interested_in").astype(int)\n\n';
+
+//             var data_augmentation =  '# Data Augmentation\n' +
+//                                     'train_datagen = ImageDataGenerator(\n' +
+//                                     '    rescale=1./255,\n' +
+//                                     '    rotation_range=20,\n' +
+//                                     '    width_shift_range=0.2,\n' +
+//                                     '    height_shift_range=0.2,\n' +
+//                                     '    shear_range=0.2,\n' +
+//                                     '    zoom_range=0.2,\n' +
+//                                     '    horizontal_flip=True\n' +
+//                                     ')\n\n' +
+//                                     'test_datagen = ImageDataGenerator(rescale=1./255)\n' +
+//                                     'train_generator = train_datagen.flow(X_train, y_train, batch_size=32)\n' +
+//                                     'test_generator = test_datagen.flow(X_test, y_test, batch_size=32)\n\n';
+//             break;
+//         case 'audio':
+//             function_name = 'load_audio_data';
+//             code += 'import librosa\n\n' +
+//                     '# Load audio data\n' +
+//                     'def '+function_name+'(folder_path, sample_rate=22050, duration=2):\n' +
+//                     '    audio_data = []\n' +
+//                     '    labels = []\n' +
+//                     '    for root, _, files in os.walk(folder_path):\n' +
+//                     '        for file in files:\n' +
+//                     '            if file.lower().endswith(\'.wav\'):\n' +
+//                     '                audio_path = os.path.join(root, file)\n' +
+//                     '                label = os.path.basename(root)\n' +
+//                     '                # Load audio file\n' +
+//                     '                signal, sr = librosa.load(audio_path, sr=sample_rate, duration=duration, mono=True)\n' +
+//                     '                # Ensure all audio files have the same length\n' +
+//                     '                if len(signal) == sample_rate * duration:\n' +
+//                     '                    audio_data.append(signal)\n' +
+//                     '                    labels.append(label)\n' +
+//                     '    print("Total audio files loaded:", len(audio_data))\n' +
+//                     '    return np.array(audio_data), np.array(labels)\n\n';
+
+//             var convert_labels_code =   '# Convert labels to integers\n' +
+//                                         'unique_labels = np.unique(y_labels)\n' +
+//                                         'label_to_index = {label: i for i, label in enumerate(unique_labels)}\n' +
+//                                         'y_train = np.array([label_to_index[label] for label in y_train])\n' +
+//                                         'y_test = np.array([label_to_index[label] for label in y_test])\n\n';
+//             break;
+//         case 'text':
+//             function_name = 'load_text_data';
+//             code += 'from keras.preprocessing.text import Tokenizer\n' +
+//                     'from keras.preprocessing.sequence import pad_sequences\n\n' +
+//                     '# Load text data\n' +
+//                     'def '+function_name+'(folder_path, text_column, target_column):\n' +
+//                     '    texts = []\n' +
+//                     '    labels = []\n' +
+//                     '    for file_name in os.listdir(folder_path):\n' +
+//                     '        if file_name.endswith(\'.csv\'):\n' +
+//                     '            file_path = os.path.join(folder_path, file_name)\n' +
+//                     '            # Load the CSV file\n' +
+//                     '            df = pd.read_csv(file_path)\n' +
+//                     '            # Check if the target and text columns exist in the dataframe\n' +
+//                     '            if text_column in df.columns and target_column in df.columns:\n' +
+//                     '                # Append the text data and targets\n' +
+//                     '                texts.extend(df[text_column].tolist())\n' +
+//                     '                labels.extend(df[target_column].tolist())\n' +
+//                     '            else:\n' +
+//                     '                print(f"Warning: Columns \'{text_column}\' or \'{target_column}\' not found in file: {file_path}")\n' +
+//                     '    print("Total text samples loaded:", len(texts))\n' +
+//                     '    return texts, labels\n\n';
+
+//             var convert_labels_code =   '# Tokenize text data and preprocess\n' +
+//                                         'max_words = 10000  # maximum number of words to keep in the vocabulary\n' +
+//                                         'max_len = 1000  # maximum length of sequences\n' +
+//                                         'tokenizer = Tokenizer(num_words=max_words)\n' +
+//                                         'tokenizer.fit_on_texts(texts)\n' +
+//                                         'X_sequences = tokenizer.texts_to_sequences(texts)\n' +
+//                                         'x = pad_sequences(X_sequences, maxlen=max_len)\n\n' +
+//                                         '# Convert targets to binary labels\n' +
+//                                         'y = [1 if highlight else 0 for highlight in labels]\n\n';
+
+//             var convert_to_numpy_code = '# Convert lists to numpy arrays\n' +
+//                                         'x = np.array(x)\n' +
+//                                         'y = np.array(y)\n\n';
+
+//             break;
+//         default:
+//             dataset = 'image';
+//     }
+
+//     // load data code
+//     if (dropdown_dataset == 'image' || dropdown_dataset == 'audio') {
+//         code += 'folder_path = "' + dataset_path + '/";\n' +
+//                 'x, y = ' + function_name + '(folder_path);\n\n';
+//     }
+//     if (dropdown_dataset == 'text') {
+//         code += 'folder_path = "' + dataset_path + '/";\n' +
+//                 'var text_column = "enter your text column here";\n' +
+//                 'var target_column = "enter your target column here";\n' +
+//                 'x, y = ' + function_name + '(folder_path, text_column, target_column);\n\n';
+//     }
+
+//     // convert labels
+//     if (dropdown_dataset == 'image' || dropdown_dataset == 'audio'){
+//         code += convert_labels_code;
+//     }else{
+//         code += convert_to_numpy_code;
+//     }
+    
+
+//     // add splitting code
+//     code += data_splitting + '\n';
+
+//     // add layers code
+//     if (layers) {
+//         code += `\n\nmodel = Sequential([\n`;
+//         code += layers;
+//         code += `\n])\n`;
+//     }
+
+//     code += '\n' + compile;
+
+//     // add data augmentation
+//     if (data_augmentation){
+//         code += data_augmentation;
+//     }
+
+//     // add early stopping
+//     code += '# Define early stopping callback\n' +
+//             'early_stopping = EarlyStopping(monitor=\'val_loss\', patience=3, restore_best_weights=True)\n\n';
+
+//     code += '\n' + fit;
+//     code += '\n' + evaluate;
+
+//     return code;
+// };
+
+// // CNN splitting
+// Blockly.Python['cnn_split'] = function(block) {
+//     code = '# Split data into training and testing sets\n' +
+//             'X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)';
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+// };
+
+// // begin layers blocks
+
+//   Blockly.Python['conv2d'] = function(block) {
+//     var text_filters = block.getFieldValue('filters');
+//     var dropdown_filter_size = block.getFieldValue('filter_size');
+//     var text_activation_function = block.getFieldValue('activation function');
+//     var conv2d_input = Blockly.Python.valueToCode(block, 'conv2d', Blockly.Python.ORDER_ATOMIC) || '';
+//     var filter_size = 0;
+
+//     switch (dropdown_filter_size) {
+//         case '1_1':
+//             filter_size = 1;
+//             break;
+//         case '3_3':
+//             filter_size = 3;
+//             break;
+//         case '5_5':
+//             filter_size = 5;
+//             break;
+//         case '7_7':
+//             filter_size = 7;
+//             break;
+//         case '9_9':
+//             filter_size = 9;
+//             break;
+//         default:
+//             filter_size = 3;
+//             break;
+//     }
+    
+//     if (text_filters = 'default') {
+//         text_filters = 32;
+//     }
+
+//     var code = `Conv2D(${text_filters}, (${filter_size}, ${filter_size}), activation='${text_activation_function}'), input_shape=(${text_filters}, ${text_filters}, ${filter_size}))`;
+    
+//     // If there is an input value, append it to the code
+//     if (conv2d_input) {
+//         code += `,\n${conv2d_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+
+//   Blockly.Python['conv1d'] = function(block) {
+//     var text_filters = block.getFieldValue('filters');
+//     var dropdown_filter_size = block.getFieldValue('filter_size');
+//     var text_activation_function = block.getFieldValue('activation function');
+//     var conv1d_input = Blockly.Python.valueToCode(block, 'conv1d', Blockly.Python.ORDER_ATOMIC) || '';
+//     var filter_size = 0;
+
+//     switch (dropdown_filter_size) {
+//         case '1':
+//             filter_size = 1;
+//             break;
+//         case '3':
+//             filter_size = 3;
+//             break;
+//         case '5':
+//             filter_size = 5;
+//             break;
+//         case '7':
+//             filter_size = 7;
+//             break;
+//         case '9':
+//             filter_size = 9;
+//             break;
+//         default:
+//             filter_size = 3;
+//             break;
+//     }
+    
+//     if (text_filters = 'default') {
+//         text_filters = 32;
+//     }
+
+//     var code = `Conv1D(${text_filters}, ${filter_size}, activation='${text_activation_function}')`;
+    
+//     // If there is an input value, append it to the code
+//     if (conv1d_input) {
+//         code += `,\n${conv1d_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+
+//   Blockly.Python['maxpooling2d'] = function(block) {
+//     var dropdown_maxpooling = block.getFieldValue('maxpooling');
+//     var maxpooling2d_input = Blockly.Python.valueToCode(block, 'maxpooling2d', Blockly.Python.ORDER_ATOMIC) || '';
+//     var pooling_value = 0;
+
+//     switch (dropdown_maxpooling) {
+//         case '2_2':
+//             pooling_value = 2;
+//             break;
+//         case '3_3':
+//             pooling_value = 3;
+//             break;
+//         case '4_4':
+//             pooling_value = 4;
+//             break;
+//         default:
+//             pooling_value = 2;
+//     }
+
+//     var code = `MaxPooling2D(${pooling_value}, ${pooling_value})`;
+
+//     // If there is an input value, append it to the code
+//     if (maxpooling2d_input) {
+//         code += `,\n${maxpooling2d_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+
+//   Blockly.Python['maxpooling1d'] = function(block) {
+//     var dropdown_maxpooling = block.getFieldValue('maxpooling');
+//     var maxpooling1d_input = Blockly.Python.valueToCode(block, 'maxpooling1d', Blockly.Python.ORDER_ATOMIC) || '';
+//     var pooling_value = 0;
+
+//     switch (dropdown_maxpooling) {
+//         case '2':
+//             pooling_value = 2;
+//             break;
+//         case '3':
+//             pooling_value = 3;
+//             break;
+//         case '4':
+//             pooling_value = 4;
+//             break;
+//         default:
+//             pooling_value = 2;
+//     }
+
+//     var code = `MaxPooling1D(${pooling_value})`;
+
+//     // If there is an input value, append it to the code
+//     if (maxpooling1d_input) {
+//         code += `,\n${maxpooling1d_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+
+//   Blockly.Python['flatten'] = function(block) {
+//     var flatten_input = Blockly.Python.valueToCode(block, 'flatten', Blockly.Python.ORDER_ATOMIC) || '';
+
+//     var code = `Flatten()`;
+
+//     // If there is an input value, append it to the code
+//     if (flatten_input) {
+//         code += `,\n${flatten_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+
+
+//   Blockly.Python['conv2d'] = function(block) {
+//     var text_filters = block.getFieldValue('filters');
+//     var dropdown_filter_size = block.getFieldValue('filter_size');
+//     var text_activation_function = block.getFieldValue('activation function');
+//     var conv2d_input = Blockly.Python.valueToCode(block, 'conv2d', Blockly.Python.ORDER_ATOMIC) || '';
+//     var filter_size = 0;
+
+//     switch (dropdown_filter_size) {
+//         case '1_1':
+//             filter_size = 1;
+//             break;
+//         case '3_3':
+//             filter_size = 3;
+//             break;
+//         case '5_5':
+//             filter_size = 5;
+//             break;
+//         case '7_7':
+//             filter_size = 7;
+//             break;
+//         case '9_9':
+//             filter_size = 9;
+//             break;
+//         default:
+//             filter_size = 3;
+//             break;
+//     }
+    
+//     if (text_filters = 'default') {
+//         text_filters = 32;
+//     }
+
+//     var code = `Conv2D(${text_filters}, (${filter_size}, ${filter_size})), activation='${text_activation_function}'), input_shape=(${text_filters}, ${text_filters}, ${filter_size}))`;
+    
+//     // If there is an input value, append it to the code
+//     if (conv2d_input) {
+//         code += `,\n${conv2d_input}`;
+//       }
+
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+//   // end layers blocks
+
+//   // begin Model Evaluation blocks
+/////////////////////////////////// FITING //////////////////////////////////////////////////////////
   Blockly.Python['fit'] = function(block) {
     var x_train = block.getFieldValue('X_train');
     var y_train = block.getFieldValue('y_train');
@@ -2425,12 +3279,39 @@ Blockly.Python['sequential'] = function(block) {
     var code = `model.fit(${x_train}, ${y_train}, epochs=${epochs}, verbose=${verbose})\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+  Blockly.Python['cnn_fit'] = function(block) {
+    var epochs = block.getFieldValue('cnn_epochs');
+    var verbose = block.getFieldValue('cnn_verbose');
   
+    var code = `model.fit(train_generator, epochs=${epochs}, verbose=${verbose})\n`;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+//   Blockly.Python['cnn_fit'] = function(block) {
+//     var dropdown_cnn_fit = block.getFieldValue('cnn_fit_dropdown');
+
+//     switch (dropdown_cnn_fit) {
+//         case 'text_audio':
+//             var code =  '# Fit the model with early stopping\n' +
+//                     'history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_test, y_test), callbacks=[early_stopping])\n';
+//             break;
+//         case 'image':
+//             var code =  '# Fit the model with early stopping\n' +
+//                     'history = model.fit(train_generator, epochs=20, validation_data=test_generator, callbacks=[early_stopping])\n';
+//             break;
+//     }
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+//   };
+  /////////////////////////////////EVALUATION ////////////////////////////////////////////////
   Blockly.Python['evaluate'] = function(block) {
     var x_test = block.getFieldValue('X_test');
     var y_test = block.getFieldValue('y_test');
   
     var code = `model.evaluate(${x_test}, ${y_test})\n`;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+  Blockly.Python['cnn_evaluation'] = function(block) {
+    var code = `model.evaluate(test_generator)\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
   
@@ -2451,7 +3332,7 @@ Blockly.Python['data_split'] = function(block) {
     y_test = block.getFieldValue('y_test');
     test_size = block.getFieldValue('test_size');
     var code = 'from sklearn.model_selection import train_test_split;\n'
-    code += `${x_train}, ${x_test}, ${y_train}, ${y_test} = train_test_split(${input}, ${output}, test_size=${test_size});\n`
+    code += `${x_train}, ${x_test}, ${y_train}, ${y_test} = train_test_split(${input}, ${output}, test_size=${test_size}, random_state=42);\n`
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
