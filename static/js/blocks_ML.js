@@ -3252,8 +3252,8 @@ Blockly.defineBlocksWithJsonArray([
             "args0": [
               {
                 "type": "field_input",
-                "name": "predectied_variable",
-                "text": "y_predectied"
+                "name": "predicted_variable",
+                "text": "y_predicted"
               },
               {
                 "type": "input_value",
@@ -3383,6 +3383,391 @@ Blockly.defineBlocksWithJsonArray([
     "tooltip": "",
     "helpUrl": ""
   }]);
+
+  /* Visualization Blocks begins */
+      /* ------------------------------ Data Visualization begins ------------------------------ */
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "scatter_plot",
+          "message0": "Scatter Plot %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "scatter_plot"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+    
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "histograms",
+          "message0": "Histograms %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "histograms"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "box_plots",
+          "message0": "Box Plots %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "box_plots"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "heatmaps",
+          "message0": "Heatmaps %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "heatmaps"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+    /* ------------------------------ Data Visualization ends ------------------------------ */
+    /* ------------------------------ Model Visualization begins ------------------------------ */
+    Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "decision_boundary",
+          "message0": "Decision Boundary Plot %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "decision_boundary"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "tree_visualization",
+          "message0": "Tree Visualization %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "tree_visualization"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "feature_importances",
+          "message0": "Feature Importances %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "feature_importances"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "learning_curves",
+          "message0": "Learning Curves %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "learning_curves"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+    /* ------------------------------ Model Visualization ends ------------------------------ */
+    /* ------------------------------ Model Performance begins ------------------------------ */
+    Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "confusion_matrix",
+          "message0": "Confusion Matrix %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "confusion_matrix"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "ROC_curve",
+          "message0": "ROC Curve %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "ROC_curve"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "precision_recall_curve",
+          "message0": "Precision-Recall Curve %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "precision_recall_curve"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+    /* ------------------------------ Model Performance ends ------------------------------ */
+    /* ------------------------------ Clustering and Dimensionality Reduction begins ------------------------------ */
+Blockly.defineBlocksWithJsonArray([
+    {
+      "type": "elbow_plot",
+      "message0": "Elbow Plot %1",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "elbow_plot"
+        }
+      ],
+      "output": null,
+      "colour": 230,
+      "tooltip": "",
+      "helpUrl": ""
+    }
+]);
+
+Blockly.defineBlocksWithJsonArray([
+    {
+      "type": "tsne_plot",
+      "message0": "TSNE Plot %1",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "tsne_plot"
+        }
+      ],
+      "output": null,
+      "colour": 230,
+      "tooltip": "",
+      "helpUrl": ""
+    }
+]);
+
+Blockly.defineBlocksWithJsonArray([
+    {
+      "type": "pca_plot",
+      "message0": "PCA Plot %1",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "pca_plot"
+        }
+      ],
+      "output": null,
+      "colour": 230,
+      "tooltip": "",
+      "helpUrl": ""
+    }
+]);
+/* ------------------------------ Clustering and Dimensionality Reduction ends ------------------------------ */
+/* ------------------------------ Hyperparameter Tuning Visualization begins ------------------------------ */
+Blockly.defineBlocksWithJsonArray([
+    {
+      "type": "hyperparameter_heatmaps",
+      "message0": "Hyperparameter Heatmaps %1",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "hyperparameter_heatmaps"
+        }
+      ],
+      "output": null,
+      "colour": 230,
+      "tooltip": "",
+      "helpUrl": ""
+    }
+]);
+/* ------------------------------ Hyperparameter Tuning Visualization ends ------------------------------ */
+    /* ------------------------------ Neural Network begins ------------------------------ */
+      Blockly.defineBlocksWithJsonArray([
+      {
+        "type": "confusion_matrix_nn",
+        "message0": "Confusion Matrix %1",
+        "args0": [
+          {
+            "type": "input_value",
+            "name": "confusion_matrix_nn"
+          }
+        ],
+        "output": null,
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+      }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "ROC_curve_nn",
+          "message0": "ROC Curve %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "ROC_curve_nn"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "precision_recall_curve_nn",
+          "message0": "Precision-Recall Curve %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "precision_recall_curve_nn"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "loss_accuracy_curve",
+          "message0": "Loss and Accuracy Curves %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "loss_accuracy_curve"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "word_cloud",
+          "message0": "Word Cloud %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "word_cloud"
+            }
+          ],
+          "output": null,
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+      /* ------------------------------ Neural Network ends ------------------------------ */
+      /* ------------------------------ Ensemble Methods Visualization begins ------------------------------ */
+      Blockly.defineBlocksWithJsonArray([
+          {
+            "type": "ensemble_feature_importance",
+            "message0": "Feature Importance %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "ensemble_feature_importance"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+      ]);
+      
+      Blockly.defineBlocksWithJsonArray([
+          {
+            "type": "oob_error_plot",
+            "message0": "Out-of-Bag Error %1",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "oob_error_plot"
+              }
+            ],
+            "output": null,
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+      ]);
+      /* ------------------------------ Ensemble Methods Visualization ends ------------------------------ */
+
+      /* Visualization Blocks ends */
 
     Blockly.defineBlocksWithJsonArray([
         {

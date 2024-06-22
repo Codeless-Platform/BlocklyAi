@@ -202,10 +202,10 @@
                                         data-color-scheme="no-preference: dark; light: dark; dark: dark;"
                                         data-icon="octicon-star" data-size="large" data-show-count="true"
                                         aria-label="Star chekoduadarsh/BlocklyML on GitHub">Follow @hazem.abdelnasser</a>
-                                    <a class="github-button" href="https://www.instagram.com/@hesham.debo/"
+                                    <a class="github-button" href="https://www.instagram.com/@hesham.deebo/"
                                         data-color-scheme="no-preference: dark; light: dark; dark: dark;"
                                         data-icon="octicon-star" data-size="large" data-show-count="true"
-                                        aria-label="Star chekoduadarsh/BlocklyML on GitHub">Follow @hesham.debo</a>
+                                        aria-label="Star chekoduadarsh/BlocklyML on GitHub">Follow @hesham.deebo</a>
                                 </div>
                                 <p>
                                     1. Click on <img src='/static/media/upload.png' class="icon"> upload button </br>
@@ -906,6 +906,88 @@
             </block>
            </category>
            <sep></sep>
+           <category name=" Visualization"></category>
+           <category name="Data Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="scatter_plot">
+                   <field type="scatter_plot">Scatter Plot</field>
+               </block>
+               <block type="histograms">
+                   <field type="histograms">Histograms</field>
+               </block>
+               <block type="box_plots">
+                   <field type="box_plots">Box Plots</field>
+               </block>
+               <block type="heatmaps">
+                   <field type="heatmaps">Heatmaps</field>
+               </block>
+           </category>
+           <category name="Model Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="decision_boundary">
+                   <field type="decision_boundary">Decision Boundary</field>
+               </block>
+               <block type="tree_visualization">
+                   <field type="tree_visualization">Tree Visualization - DecisionTreeClassifier</field>
+               </block>
+               <block type="feature_importances">
+                   <field type="feature_importances">Feature Importances - RandomForestClassifier</field>
+               </block>
+               <block type="learning_curves">
+                   <field type="learning_curves">Learning Curves</field>
+               </block>
+           </category>
+           <category name="Model Performance Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="confusion_matrix">
+                   <field type="confusion_matrix">Confusion Matrix</field>
+               </block>
+               <block type="ROC_curve">
+                   <field type="ROC_curve">ROC Curve</field>
+               </block>
+           </category>
+           <category name="Clustering and Dimensionality Reduction" colour="%{BKY_LOGIC_HUE}">
+               <block type="elbow_plot">
+                   <field name="elbow_plot">Elbow Plot - KMeans</field>
+               </block>
+               <block type="tsne_plot">
+                   <field name="tsne_plot">TSNE Plot</field>
+               </block>
+               <block type="pca_plot">
+                   <field name="pca_plot">PCA Plot</field>
+               </block>
+           </category>
+           <category name="Hyperparameter Tuning Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="hyperparameter_heatmaps">
+                   <field name="hyperparameter_heatmaps">Hyperparameter Heatmaps</field>
+               </block>
+           </category>
+           <category name="Neural Network Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="confusion_matrix_nn">
+                   <field type="confusion_matrix_nn">Confusion Matrix</field>
+               </block>
+               <block type="ROC_curve_nn">
+                   <field type="ROC_curve_nn">ROC Curve</field>
+               </block>
+               <block type="precision_recall_curve">
+                   <field type="precision_recall_curve">precision-recall Curve</field>
+               </block>
+               <block type="loss_accuracy_curve">
+                   <field type="loss_accuracy_curve">Loss and Accuracy Curves</field>
+               </block>
+           </category>
+           <category name="Ensemble Methods Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="ensemble_feature_importance">
+                   <field type="ensemble_feature_importance">Feature Importance - GradientBoostingClassifier</field>
+               </block>
+               <block type="oob_error_plot">
+                   <field type="oob_error_plot">Out-of-Bag Error - RandomForestClassifier</field>
+               </block>
+           </category>                
+           <category name="Text Data Visualization" colour="%{BKY_LOGIC_HUE}">
+               <block type="word_cloud">
+                   <field type="word_cloud">Word Cloud</field>
+               </block>
+           </category>
+        </category>
+        <sep></sep>
         <category name="%{BKY_CATVARIABLES}" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
         <category name="%{BKY_CATFUNCTIONS}" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"> </category>
     </xml>
