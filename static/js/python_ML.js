@@ -2268,31 +2268,38 @@ Blockly.Python['classification_models'] = function(block) {
             code += 'from sklearn.linear_model import LogisticRegression\n';
             code += 'model = LogisticRegression()\n';
             break;
-        case 'Knn':
-            code += 'from sklearn.neighbors import KNeighborsClassifier\n';
-            code += 'model = KNeighborsClassifier()\n';
-            break;
-        case 'DecisionTrees':
-            code += 'from sklearn.tree import DecisionTreeClassifier\n';
-            code += 'model = DecisionTreeClassifier()\n';
-            break;
-        case 'RandomForest':
-            code += 'from sklearn.ensemble import RandomForestClassifier\n';
-            code += 'model = RandomForestClassifier()\n';
-            break;
-        case 'Svm':
-            code += 'from sklearn.svm import SVC\n';
-            code += 'model = SVC()\n';
-            break;
-        case 'NaiveBayes':
-            code += 'from sklearn.naive_bayes import GaussianNB\n';
-            code += 'model = GaussianNB()\n';
-            break;
-        case 'XGboost':
-            code += 'from xgboost import XGBClassifier\n';
-            code += 'model = XGBClassifier()\n';
-            break;
-        default:
+            case 'Knn':
+                var number_neighbors = block.getFieldValue('neighbors') || '';
+                code += 'from sklearn.neighbors import KNeighborsClassifier\n';
+                code += `model = KNeighborsClassifier(n_neighbors=${number_neighbors})\n`;
+                break;
+            case 'DecisionTrees':
+                var max_depth_dt = block.getFieldValue('max_depth_dt') || '';
+                code += 'from sklearn.tree import DecisionTreeClassifier\n';
+                code += `model = DecisionTreeClassifier(max_depth=${max_depth_dt}, random_state=42)\n`;
+                break;
+            case 'RandomForest':
+                var n_estimators = block.getFieldValue('n_estimators') || '';
+                var max_depth_rf = block.getFieldValue('max_depth_rf') || '';
+                code += 'from sklearn.ensemble import RandomForestClassifier\n';
+                code += `model = RandomForestClassifier(n_estimators=${n_estimators}, max_depth=${max_depth_rf}, random_state=42)\n`;
+                break;
+            case 'Svm':
+                code += 'from sklearn.svm import SVC\n';
+                code += 'model = SVC()\n';
+                break;
+            case 'NaiveBayes':
+                code += 'from sklearn.naive_bayes import GaussianNB\n';
+                code += 'model = GaussianNB()\n';
+                break;
+            case 'XGboost':
+                var n_estimators_xgb = block.getFieldValue('n_estimators_xgb') ||'';
+                var max_depth_xgb = block.getFieldValue('max_depth_xgb') || '';
+                var learning_rate = block.getFieldValue('learning_rate') || '';
+                code += 'import xgboost as xgb\n';
+                code += `model = xgb.XGBClassifier(n_estimators=${n_estimators_xgb}, max_depth=${max_depth_xgb}, learning_rate=${learning_rate}, random_state=42)\n`;
+                break;
+            default:
             break;
     }
     

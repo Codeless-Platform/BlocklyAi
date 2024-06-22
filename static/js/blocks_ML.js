@@ -3304,85 +3304,287 @@ Blockly.defineBlocksWithJsonArray([
  ]);
 
 
-Blockly.defineBlocksWithJsonArray([
-{
-    "type": "classification_models",
-    "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8",
-    "args0": [
+
+///////////////////////////// CLASIFICATION MODELS //////////////////////////
+Blockly.defineBlocksWithJsonArray([{
+  "type": "classification_models",
+  "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8            ",
+  "args0": [
       {
-        "type": "field_dropdown",
-        "name": "c_algorithms",
-        "options": [
-          [
-            "Logistic Regression",
-            "LogisticRegression"
-          ],
-          [
-            "K-Nearest Neighbors (KNN)",
-            "Knn"
-          ],
-          [
-            "Decision Trees",
-            "DecisionTrees"
-          ],
-          [
-            "Random Forest",
-            "RandomForest"
-          ],
-          [
-            "Support Vector Machines (SVM)",
-            "Svm"
-          ],
-          [
-            "Naive Bayes",
-            "NaiveBayes"
-          ],
-          [
-            "Gradient Boosting algorithms",
-            "XGboost"
+          "type": "field_dropdown",
+          "name": "c_algorithms",
+          "options": [
+              ["Logistic Regression", "LogisticRegression"],
+              ["K-Nearest Neighbors (KNN)", "Knn"],
+              ["Decision Trees", "DecisionTrees"],
+              ["Random Forest", "RandomForest"],
+              ["Support Vector Machines (SVM)", "Svm"],
+              ["Naive Bayes", "NaiveBayes"],
+              ["Gradient Boosting algorithms", "XGboost"]
           ]
-        ]
       },
       {
-        "type": "field_input",
-        "name": "dataset_path",
-        "text": ""
+          "type": "field_input",
+          "name": "dataset_path",
+          "text": ""
       },
       {
-        "type": "input_dummy"
+          "type": "input_dummy"
       },
       {
-        "type": "input_value",
-        "name": "Data_Preprocessing",
-        "check": "Preprocessing"
+          "type": "input_value",
+          "name": "Data_Preprocessing",
+          "check": "Preprocessing"
       },
       {
-        "type": "input_value",
-        "name": "Model_Training",
-        "check": "Training"
+          "type": "input_value",
+          "name": "Model_Training",
+          "check": "Training"
       },
       {
-        "type": "input_value",
-        "name": "Model_Evaluation",
-        "check":"Evaluation"
+          "type": "input_value",
+          "name": "Model_Evaluation",
+          "check": "Evaluation"
       },
       {
-        "type": "input_value",
-        "name": "Model_Prediction",
-        "check": "Prediction"
-
+          "type": "input_value",
+          "name": "Model_Prediction",
+          "check": "Prediction"
       },
       {
-        "type": "input_value",
-        "name": "Visualization",
-        "check": "Visualization"
-
+          "type": "input_value",
+          "name": "Visualization",
+          "check": "Visualization"
       }
-    ],
-    "colour": 230,
-    "tooltip": "",
-    "helpUrl": ""
-  }]);
+  ],
+  "mutator": "classification_models_mutator",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}]);
+
+Blockly.defineBlocksWithJsonArray([{
+  "type": "knn_mutator",
+  "message0": "Number of neighbors: %1",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "neighbors",
+          "value": 5,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "randomforest_mutator",
+  "message0": "n_estimators: %1 max_depth: %2",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "n_estimators",
+          "value": 100,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "decisiontree_mutator",
+  "message0": "max_depth: %1",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "xgboost_mutator",
+  "message0": "n_estimators: %1 max_depth: %2 learning_rate: %3",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "n_estimators",
+          "value": 100,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "learning_rate",
+          "value": 1,
+          "min": 0,
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}
+]);
+
+Blockly.ClassificationModelsMutator = {
+  mutationToDom: function() {
+      var container = document.createElement('mutation');
+      var algorithm = this.getFieldValue('c_algorithms');
+      container.setAttribute('algorithm', algorithm);
+      if (algorithm == 'Knn') {
+          container.setAttribute('knn', true);
+      } else if (algorithm == 'RandomForest') {
+          container.setAttribute('randomforest', true);
+      } else if (algorithm == 'DecisionTrees') {
+          container.setAttribute('decisiontree', true);
+      } else if (algorithm == 'XGboost') {
+          container.setAttribute('xgboost', true);
+      }
+      return container;
+  },
+  domToMutation: function(xmlElement) {
+      var algorithm = xmlElement.getAttribute('algorithm');
+      this.updateShape_(algorithm);
+  },
+  updateShape_: function(algorithm) {
+      if (algorithm == 'Knn') {
+
+        if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+        if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+        if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+        if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+        if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+        if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+        if(this.getInput('d')){this.removeInput('d')}
+
+          if (!this.getInput('neighbors')) {
+              this.appendDummyInput('neighbors')
+                  .appendField('Number of neighbors : ')
+                  .appendField(new Blockly.FieldNumber(5, 1), 'neighbors');
+                  this.appendDummyInput('n');
+          }
+      } else if (algorithm == 'RandomForest') {
+
+          if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+          if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+          if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+          if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+          if(this.getInput('neighbors')){this.removeInput('neighbors')}
+          if(this.getInput('n')){this.removeInput('n')}
+          if(this.getInput('d')){this.removeInput('d')}
+
+        
+          if (!this.getInput('n_estimators')) {
+              this.appendDummyInput('n_estimators')
+                  .appendField('n_estimators:')
+                  .appendField(new Blockly.FieldNumber(100, 1), 'n_estimators');
+          }
+          if (!this.getInput('max_depth_rf')) {
+              this.appendDummyInput('max_depth_rf')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_rf');
+          }
+      } else if (algorithm == 'DecisionTrees') {
+
+        if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+        if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+        if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+        if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+        if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+        if(this.getInput('neighbors')){this.removeInput('neighbors')}
+        if(this.getInput('n')){this.removeInput('n')}
+
+          if (!this.getInput('max_depth_dt')) {
+              this.appendDummyInput('max_depth_dt')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_dt');
+                  this.appendDummyInput('d');
+          }
+      } else if (algorithm == 'XGboost') {
+          if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+          if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+          if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+          if(this.getInput('neighbors')){this.removeInput('neighbors')}
+          if(this.getInput('n')){this.removeInput('n')}
+          if(this.getInput('d')){this.removeInput('d')}
+
+          if (!this.getInput('n_estimators_xgb')) {
+              this.appendDummyInput('n_estimators_xgb')
+                  .appendField('n_estimators:')
+                  .appendField(new Blockly.FieldNumber(100, 1), 'n_estimators_xgb');
+          }
+          if (!this.getInput('max_depth_xgb')) {
+              this.appendDummyInput('max_depth_xgb')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_xgb');
+          }
+          if (!this.getInput('learning_rate')) {
+              this.appendDummyInput('learning_rate')
+                  .appendField('learning_rate:')
+                  .appendField(new Blockly.FieldNumber(0.1, 0), 'learning_rate');
+          }
+      } else {
+          if (this.getInput('neighbors')) {
+              this.removeInput('neighbors');
+          }
+          if (this.getInput('n_estimators')) {
+              this.removeInput('n_estimators');
+          }
+          if (this.getInput('max_depth_rf')) {
+              this.removeInput('max_depth_rf');
+          }
+          if (this.getInput('max_depth_dt')) {
+              this.removeInput('max_depth_dt');
+          }
+          if (this.getInput('n_estimators_xgb')) {
+              this.removeInput('n_estimators_xgb');
+          }
+          if (this.getInput('max_depth_xgb')) {
+              this.removeInput('max_depth_xgb');
+          }
+          if (this.getInput('learning_rate')) {
+              this.removeInput('learning_rate');
+          }
+          if(this.getInput('n')){
+            this.removeInput('n')
+          }
+
+          if(this.getInput('d')){
+            this.removeInput('d')
+          }
+      }
+  },
+  onchange: function(event) {
+      if (event.type == Blockly.Events.BLOCK_CHANGE && event.blockId == this.id) {
+          var algorithm = this.getFieldValue('c_algorithms');
+          this.updateShape_(algorithm);
+      }
+  }
+};
+
+Blockly.Extensions.registerMutator('classification_models_mutator', Blockly.ClassificationModelsMutator, null, ['knn_mutator', 'randomforest_mutator', 'decisiontree_mutator', 'xgboost_mutator']);
+
 
   /* Visualization Blocks begins */
       /* ------------------------------ Data Visualization begins ------------------------------ */
