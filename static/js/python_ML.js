@@ -2211,27 +2211,27 @@ var test_size = 'test_size';
 
 Blockly.Python['f1score'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import f1_score\nf1 = f1_score(y_test,${global_predicted_variable}) \n`;
+    var code = `\nfrom sklearn.metrics import f1_score\nf1 = f1_score(${y_test},${global_predicted_variable}) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 
 Blockly.Python['recall'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import recall_score\nrecall =recall_score(y_test,${global_predicted_variable}) \n`;
+    var code = `\nfrom sklearn.metrics import recall_score\nrecall =recall_score(${y_test},${global_predicted_variable}) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 
 Blockly.Python['precision'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import precision_score\nprecision = precision_score(y_test,${global_predicted_variable}) \n`;
+    var code = `\nfrom sklearn.metrics import precision_score\nprecision = precision_score(${y_test},${global_predicted_variable}) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 Blockly.Python['accuracy'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import accuracy_score\naccuracy = accuracy_score(y_test,${global_predicted_variable}) \n`;
+    var code = `\nfrom sklearn.metrics import accuracy_score\naccuracy = accuracy_score(${y_test},${global_predicted_variable}) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
@@ -2240,7 +2240,7 @@ Blockly.Python['evaluation'] = function(block) {
     var text_training_input = block.getFieldValue('predicted_variable');
     global_predicted_variable = text_training_input ;
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `${text_training_input}= model.predict(X_test) \n`;
+    var code = `${text_training_input}= model.predict(${x_test }) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
@@ -2355,14 +2355,14 @@ Blockly.Python['regression_models'] = function(block) {
 
 Blockly.Python['mae'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code =`from sklearn.metrics import mean_absolute_error\nmae = mean_absolute_error(y_test,${global_predicted_variable})\n`;
+    var code =`from sklearn.metrics import mean_absolute_error\nmae = mean_absolute_error(${y_test},${global_predicted_variable})\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
 Blockly.Python['mse'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
     var code = 'from sklearn.metrics import mean_squared_error\n';
-    code += `mse = mean_squared_error(y_test, ${global_predicted_variable})\n`;
+    code += `mse = mean_squared_error(${y_test}, ${global_predicted_variable})\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
@@ -2370,7 +2370,7 @@ Blockly.Python['mse'] = function(block) {
   Blockly.Python['r_squared'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
     var code = 'from sklearn.metrics import r2_score\n';
-    code += `r_squared = r2_score(y_test,${global_predicted_variable})\n`;
+    code += `r_squared = r2_score(${y_test},${global_predicted_variable})\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
