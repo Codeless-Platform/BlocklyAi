@@ -3461,3 +3461,296 @@ Blockly.Python['oob_error_plot'] = function(block) {
 };
 /* ------------------------------ Ensemble Methods Visualization ends ------------------------------ */
 /* end visualization blocks */
+
+
+
+///////////////////////////////////////////////////////
+
+// var layersFlag = [];
+
+
+Blockly.Python['rnn_model'] = function(block) {
+    var training_path = block.getFieldValue('training_path');
+    var test_path = block.getFieldValue('test_path');
+    var data_type = block.getFieldValue('data_type');
+    var placeholder_label = block.getFieldValue('placeholder_label');
+    var use_augmentation = block.getFieldValue('use_augmentation') === 'TRUE';
+
+    var layers = Blockly.Python.valueToCode(block, 'layers', Blockly.Python.ORDER_ATOMIC) || '';
+    var compile = Blockly.Python.valueToCode(block, 'rnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
+    var fit = Blockly.Python.valueToCode(block, 'rnnFit', Blockly.Python.ORDER_ATOMIC) || '';
+    var evaluate = Blockly.Python.valueToCode(block, 'rnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var code = `import pandas as pd\n`;
+    code += `from tensorflow.keras.models import Sequential\n`;
+
+    if (layers && layersFlag.includes("Embedding")) { code += 'from tensorflow.keras.layers import Embedding\n'; }
+    if (layers && layersFlag.includes("SimpleRNN")) { code += 'from tensorflow.keras.layers import SimpleRNN\n'; }
+    if (layers && layersFlag.includes("LSTM")) { code += 'from tensorflow.keras.layers import LSTM\n'; }
+    if (layers && layersFlag.includes("GRU")) { code += 'from tensorflow.keras.layers import GRU\n'; }
+    if (layers && layersFlag.includes("Dense")) { code += 'from tensorflow.keras.layers import Dense\n'; }
+    if (layers && layersFlag.includes("Dropout")) { code += 'from tensorflow.keras.layers import Dropout\n'; }
+
+
+    if (data_type === 'audio') {
+        code += `import librosa\nimport numpy as np\nimport os\n\n`;
+    } else if (data_type === 'video') {
+        code += `import cv2\nimport numpy as np\nimport os\nimport random\n\n`;
+    }
+
+    code += `train_dir = '${training_path}'\n`;
+    code += `validation_dir = '${test_path}'\n\n`;
+
+    if (data_type === 'audio') {
+        if (use_augmentation) {
+            code += ` import random \n`;
+            code += `def augment_audio(data, sr):\n`;
+            code += `    if random.random() < 0.5:\n`;
+            code += `        data = data + 0.005 * np.random.randn(len(data))  # Add noise\n`;
+            code += `    if random.random() < 0.5:\n`;
+            code += `        data = librosa.effects.pitch_shift(data, sr, n_steps=random.randint(-3, 3))  # Pitch shift\n`;
+            code += `    if random.random() < 0.5:\n`;
+            code += `        data = librosa.effects.time_stretch(data, rate=random.uniform(0.8, 1.2))  # Time stretch\n`;
+            code += `    return data\n\n`;
+        }
+        code += `def load_audio_data(file_path, augment=False):\n`;
+        code += `    data, sr = librosa.load(file_path)\n`;
+        if (use_augmentation) {
+            code += `    if augment:\n`;
+            code += `        data = augment_audio(data, sr)\n`;
+        }
+        code += `    mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=40)\n`;
+        code += `    return mfccs\n\n`;
+
+        code += `X_train = []\n`;
+        code += `y_train = []\n`;
+        code += `X_test = []\n`;
+        code += `y_test = []\n\n`;
+
+        code += `# Load training data\n`;
+        code += `for filename in os.listdir(train_dir):\n`;
+        code += `    if filename.endswith(".wav"):\n`;
+        code += `        file_path = os.path.join(train_dir, filename)\n`;
+        code += `        mfccs = load_audio_data(file_path, augment=True)\n`;
+        code += `        X_train.append(mfccs)\n`;
+        code += `        y_train.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+
+        code += `# Load test data\n`;
+        code += `for filename in os.listdir(validation_dir):\n`;
+        code += `    if filename.endswith(".wav"):\n`;
+        code += `        file_path = os.path.join(validation_dir, filename)\n`;
+        code += `        mfccs = load_audio_data(file_path, augment=False)\n`;
+        code += `        X_test.append(mfccs)\n`;
+        code += `        y_test.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+
+        code += `# Convert lists to numpy arrays\n`;
+        code += `X_train = np.array(X_train)\n`;
+        code += `y_train = np.array(y_train)\n`;
+        code += `X_test = np.array(X_test)\n`;
+        code += `y_test = np.array(y_test)\n\n`;
+
+        code += `# Reshape data for RNN input: (num_samples, timesteps, num_features)\n`;
+        code += `X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))\n`;
+        code += `X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))\n\n`;
+    } else if (data_type === 'video') {
+        code += ` import random \n`;
+        code += `def augment_frame(frame):\n`;
+        code += `    if random.random() < 0.5:\n`;
+        code += `        frame = cv2.flip(frame, 1)  # Horizontal flip\n`;
+        code += `    if random.random() < 0.5:\n`;
+        code += `        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\n`;
+        code += `        frame[:, :, 2] = frame[:, :, 2] * (0.5 + random.random())\n`;
+        code += `        frame = cv2.cvtColor(frame, cv2.COLOR_HSV2BGR)\n`;
+        code += `    if random.random() < 0.5:\n`;
+        code += `        M = cv2.getRotationMatrix2D((frame.shape[1] / 2, frame.shape[0] / 2), random.uniform(-15, 15), 1)\n`;
+        code += `        frame = cv2.warpAffine(frame, M, (frame.shape[1], frame.shape[0]))\n`;
+        code += `    return frame\n\n`;
+
+        code += `def load_video_data(file_path, augment=False):\n`;
+        code += `    cap = cv2.VideoCapture(file_path)\n`;
+        code += `    frames = []\n`;
+        code += `    while cap.isOpened():\n`;
+        code += `        ret, frame = cap.read()\n`;
+        code += `        if not ret:\n`;
+        code += `            break\n`;
+        code += `        frame = cv2.resize(frame, (64, 64))\n`;
+        code += `        if augment:\n`;
+        code += `            frame = augment_frame(frame)\n`;
+        code += `        frames.append(frame)\n`;
+        code += `    cap.release()\n`;
+        if (use_augmentation) {
+            code += `    if augment:\n`;
+            code += `        frames = augment_video(frames)\n`;
+        }
+        code += `    return np.array(frames)\n\n`;
+
+        code += `X_train = []\n`;
+        code += `y_train = []\n`;
+        code += `X_test = []\n`;
+        code += `y_test = []\n\n`;
+
+        code += `# Load training data\n`;
+        code += `for filename in os.listdir(train_dir):\n`;
+        code += `    if filename.endswith(".mp4"):\n`;
+        code += `        file_path = os.path.join(train_dir, filename)\n`;
+        code += `        frames = load_video_data(file_path, augment=True)\n`;
+        code += `        X_train.append(frames)\n`;
+        code += `        y_train.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+
+        code += `# Load test data\n`;
+        code += `for filename in os.listdir(validation_dir):\n`;
+        code += `    if filename.endswith(".mp4"):\n`;
+        code += `        file_path = os.path.join(validation_dir, filename)\n`;
+        code += `        frames = load_video_data(file_path, augment=False)\n`;
+        code += `        X_test.append(frames)\n`;
+        code += `        y_test.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+
+        code += `# Convert lists to numpy arrays\n`;
+        code += `X_train = np.array(X_train)\n`;
+        code += `y_train = np.array(y_train)\n`;
+        code += `X_test = np.array(X_test)\n`;
+        code += `y_test = np.array(y_test)\n\n`;
+
+        code += `# Reshape data for RNN input: (num_samples, timesteps, height, width, channels)\n`;
+        code += `X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
+        code += `X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
+    }
+
+    if (layers) {
+        code += `model = Sequential([\n${layers}\n])\n`;
+    }
+
+    code += compile;
+    code += fit;
+    code += evaluate;
+
+    return code;
+};
+
+
+
+
+
+
+
+
+
+Blockly.Python['embedding'] = function(block) {
+    var input_dim = block.getFieldValue('input_dim');
+    var output_dim = block.getFieldValue('output_dim');
+    var input_length = block.getFieldValue('input_length');
+    var next_layer = Blockly.Python.valueToCode(block, 'Embedding', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if (!layersFlag.includes("Embedding")) {
+        layersFlag.push("Embedding");
+    }
+
+    var code = `Embedding(${input_dim}, ${output_dim}, input_length=${input_length})`;
+    if (next_layer) {
+        code += `,\n${next_layer}`;
+    }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+
+
+Blockly.Python['gru'] = function(block) {
+    var units = block.getFieldValue('units');
+    var activation = block.getFieldValue('activation');
+    var return_sequences = block.getFieldValue('return_sequences') === 'TRUE';
+    var next_layer = Blockly.Python.valueToCode(block, 'GRU', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if (!layersFlag.includes("GRU")) {
+        layersFlag.push("GRU");
+    }
+
+    var code = `GRU(${units}, activation='${activation}', return_sequences=${return_sequences})`;
+    if (next_layer) {
+        code += `,\n${next_layer}`;
+    }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+
+
+Blockly.Python['lstm'] = function(block) {
+    var units = block.getFieldValue('units');
+    var activation = block.getFieldValue('activation');
+    var return_sequences = block.getFieldValue('return_sequences') === 'TRUE';
+    var next_layer = Blockly.Python.valueToCode(block, 'LSTM', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if (!layersFlag.includes("LSTM")) {
+        layersFlag.push("LSTM");
+    }
+
+    var code = `LSTM(${units}, activation='${activation}', return_sequences=${return_sequences})`;
+    if (next_layer) {
+        code += `,\n${next_layer}`;
+    }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+
+
+Blockly.Python['simple_rnn'] = function(block) {
+    var units = block.getFieldValue('units');
+    var activation = block.getFieldValue('activation');
+    var nextLayer = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if (!layersFlag.includes("Simple_RNN")) {
+        layersFlag.push("Simple_RNN");
+    }
+    
+    var code = `SimpleRNN(${units}, activation='${activation}')`;
+    if (nextLayer) {
+        code += `,\n${nextLayer}`;
+    }
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+
+    
+Blockly.Python['kmeans_clustering'] = function(block) {
+        var dataset_path = block.getFieldValue('dataset_path');
+        var data_preprocessing = Blockly.Python.valueToCode(block, 'data_preprocessing', Blockly.Python.ORDER_ATOMIC) || '';
+        var model_training = Blockly.Python.valueToCode(block, 'model_training', Blockly.Python.ORDER_ATOMIC) || '';
+        var model_evaluation = Blockly.Python.valueToCode(block, 'model_evaluation', Blockly.Python.ORDER_ATOMIC) || '';
+        var model_Prediction = Blockly.Python.valueToCode(block, 'model_Prediction', Blockly.Python.ORDER_ATOMIC) || '';
+        var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
+        var hyperparameters = block.getFieldValue('hyperparameters');
+    
+        var code = `import pandas as pd\n`;
+        code += `from sklearn.cluster import KMeans\n`;
+        code += `\n`;
+        code += `dataset = pd.read_csv('${dataset_path}')\n`;
+        code += `\n`;
+        code += data_preprocessing + '\n'; 
+        code += `\n`;
+        code += `# Initialize KMeans model\n`;
+        code += `model = KMeans(n_clusters= ${hyperparameters} , random_state=42)\n`; 
+        code += `\n`;
+        code += model_training + '\n';  
+        code += `\n`;
+        code += model_evaluation + '\n';  
+    
+     
+
+        // Add model prediction code if provided
+         if (model_Prediction) {
+            code += `${model_Prediction}\n\n`;
+        }
+
+        // Add visualization code if provided
+        if (visualization) {
+            code += `${visualization}\n\n`;
+        }
+
+        return code;
+};
+
+    Blockly.Python['unsupervised_training'] = function(block) {
+        var text_training_input = block.getFieldValue('Training_input');
+        var code = `model.fit(${text_training_input})\n`;
+        return [code, Blockly.Python.ORDER_ATOMIC];
+    };
+
