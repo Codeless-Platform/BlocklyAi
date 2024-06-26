@@ -2501,123 +2501,133 @@ Blockly.defineBlocksWithJsonArray([
 
     Blockly.defineBlocksWithJsonArray([
         {
-            "type": "sequential",
-            "message0": "Sequential Model  %1 Dataset path %2 %3 Data Preprocessing %4 layers %5 Model compile %6 Model fit %7 Model evaluate %8",
-            "args0": [
-              {
-                "type": "input_dummy"
-              },
-              {
-                "type": "field_input",
-                "name": "dataset_path",
-                "text": "default"
-              },
-              {
-                "type": "input_dummy"
-              },
-              {
-                "type": "input_value",
-                "name": "data_Preprocessing",
-                "check" : "Preprocessing"
-              },
-              {
-                "type": "input_value",
-                "name": "layers",
-                "check" : "Layers"
-              },
-              {
-                "type": "input_value",
-                "name": "compile",
-                "check" : "Compile"
-              },
-              {
-                "type": "input_value",
-                "name": "fit",
-                "check" : "Fit"
-              },
-              {
-                "type": "input_value",
-                "name": "evaluate",
-                "check" : "Evaluation"
-              }
-            ],
-            "colour": 230,
-            "tooltip": "",
-            "helpUrl": ""
-          }
-        ]);
+          "type": "sequential",
+          "message0": "Sequential Model %1 Dataset path %2 %3 Data Preprocessing %4 Layers %5 Model compile %6 Model fit %7 Model evaluate %8 Visualization %9",
+          "args0": [
+            {
+              "type": "input_dummy"
+            },
+            {
+              "type": "field_input",
+              "name": "dataset_path",
+              "text": "/path/to/data"
+            },
+            {
+              "type": "input_dummy"
+            },
+            {
+              "type": "input_value",
+              "name": "data_Preprocessing",
+              "check": "Preprocessing"
+            },
+            {
+              "type": "input_value",
+              "name": "layers",
+              "check": "Layers"
+            },
+            {
+              "type": "input_value",
+              "name": "compile",
+              "check": "Compile"
+            },
+            {
+              "type": "input_value",
+              "name": "fit",
+              "check": "Fit"
+            },
+            {
+              "type": "input_value",
+              "name": "evaluate",
+              "check": "Evaluation"
+            },
+            {
+              "type": "input_value",
+              "name": "visualization",
+              "check": "visualization"
+            }
+          ],
+          "colour": 230,
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
         
         
         Blockly.defineBlocksWithJsonArray([
             {
-                "type": "cnn_model",
-                "message0": "CNN model  %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test  generator %9 Layers  %10 Model compile %11 Model fit %12 Model evaluate %13",
-                "args0": [
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "training_path",
-                    "text": "/path/to/data/train"
-                  },
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "test_path",
-                    "text": "/path/to/data/test"
-                  },
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "trainAug",
-                    "check": "Augmentation"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "testAug",
-                    "check": "Augmentation"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "trainGen",
-                    "check": "Generating"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "testGen",
-                    "check": "Generating"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "layers",
-                    "check": "Layers"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "cnnCompile",
-                    "check": "Compile"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "cnnFit",
-                    "check": "Fit"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "cnnEvaluate",
-                    "check": "Evaluation"
-                  }
-                ],
-                "colour": 230,
-                "tooltip": "",
-                "helpUrl": ""
-              }
-            ]);
+              "type": "cnn_model",
+              "message0": "CNN model %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test generator %9 Layers %10 Model compile %11 Model fit %12 Model evaluate %13 Visualization %14",
+              "args0": [
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "field_input",
+                  "name": "training_path",
+                  "text": "/path/to/data/train"
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "field_input",
+                  "name": "test_path",
+                  "text": "/path/to/data/test"
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_value",
+                  "name": "trainAug",
+                  "check": "Augmentation"
+                },
+                {
+                  "type": "input_value",
+                  "name": "testAug",
+                  "check": "Augmentation"
+                },
+                {
+                  "type": "input_value",
+                  "name": "trainGen",
+                  "check": "Generating"
+                },
+                {
+                  "type": "input_value",
+                  "name": "testGen",
+                  "check": "Generating"
+                },
+                {
+                  "type": "input_value",
+                  "name": "layers",
+                  "check": "Layers"
+                },
+                {
+                  "type": "input_value",
+                  "name": "cnnCompile",
+                  "check": "Compile"
+                },
+                {
+                  "type": "input_value",
+                  "name": "cnnFit",
+                  "check": "Fit"
+                },
+                {
+                  "type": "input_value",
+                  "name": "cnnEvaluate",
+                  "check": "Evaluation"
+                },
+                {
+                  "type": "input_value",
+                  "name": "visualization",
+                  "check": "visualization"
+                }
+              ],
+              "colour": 230,
+              "tooltip": "",
+              "helpUrl": ""
+            }
+          ]);
 
     Blockly.defineBlocksWithJsonArray([
     {

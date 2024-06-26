@@ -2388,6 +2388,7 @@ Blockly.Python['sequential'] = function(block) {
     var compile = Blockly.Python.valueToCode(block, 'compile', Blockly.Python.ORDER_ATOMIC) || '';
     var fit = Blockly.Python.valueToCode(block, 'fit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'evaluate', Blockly.Python.ORDER_ATOMIC) || '';
+    var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
   
     var code = `import numpy as np\nimport pandas as pd\nfrom tensorflow.keras.models import Sequential\n\n`;
     if (layers) {
@@ -2405,6 +2406,7 @@ Blockly.Python['sequential'] = function(block) {
     code += compile;
     code += fit;
     code += evaluate;
+    code += visualization;
     
     return code;
 };
@@ -2423,7 +2425,8 @@ Blockly.Python['cnn_model'] = function(block) {
     var compile = Blockly.Python.valueToCode(block, 'cnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
     var fit = Blockly.Python.valueToCode(block, 'cnnFit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'cnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
-    
+    var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
+
     var code = `from tensorflow.keras.models import Sequential\n`;
 
     if (trainAug||testAug) {
@@ -2473,7 +2476,8 @@ Blockly.Python['cnn_model'] = function(block) {
      code += compile;
      code += fit;
      code += evaluate;
-    
+     code += visualization;
+     
     return code;
 };
 ///////////////////////////////////////////LAYERS///////////////////////////////////////////////////////   
