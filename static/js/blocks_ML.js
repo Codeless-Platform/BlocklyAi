@@ -1888,9 +1888,9 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "SimpleRNN units: %1 activation: %2 %3",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "units",
-                "text": "50"
+                "value": "50"
             },
             {
                 "type": "field_input",
@@ -1940,9 +1940,9 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "GRU units: %1 activation: %2 %3",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "units",
-                "text": "50"
+                "value": "50"
             },
             {
                 "type": "field_input",
@@ -2220,9 +2220,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "number of neurons: %1 activation %2 %3",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "neuron_number",
-                "text": "8"
+                "value": "8"
               },
               {
                 "type": "field_input",
@@ -2259,14 +2259,14 @@ Blockly.defineBlocksWithJsonArray([
                 "text": "y_train"
               },
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "epochs",
-                "text": "10"
+                "value": "10"
               },
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "verbose",
-                "text": "1"
+                "value": "1"
               }
             ],
             "output": "Fit",
@@ -2279,14 +2279,14 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Cnn fit , epochs %1 verbose %2 %3",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "cnn_epochs",
-                "text": "10"
+                "value": "10"
               },
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "cnn_verbose",
-                "text": "1"
+                "value": "1"
               },
               {
                 "type": "input_dummy",
@@ -2416,9 +2416,9 @@ Blockly.defineBlocksWithJsonArray([
                 "text": "y_test"
               },
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "test_size",
-                "text": "0.2"
+                "value": "0.2"
               }
             ],
             "output": "Preprocessing",
@@ -2448,7 +2448,7 @@ Blockly.defineBlocksWithJsonArray([
             {
                 "type": "field_input",
                 "name": "dataset_path",
-                "text": ""
+                "text": "/path/to/data"
             },
             {
                 "type": "input_dummy"
@@ -2900,9 +2900,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Shear range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "shear_range",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
                 "type": "input_value",
@@ -2919,9 +2919,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Zoom range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "zoom_range",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
                 "type": "input_value",
@@ -2938,9 +2938,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Rotation range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "rotation_range",
-                "text": "40"
+                "value": "40"
               },
               {
                 "type": "input_value",
@@ -2957,9 +2957,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Width shift range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "width_shift_range",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
                 "type": "input_value",
@@ -2976,9 +2976,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Height shift range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "height_shift_range",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
                 "type": "input_value",
@@ -2995,9 +2995,9 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Channel shift range %1 %2",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "channel_shift_range",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
                 "type": "input_value",
@@ -3118,14 +3118,14 @@ Blockly.defineBlocksWithJsonArray([
             "message0": "Brightness range %1 , %2 %3",
             "args0": [
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "brightness_min",
-                "text": "0.2"
+                "value": "0.2"
               },
               {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "brightness_max",
-                "text": "1.0"
+                "value": "1.0"
               },
               {
                 "type": "input_value",
@@ -3333,9 +3333,9 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "Seed %1 %2",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "seed",
-        "text": "42"
+        "value": "42"
       },
       {
         "type": "input_value",
@@ -3422,14 +3422,14 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "Target size %1 , %2 %3",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "target_size1",
-        "text": "32"
+        "value": "32"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "target_size2",
-        "text": "32"
+        "value": "32"
       },
       {
         "type": "input_value",
@@ -3446,9 +3446,9 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "Batch size %1 %2",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "batch_size",
-        "text": "32"
+        "value": "32"
       },
       {
         "type": "input_value",
@@ -3470,19 +3470,19 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "Conv2D , Number of filters %1 Size %2 , %3 Activation Function %4 %5",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "filters",
-        "text": "32"
+        "value": "32"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size1",
-        "text": "3"
+        "value": "3"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size2",
-        "text": "3"
+        "value": "3"
       },
       {
         "type": "field_input",
@@ -3504,19 +3504,19 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "Conv input layer , Number of filters %1 Size %2 , %3 Activation function %4 Input size %5 %6 %7 %8",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "filters_number",
-        "text": "32"
+        "value": "32"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "f_size1",
-        "text": "3"
+        "value": "3"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "f_size2",
-        "text": "3"
+        "value": "3"
       },
       {
         "type": "field_input",
@@ -3524,19 +3524,19 @@ Blockly.defineBlocksWithJsonArray([{
         "text": "relu"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "input_size1",
-        "text": "32"
+        "value": "32"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "input_size2",
-        "text": "32"
+        "value": "32"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "input_size3",
-        "text": "3"
+        "value": "3"
       },
       {
         "type": "input_value",
@@ -3553,24 +3553,24 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "AveragePooling2D , Size %1 , %2 ,Stride %3 , %4 %5",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size1",
-        "text": "2"
+        "value": "2"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size2",
-        "text": "2"
+        "value": "2"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "stride1",
-        "text": "1"
+        "value": "1"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "stride2",
-        "text": "1"
+        "value": "1"
       },
       {
         "type": "input_value",
@@ -3587,24 +3587,24 @@ Blockly.defineBlocksWithJsonArray([{
     "message0": "MaxPooling2D , Size %1 , %2 ,Stride %3 , %4 %5",
     "args0": [
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size1",
-        "text": "2"
+        "value": "2"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "size2",
-        "text": "2"
+        "value": "2"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "stride1",
-        "text": "1"
+        "value": "1"
       },
       {
-        "type": "field_input",
+        "type": "field_number",
         "name": "stride2",
-        "text": "1"
+        "value": "1"
       },
       {
         "type": "input_value",
@@ -3636,9 +3636,9 @@ Blockly.defineBlocksWithJsonArray([{
         "message0": "Dropout %1 %2",
         "args0": [
           {
-            "type": "field_input",
+            "type": "field_number",
             "name": "rate",
-            "text": "0.5"
+            "value": "0.5"
           },
           {
             "type": "input_value",
@@ -3849,7 +3849,7 @@ Blockly.defineBlocksWithJsonArray([{
         {
             "type": "field_input",
             "name": "dataset_path",
-            "text": ""
+            "text": "/path/to/data"
         },
         {
             "type": "input_dummy"
