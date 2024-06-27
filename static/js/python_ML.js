@@ -2285,8 +2285,15 @@ Blockly.Python['classification_models'] = function(block) {
                 code += `model = RandomForestClassifier(n_estimators=${n_estimators}, max_depth=${max_depth_rf}, random_state=42)\n`;
                 break;
             case 'Svm':
+<<<<<<< HEAD
                 code += 'from sklearn.svm import SVC\n';
                 code += 'model = SVC()\n';
+=======
+                var C = block.getFieldValue('C') || '1';
+                var kernel = block.getFieldValue('kernel') || 'rbf';
+                code += 'from sklearn.svm import SVC\n';
+                code += `model = SVC(C=${C}, kernel='${kernel}')\n`;
+>>>>>>> main
                 break;
             case 'NaiveBayes':
                 code += 'from sklearn.naive_bayes import GaussianNB\n';
@@ -2324,27 +2331,35 @@ Blockly.Python['regression_models'] = function(block) {
     var value_visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
     
     var code = "";
-    code += "import pandas as pd \n";
+    code += "import pandas as pd\n";
     switch (dropdown_algorithm) {
         case 'LinearRegression':
             code += 'from sklearn.linear_model import LinearRegression\n';
             code += 'model = LinearRegression()\n';
             break;
-        case 'DecisionTreesRegressor':
+        case 'DecisionTree':
+            var max_depth_dt = block.getFieldValue('max_depth_dt') || '';
             code += 'from sklearn.tree import DecisionTreeRegressor\n';
-            code += 'model = DecisionTreeRegressor()\n';
+            code += `model = DecisionTreeRegressor(max_depth=${max_depth_dt}, random_state=42)\n`;
             break;
-        case 'RandomForestRegressor':
+        case 'RandomForest':
+            var n_estimators_rf = block.getFieldValue('n_estimators_rf') || '';
+            var max_depth_rf = block.getFieldValue('max_depth_rf') || '';
             code += 'from sklearn.ensemble import RandomForestRegressor\n';
-            code += 'model = RandomForestRegressor()\n';
+            code += `model = RandomForestRegressor(n_estimators=${n_estimators_rf}, max_depth=${max_depth_rf}, random_state=42)\n`;
             break;
-        case 'SVR':
+        case 'SVM':
+            var c_svm = block.getFieldValue('C_svm') || '';
+            var kernel_svm = block.getFieldValue('kernel_svm') || '';
             code += 'from sklearn.svm import SVR\n';
-            code += 'model = SVR()\n';
+            code += `model = SVR(C=${c_svm}, kernel='${kernel_svm}')\n`;
             break;
-        case 'GradientBoostingRegressor':
+        case 'GradientBoosting':
+            var n_estimators_gb = block.getFieldValue('n_estimators_gb') || '';
+            var max_depth_gb = block.getFieldValue('max_depth_gb') || '';
+            var learning_rate_gb = block.getFieldValue('learning_rate_gb') || '';
             code += 'from sklearn.ensemble import GradientBoostingRegressor\n';
-            code += 'model = GradientBoostingRegressor()\n';
+            code += `model = GradientBoostingRegressor(n_estimators=${n_estimators_gb}, max_depth=${max_depth_gb}, learning_rate=${learning_rate_gb}, random_state=42)\n`;
             break;
         default:
             break;
@@ -2358,7 +2373,8 @@ Blockly.Python['regression_models'] = function(block) {
     code += value_model_prediction + '\n';
     code += value_visualization + '\n';
     return code;
-  }; 
+};
+
 
 Blockly.Python['mae'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
@@ -2391,6 +2407,7 @@ Blockly.Python['sequential'] = function(block) {
     var compile = Blockly.Python.valueToCode(block, 'compile', Blockly.Python.ORDER_ATOMIC) || '';
     var fit = Blockly.Python.valueToCode(block, 'fit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'evaluate', Blockly.Python.ORDER_ATOMIC) || '';
+    var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
   
     var code = `import numpy as np\nimport pandas as pd\nfrom tensorflow.keras.models import Sequential\n\n`;
     if (layers) {
@@ -2408,6 +2425,7 @@ Blockly.Python['sequential'] = function(block) {
     code += compile;
     code += fit;
     code += evaluate;
+    code += visualization;
     
     return code;
 };
@@ -2430,7 +2448,8 @@ Blockly.Python['cnn_model'] = function(block) {
     var compile = Blockly.Python.valueToCode(block, 'cnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
     var fit = Blockly.Python.valueToCode(block, 'cnnFit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'cnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
-    
+    var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
+
     var code = `from tensorflow.keras.models import Sequential\n`;
 
     if (trainAug||testAug) {
@@ -2480,7 +2499,8 @@ Blockly.Python['cnn_model'] = function(block) {
      code += compile;
      code += fit;
      code += evaluate;
-    
+     code += visualization;
+     
     return code;
 };
 /* CNN Model ends */
