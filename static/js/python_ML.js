@@ -2285,15 +2285,10 @@ Blockly.Python['classification_models'] = function(block) {
                 code += `model = RandomForestClassifier(n_estimators=${n_estimators}, max_depth=${max_depth_rf}, random_state=42)\n`;
                 break;
             case 'Svm':
-<<<<<<< HEAD
-                code += 'from sklearn.svm import SVC\n';
-                code += 'model = SVC()\n';
-=======
                 var C = block.getFieldValue('C') || '1';
                 var kernel = block.getFieldValue('kernel') || 'rbf';
                 code += 'from sklearn.svm import SVC\n';
                 code += `model = SVC(C=${C}, kernel='${kernel}')\n`;
->>>>>>> main
                 break;
             case 'NaiveBayes':
                 code += 'from sklearn.naive_bayes import GaussianNB\n';
@@ -2503,6 +2498,7 @@ Blockly.Python['cnn_model'] = function(block) {
      
     return code;
 };
+
 /* CNN Model ends */
 
 /* SOM MODEL begins */
@@ -3122,7 +3118,7 @@ Blockly.Python['scatter_plot'] = function(block) {
                 '\n# Scatter plot for actual values\n' +
                 'ax.scatter(x=range(0, len(y_test)), y=y_test, c=\'blue\', label=\'Actual\', alpha=0.3)\n' +
                 '\n# Scatter plot for predicted values\n' +
-                `ax.scatter(x=range(0, len(${global_predicted_variable})), y=${global_predicted_variable}, c=\'red\', label=\'Predicted\', alpha=0.3)\n` +
+                'ax.scatter(x=range(0, len(y_predicted)), y=y_predicted, c=\'red\', label=\'Predicted\', alpha=0.3)\n'
                 '# Set plot title and labels\n' +
                 'plt.title(\'Actual and Predicted Values\')\n' +
                 'plt.xlabel(\'Actual Values\')\n' +
@@ -3221,7 +3217,7 @@ Blockly.Python['decision_boundary'] = function(block) {
                 'from sklearn.tree import DecisionTreeClassifier, plot_tree\n' +
                 'import matplotlib.pyplot as plt\n' +
                 '\ntree_model = DecisionTreeClassifier()\n' +
-                `tree_model.fit(${x_train}, ${y_train})\n` +
+                'tree_model.fit(X_train, y_train)\n' +
                 'plt.figure(figsize=(20, 10))\n' +
                 'plot_tree(tree_model, filled=True, feature_names=x.columns, class_names=[\'0\', \'1\'])\n' +
                 'plt.show()\n';
@@ -3241,7 +3237,7 @@ Blockly.Python['decision_boundary'] = function(block) {
                 'import matplotlib.pyplot as plt\n' +
                 'from sklearn.ensemble import RandomForestClassifier\n' +
                 '\nrf_model = RandomForestClassifier()\n' +
-                `rf_model.fit(${x_train}, ${y_train})\n` +
+                'rf_model.fit(X_train, y_train)\n' +
                 'importances = rf_model.feature_importances_\n' +
                 'indices = np.argsort(importances)[::-1]\n' +
                 'plt.figure(figsize=(12, 8))\n' +
@@ -3265,7 +3261,7 @@ Blockly.Python['decision_boundary'] = function(block) {
     var code =  '## Learning Curves\n' +
                 'import matplotlib.pyplot as plt\n' +
                 'from sklearn.model_selection import learning_curve\n' +
-                `\ntrain_sizes, train_scores, test_scores = learning_curve(model, ${x_train}, ${y_train}, cv=5)\n` +
+                '\ntrain_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, cv=5)\n' +
                 'train_mean = np.mean(train_scores, axis=1)\n' +
                 'test_mean = np.mean(test_scores, axis=1)\n' +
                 'plt.plot(train_sizes, train_mean, label=\'Training score\')\n' +
@@ -3291,7 +3287,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '# Confusion Matrix\n' +
                 'from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix\n' +
                 'import matplotlib.pyplot as plt\n\n' +
-                `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
+                'cm = confusion_matrix(y_test, y_predicted)\n' +
                 'disp = ConfusionMatrixDisplay(confusion_matrix=cm)\n' +
                 'disp.plot(cmap=\'Blues\')\n' +
                 'plt.show()\n';
@@ -3310,7 +3306,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '## ROC Curve\n' +
                 'from sklearn.metrics import RocCurveDisplay\n' +
                 'import matplotlib.pyplot as plt\n\n' +
-                `RocCurveDisplay.from_estimator(model, ${x_test}, ${y_test})\n` +
+                'RocCurveDisplay.from_estimator(model, X_test, y_test)\n' +
                 'plt.show()\n';
 
     // If there is an input value, append it to the code
@@ -3327,7 +3323,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '## Precision-Recall Curve\n' +
                 'from sklearn.metrics import PrecisionRecallDisplay\n' +
                 'import matplotlib.pyplot as plt\n' +
-                `PrecisionRecallDisplay.from_estimator(model, ${x_test}, ${y_test})\n` +
+                'PrecisionRecallDisplay.from_estimator(model, X_test, y_test)\n' +
                 'plt.show()\n';
 
     // If there is an input value, append it to the code
@@ -3414,7 +3410,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
                   'from sklearn.model_selection import GridSearchCV\n' +
                   'param_grid = {\'C\': [0.1, 1, 10, 100]}\n' +
                   'grid_search = GridSearchCV(LogisticRegression(), param_grid, cv=5)\n' +
-                  `grid_search.fit(${x_train}, ${y_train})\n` +
+                  'grid_search.fit(X_train, y_train)\n' +
                   'scores = grid_search.cv_results_[\'mean_test_score\'].reshape(len(param_grid[\'C\']), -1)\n' +
                   'plt.imshow(scores, interpolation=\'nearest\', cmap=\'viridis\')\n' +
                   'plt.xlabel(\'C\')\n' +
@@ -3624,13 +3620,13 @@ Blockly.Python['ensemble_feature_importance'] = function(block) {
                 'import numpy as np\n' +
                 'from sklearn.ensemble import RandomForestClassifier\n' +
                 'model = RandomForestClassifier()\n' +
-                `model.fit(${x_train}, ${y_train})\n` +
+                'model.fit(X_train, y_train)\n' +
                 'importances = model.feature_importances_\n' +
                 'indices = np.argsort(importances)[::-1]\n' +
                 'plt.figure()\n' +
                 'plt.title("Feature Importances")\n' +
-                `plt.bar(range(${x_train}.shape[1]), importances[indices], align="center")\n` +
-                `plt.xticks(range(${x_train}.shape[1]), ${x_train}.columns[indices], rotation=90)\n` +
+                'plt.bar(range(X_train.shape[1]), importances[indices], align="center")\n' +
+                'plt.xticks(range(X_train.shape[1]), X_train.columns[indices], rotation=90)\n' +
                 'plt.tight_layout()\n' +
                 'plt.show()\n';
 
@@ -3652,7 +3648,7 @@ Blockly.Python['oob_error_plot'] = function(block) {
                 '# Iterate over a range of n_estimators\n' +
                 'for n_estimators in range(1, 101):\n' +
                 '    model = RandomForestClassifier(n_estimators=n_estimators, oob_score=True)\n' +
-                `    model.fit(${x_train}, ${y_train})\n` +
+                '    model.fit(X_train, y_train)\n' +
                 '    oob_error = 1 - model.oob_score_\n' +
                 '    oob_errors.append(oob_error)\n\n' +
                 '# Plot the OOB error\n' +
@@ -3932,7 +3928,7 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         var code = `import pandas as pd\n`;
         code += `from sklearn.cluster import KMeans\n`;
         code += `\n`;
-        code += `data = pd.read_csv('${dataset_path}')\n`;
+        code += `dataset = pd.read_csv('${dataset_path}')\n`;
         code += `\n`;
         code += data_preprocessing + '\n'; 
         code += `\n`;
