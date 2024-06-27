@@ -1914,9 +1914,9 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "LSTM units: %1 activation: %2 %3",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "units",
-                "text": "50"
+                "value": "50"
             },
             {
                 "type": "field_input",
@@ -1966,19 +1966,19 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "Embedding input_dim: %1 output_dim: %2 input_length: %3 %4",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "input_dim",
-                "text": "10000"
+                "value": "10000"
             },
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "output_dim",
-                "text": "128"
+                "value": "128"
             },
             {
-                "type": "field_input",
+                "type": "field_number",
                 "name": "input_length",
-                "text": "100"
+                "value": "100"
             },
             {
                 "type": "input_value",
@@ -2031,9 +2031,9 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_dummy"
                 },
                 {
-                    "type": "field_input",
+                    "type": "field_number",
                     "name": "placeholder_label",
-                    "text": "0"
+                    "value": "0"
                 },
                 {
                     "type": "input_dummy"
@@ -2140,9 +2140,9 @@ Blockly.defineBlocksWithJsonArray([
                     "check": "Visualization"
                 },
                 {
-                    "type": "field_input",
+                    "type": "field_number",
                     "name": "hyperparameters",
-                    "text": "3"
+                    "value": "3"
                 }
             ],
             "colour": 230,
