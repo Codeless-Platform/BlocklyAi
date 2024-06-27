@@ -1881,6 +1881,295 @@ Blockly.defineBlocksWithJsonArray([
 
     // ]);
 
+    // RNN Layers //
+
+    Blockly.defineBlocksWithJsonArray([{
+        "type": "simple_rnn",
+        "message0": "SimpleRNN units: %1 activation: %2 %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "units",
+                "text": "50"
+            },
+            {
+                "type": "field_input",
+                "name": "activation",
+                "text": "tanh"
+            },
+            {
+                "type": "input_value",
+                "name": "nextLayer",
+                "check": "Layers"
+            }
+        ],
+        "output": "Layers",
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+    }]);
+    
+    Blockly.defineBlocksWithJsonArray([{
+        "type": "lstm",
+        "message0": "LSTM units: %1 activation: %2 %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "units",
+                "text": "50"
+            },
+            {
+                "type": "field_input",
+                "name": "activation",
+                "text": "tanh"
+            },
+            {
+                "type": "input_value",
+                "name": "nextLayer",
+                "check": "Layers"
+            }
+        ],
+        "output": "Layers",
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+    }]);
+    
+    Blockly.defineBlocksWithJsonArray([{
+        "type": "gru",
+        "message0": "GRU units: %1 activation: %2 %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "units",
+                "text": "50"
+            },
+            {
+                "type": "field_input",
+                "name": "activation",
+                "text": "tanh"
+            },
+            {
+                "type": "input_value",
+                "name": "nextLayer",
+                "check": "Layers"
+            }
+        ],
+        "output": "Layers",
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+    }]);
+    
+    Blockly.defineBlocksWithJsonArray([{
+        "type": "embedding",
+        "message0": "Embedding input_dim: %1 output_dim: %2 input_length: %3 %4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "input_dim",
+                "text": "10000"
+            },
+            {
+                "type": "field_input",
+                "name": "output_dim",
+                "text": "128"
+            },
+            {
+                "type": "field_input",
+                "name": "input_length",
+                "text": "100"
+            },
+            {
+                "type": "input_value",
+                "name": "nextLayer",
+                "check": "Layers"
+            }
+        ],
+        "output": "Layers",
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+    }]);      
+    /////////////
+
+    
+  
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "rnn_model",
+            "message0": "RNN model %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Data type %6 %7 label %8 %9 Layers %10 compile %11 Model fit %12 Model evaluate %13 %14 Use Augmentation %15 %16 Visualization %17",
+            "args0": [
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_input",
+                    "name": "training_path",
+                    "text": "/path/to/data/train"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_input",
+                    "name": "test_path",
+                    "text": "/path/to/data/test"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_dropdown",
+                    "name": "data_type",
+                    "options": [
+                        ["Audio", "audio"],
+                        ["Video", "video"]
+                    ]
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_input",
+                    "name": "placeholder_label",
+                    "text": "0"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "input_value",
+                    "name": "layers",
+                    "check": "Layers"
+                },
+                {
+                    "type": "input_value",
+                    "name": "rnnCompile",
+                    "check": "Compile"
+                },
+                {
+                    "type": "input_value",
+                    "name": "rnnFit",
+                    "check": "Fit"
+                },
+                {
+                    "type": "input_value",
+                    "name": "rnnEvaluate",
+                    "check": "Evaluation"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "use_augmentation",
+                    "checked": false
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_value",
+                  "name": "Visualization",
+                  "check": "Visualization_nn"
+                }
+            ],
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+        }
+    ]);
+    
+
+
+    
+    Blockly.defineBlocksWithJsonArray([
+        {
+        "type": "unsupervised_training",
+        "message0": "Training input: %1 %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "Training_input",
+                "text": "X_train"
+            },
+            {
+                "type": "input_dummy"
+            }
+        ],
+        "output": "Training",
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+        }
+    ]);
+
+    
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "kmeans_clustering",
+            "message0": "K-means Clustering %1 Dataset Path %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8 n_clusters= %9",
+            "args0": [
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_input",
+                    "name": "dataset_path",
+                    "text": "/path/to/data.csv"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "input_value",
+                    "name": "data_preprocessing",
+                    "check": "Preprocessing"
+                },
+                {
+                    "type": "input_value",
+                    "name": "model_training",
+                    "check": "Training"
+                },
+                {
+                    "type": "input_value",
+                    "name": "model_evaluation",
+                    "check": "Evaluation"
+                },
+                {
+                    "type": "input_value",
+                    "name": "model_Prediction",
+                    "check": "Prediction"
+                },
+                {
+                    "type": "input_value",
+                    "name": "visualization",
+                    "check": "Visualization_nn"
+                },
+                {
+                    "type": "field_input",
+                    "name": "hyperparameters",
+                    "text": "3"
+                }
+            ],
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+        }
+    ]);
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "prediction",
@@ -1894,7 +2183,7 @@ Blockly.defineBlocksWithJsonArray([
             ],
             "output": "Prediction" ,
             "colour": 230,
-            "tooltip": "Make a prediction using the trained model",
+            "tooltip": "Make a prediction on new data using the trained model",
             "helpUrl": ""
         }
     ]);
@@ -2218,10 +2507,11 @@ Blockly.defineBlocksWithJsonArray([
     ]);
 
 
+    /* Deep Learning begins */
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "sequential",
-            "message0": "Sequential Model  %1 Dataset path %2 %3 Data Preprocessing %4 layers %5 Model compile %6 Model fit %7 Model evaluate %8",
+            "message0": "Sequential Model  %1 Dataset path %2 %3 Data Preprocessing %4 layers %5 Model compile %6 Model fit %7 Model evaluate %8 Visualization %9",
             "args0": [
               {
                 "type": "input_dummy"
@@ -2258,7 +2548,12 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "input_value",
                 "name": "evaluate",
                 "check" : "Evaluation"
-              }
+              },
+              {
+                "type": "input_value",
+                "name": "Visualization",
+                "check": "Visualization_nn"
+              },
             ],
             "colour": 230,
             "tooltip": "",
@@ -2270,7 +2565,7 @@ Blockly.defineBlocksWithJsonArray([
         Blockly.defineBlocksWithJsonArray([
             {
                 "type": "cnn_model",
-                "message0": "CNN model  %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test  generator %9 Layers  %10 Model compile %11 Model fit %12 Model evaluate %13",
+                "message0": "CNN model  %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Train augmentation %6 Test augmentation %7 Train generator %8 Test  generator %9 Layers  %10 Model compile %11 Model fit %12 Model evaluate %13 Visualization %14",
                 "args0": [
                   {
                     "type": "input_dummy"
@@ -2330,14 +2625,239 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_value",
                     "name": "cnnEvaluate",
                     "check": "Evaluation"
-                  }
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "Visualization",
+                    "check": "Visualization_nn"
+                },
                 ],
                 "colour": 230,
                 "tooltip": "",
                 "helpUrl": ""
               }
             ]);
+    
+            Blockly.defineBlocksWithJsonArray([
+                {
+                    "type": "som",
+                    "message0": "SOM  %1 Dataset path %2 %3 Input Variable: %4 , Output Variable: %5 ,Target Column %6 %7 Split Variables into: %8 , %9 , %10 , %11 , test size= %12 , random state= %13 %14 %15 Encode Data (String data?) %16 %17 Model Initialization %18 SOM Label Assignment %19 Model Metrics %20 Visualization %21",
+                    "args0": [
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "dataset_path",
+                        "text": "default"
+                      },
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "input_var",
+                        "text": "x"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "output_var",
+                        "text": "y"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "output_column",
+                        "text": "output_column"
+                      },
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "input_train",
+                        "text": "X_train"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "input_test",
+                        "text": "X_test"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "output_train",
+                        "text": "y_train"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "output_test",
+                        "text": "y_test"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "test_size",
+                        "text": "0.2"
+                      },
+                      {
+                        "type": "field_input",
+                        "name": "random_state",
+                        "text": "42"
+                      },
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                          "type": "field_checkbox",
+                          "name": "encode_data",
+                          "checked": false
+                      },
+                      {
+                        "type": "input_dummy"
+                      },
+                      {
+                        "type": "input_value",
+                        "name": "som_init",
+                        "check" : "som_init"
+                      },
+                      {
+                        "type": "input_value",
+                        "name": "som_assign",
+                        "check" : "som_assign"
+                      },
+                      {
+                        "type": "input_value",
+                        "name": "metrics",
+                        "check" : "Metric"
+                      },
+                      {
+                        "type": "input_value",
+                        "name": "Visualization",
+                        "check": "Visualization_nn"
+                      },
+                    ],
+                    "colour": 230,
+                    "tooltip": "",
+                    "helpUrl": ""
+                  }
+                ]);
+    /* Deep Learning ends */
 
+    /* som blocks start */
+    /*
+    Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "som_data_preprocessing",
+        "message0": "Input Variable: %1 , Output Variable: %2 ,Target Column %3   - Split Variables into: %4 , %5 , %6 , test size= %7 , random state= %8",
+        "args0": [
+          {
+            "type": "field_input",
+            "name": "input_var",
+            "text": "x"
+          },
+          {
+            "type": "field_input",
+            "name": "output_var",
+            "text": "y"
+          },
+          {
+            "type": "field_input",
+            "name": "output_column",
+            "text": "output_column"
+          },
+          {
+            "type": "field_input",
+            "name": "input_train",
+            "text": "X_train"
+          },
+          {
+            "type": "field_input",
+            "name": "input_test",
+            "text": "X_test"
+          },
+          {
+            "type": "field_input",
+            "name": "output_test",
+            "text": "y_test"
+          },
+          {
+            "type": "field_input",
+            "name": "test_size",
+            "text": "0.2"
+          },
+          {
+            "type": "field_input",
+            "name": "random_state",
+            "text": "42"
+          }
+        ],
+        "output": null,
+        "colour": 230,
+        "tooltip": "",
+        "helpUrl": ""
+      }
+    ]);
+    */
+    Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "som_init",
+        "message0": "SOM Initialization: x neurons %1 y neurons %2 sigma= %3 learning rate= %4",
+        "args0": [
+          {
+            "type": "field_input",
+            "name": "x_neurons",
+            "text": "10"
+          },
+          {
+            "type": "field_input",
+            "name": "y_neurons",
+            "text": "10"
+          },
+          {
+            "type": "field_input",
+            "name": "sigma",
+            "text": "1"
+          },
+          {
+            "type": "field_input",
+            "name": "learning_rate",
+            "text": "0.5"
+          }
+        ],
+        "output": "som_init",
+        "colour": 230,
+        "tooltip": "choose number of x axis neurons, number of y axis neurons, sigma and learning rate",
+        "helpUrl": ""
+      }
+    ]);
+    Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "som_assign",
+        "message0": "SOM Label Assignment: %1",
+        "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "label_assign",
+            "options": [
+              [
+                "most common label",
+                "most_common"
+              ],
+              [
+                "mean value of the labels",
+                "mean_value"
+              ]
+            ]
+          }
+        ],
+        "output": "som_assign",
+        "colour": 230,
+        "tooltip": "Choose your preferrable method of label assignment\n hello world",
+        "helpUrl": ""
+      }
+    ]);
+    /* som blocks end */
     Blockly.defineBlocksWithJsonArray([
     {
         "type": "mae",
@@ -3304,85 +3824,287 @@ Blockly.defineBlocksWithJsonArray([
  ]);
 
 
-Blockly.defineBlocksWithJsonArray([
-{
-    "type": "classification_models",
-    "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8",
-    "args0": [
+
+///////////////////////////// CLASIFICATION MODELS //////////////////////////
+Blockly.defineBlocksWithJsonArray([{
+  "type": "classification_models",
+  "message0": "Algorithm : %1 Dataset Path : %2 %3 Data Preprocessing %4 Model Training %5 Model Evaluation %6 Model Prediction %7 Visualization %8            ",
+  "args0": [
       {
-        "type": "field_dropdown",
-        "name": "c_algorithms",
-        "options": [
-          [
-            "Logistic Regression",
-            "LogisticRegression"
-          ],
-          [
-            "K-Nearest Neighbors (KNN)",
-            "Knn"
-          ],
-          [
-            "Decision Trees",
-            "DecisionTrees"
-          ],
-          [
-            "Random Forest",
-            "RandomForest"
-          ],
-          [
-            "Support Vector Machines (SVM)",
-            "Svm"
-          ],
-          [
-            "Naive Bayes",
-            "NaiveBayes"
-          ],
-          [
-            "Gradient Boosting algorithms",
-            "XGboost"
+          "type": "field_dropdown",
+          "name": "c_algorithms",
+          "options": [
+              ["Logistic Regression", "LogisticRegression"],
+              ["K-Nearest Neighbors (KNN)", "Knn"],
+              ["Decision Trees", "DecisionTrees"],
+              ["Random Forest", "RandomForest"],
+              ["Support Vector Machines (SVM)", "Svm"],
+              ["Naive Bayes", "NaiveBayes"],
+              ["Gradient Boosting algorithms", "XGboost"]
           ]
-        ]
       },
       {
-        "type": "field_input",
-        "name": "dataset_path",
-        "text": ""
+          "type": "field_input",
+          "name": "dataset_path",
+          "text": ""
       },
       {
-        "type": "input_dummy"
+          "type": "input_dummy"
       },
       {
-        "type": "input_value",
-        "name": "Data_Preprocessing",
-        "check": "Preprocessing"
+          "type": "input_value",
+          "name": "Data_Preprocessing",
+          "check": "Preprocessing"
       },
       {
-        "type": "input_value",
-        "name": "Model_Training",
-        "check": "Training"
+          "type": "input_value",
+          "name": "Model_Training",
+          "check": "Training"
       },
       {
-        "type": "input_value",
-        "name": "Model_Evaluation",
-        "check":"Evaluation"
+          "type": "input_value",
+          "name": "Model_Evaluation",
+          "check": "Evaluation"
       },
       {
-        "type": "input_value",
-        "name": "Model_Prediction",
-        "check": "Prediction"
-
+          "type": "input_value",
+          "name": "Model_Prediction",
+          "check": "Prediction"
       },
       {
-        "type": "input_value",
-        "name": "Visualization",
-        "check": "Visualization"
-
+          "type": "input_value",
+          "name": "Visualization",
+          "check": "Visualization"
       }
-    ],
-    "colour": 230,
-    "tooltip": "",
-    "helpUrl": ""
-  }]);
+  ],
+  "mutator": "classification_models_mutator",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}]);
+
+Blockly.defineBlocksWithJsonArray([{
+  "type": "knn_mutator",
+  "message0": "Number of neighbors: %1",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "neighbors",
+          "value": 5,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "randomforest_mutator",
+  "message0": "n_estimators: %1 max_depth: %2",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "n_estimators",
+          "value": 100,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "decisiontree_mutator",
+  "message0": "max_depth: %1",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "xgboost_mutator",
+  "message0": "n_estimators: %1 max_depth: %2 learning_rate: %3",
+  "args0": [
+      {
+          "type": "field_number",
+          "name": "n_estimators",
+          "value": 100,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "max_depth",
+          "value": 3,
+          "min": 1
+      },
+      {
+          "type": "field_number",
+          "name": "learning_rate",
+          "value": 1,
+          "min": 0,
+      }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}
+]);
+
+Blockly.ClassificationModelsMutator = {
+  mutationToDom: function() {
+      var container = document.createElement('mutation');
+      var algorithm = this.getFieldValue('c_algorithms');
+      container.setAttribute('algorithm', algorithm);
+      if (algorithm == 'Knn') {
+          container.setAttribute('knn', true);
+      } else if (algorithm == 'RandomForest') {
+          container.setAttribute('randomforest', true);
+      } else if (algorithm == 'DecisionTrees') {
+          container.setAttribute('decisiontree', true);
+      } else if (algorithm == 'XGboost') {
+          container.setAttribute('xgboost', true);
+      }
+      return container;
+  },
+  domToMutation: function(xmlElement) {
+      var algorithm = xmlElement.getAttribute('algorithm');
+      this.updateShape_(algorithm);
+  },
+  updateShape_: function(algorithm) {
+      if (algorithm == 'Knn') {
+
+        if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+        if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+        if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+        if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+        if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+        if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+        if(this.getInput('d')){this.removeInput('d')}
+
+          if (!this.getInput('neighbors')) {
+              this.appendDummyInput('neighbors')
+                  .appendField('Number of neighbors : ')
+                  .appendField(new Blockly.FieldNumber(5, 1), 'neighbors');
+                  this.appendDummyInput('n');
+          }
+      } else if (algorithm == 'RandomForest') {
+
+          if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+          if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+          if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+          if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+          if(this.getInput('neighbors')){this.removeInput('neighbors')}
+          if(this.getInput('n')){this.removeInput('n')}
+          if(this.getInput('d')){this.removeInput('d')}
+
+        
+          if (!this.getInput('n_estimators')) {
+              this.appendDummyInput('n_estimators')
+                  .appendField('n_estimators:')
+                  .appendField(new Blockly.FieldNumber(100, 1), 'n_estimators');
+          }
+          if (!this.getInput('max_depth_rf')) {
+              this.appendDummyInput('max_depth_rf')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_rf');
+          }
+      } else if (algorithm == 'DecisionTrees') {
+
+        if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+        if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+        if(this.getInput('n_estimators_xgb')){this.removeInput('n_estimators_xgb')}
+        if(this.getInput('max_depth_xgb')){this.removeInput('max_depth_xgb')}
+        if(this.getInput('learning_rate')){this.removeInput('learning_rate')}
+        if(this.getInput('neighbors')){this.removeInput('neighbors')}
+        if(this.getInput('n')){this.removeInput('n')}
+
+          if (!this.getInput('max_depth_dt')) {
+              this.appendDummyInput('max_depth_dt')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_dt');
+                  this.appendDummyInput('d');
+          }
+      } else if (algorithm == 'XGboost') {
+          if(this.getInput('max_depth_dt')){this.removeInput('max_depth_dt')}
+          if(this.getInput('max_depth_rf')){this.removeInput('max_depth_rf')}
+          if(this.getInput('n_estimators')){this.removeInput('n_estimators')}
+          if(this.getInput('neighbors')){this.removeInput('neighbors')}
+          if(this.getInput('n')){this.removeInput('n')}
+          if(this.getInput('d')){this.removeInput('d')}
+
+          if (!this.getInput('n_estimators_xgb')) {
+              this.appendDummyInput('n_estimators_xgb')
+                  .appendField('n_estimators:')
+                  .appendField(new Blockly.FieldNumber(100, 1), 'n_estimators_xgb');
+          }
+          if (!this.getInput('max_depth_xgb')) {
+              this.appendDummyInput('max_depth_xgb')
+                  .appendField('max_depth:')
+                  .appendField(new Blockly.FieldNumber(3, 1), 'max_depth_xgb');
+          }
+          if (!this.getInput('learning_rate')) {
+              this.appendDummyInput('learning_rate')
+                  .appendField('learning_rate:')
+                  .appendField(new Blockly.FieldNumber(0.1, 0), 'learning_rate');
+          }
+      } else {
+          if (this.getInput('neighbors')) {
+              this.removeInput('neighbors');
+          }
+          if (this.getInput('n_estimators')) {
+              this.removeInput('n_estimators');
+          }
+          if (this.getInput('max_depth_rf')) {
+              this.removeInput('max_depth_rf');
+          }
+          if (this.getInput('max_depth_dt')) {
+              this.removeInput('max_depth_dt');
+          }
+          if (this.getInput('n_estimators_xgb')) {
+              this.removeInput('n_estimators_xgb');
+          }
+          if (this.getInput('max_depth_xgb')) {
+              this.removeInput('max_depth_xgb');
+          }
+          if (this.getInput('learning_rate')) {
+              this.removeInput('learning_rate');
+          }
+          if(this.getInput('n')){
+            this.removeInput('n')
+          }
+
+          if(this.getInput('d')){
+            this.removeInput('d')
+          }
+      }
+  },
+  onchange: function(event) {
+      if (event.type == Blockly.Events.BLOCK_CHANGE && event.blockId == this.id) {
+          var algorithm = this.getFieldValue('c_algorithms');
+          this.updateShape_(algorithm);
+      }
+  }
+};
+
+Blockly.Extensions.registerMutator('classification_models_mutator', Blockly.ClassificationModelsMutator, null, ['knn_mutator', 'randomforest_mutator', 'decisiontree_mutator', 'xgboost_mutator']);
+
 
   /* Visualization Blocks begins */
       /* ------------------------------ Data Visualization begins ------------------------------ */
@@ -3396,7 +4118,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "scatter_plot"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3413,7 +4135,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "histograms"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3430,7 +4152,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "box_plots"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3447,7 +4169,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "heatmaps"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3465,7 +4187,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "decision_boundary"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3482,7 +4204,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "tree_visualization"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3499,7 +4221,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "feature_importances"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3516,7 +4238,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "learning_curves"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3534,7 +4256,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "confusion_matrix"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3551,7 +4273,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "ROC_curve"
             }
           ],
-          "output": null,
+          "output": "Visualization",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3568,7 +4290,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "precision_recall_curve"
             }
           ],
-          "output": null,
+          "output": "Visualization_nn",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3586,7 +4308,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "elbow_plot"
         }
       ],
-      "output": null,
+      "output": "Visualization_nn",
       "colour": 230,
       "tooltip": "",
       "helpUrl": ""
@@ -3603,7 +4325,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "tsne_plot"
         }
       ],
-      "output": null,
+      "output": "Visualization_nn",
       "colour": 230,
       "tooltip": "",
       "helpUrl": ""
@@ -3620,7 +4342,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "pca_plot"
         }
       ],
-      "output": null,
+      "output": "Visualization_nn",
       "colour": 230,
       "tooltip": "",
       "helpUrl": ""
@@ -3638,7 +4360,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "hyperparameter_heatmaps"
         }
       ],
-      "output": null,
+      "output": "Visualization",
       "colour": 230,
       "tooltip": "",
       "helpUrl": ""
@@ -3647,33 +4369,43 @@ Blockly.defineBlocksWithJsonArray([
 /* ------------------------------ Hyperparameter Tuning Visualization ends ------------------------------ */
     /* ------------------------------ Neural Network begins ------------------------------ */
       Blockly.defineBlocksWithJsonArray([
-      {
-        "type": "confusion_matrix_nn",
-        "message0": "Confusion Matrix %1",
-        "args0": [
-          {
-            "type": "input_value",
-            "name": "confusion_matrix_nn"
+        {
+            "type": "confusion_matrix_nn",
+            "message0": "Confusion Matrix , SOM? %1 %2",
+            "args0": [
+              {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+              },
+              {
+                "type": "input_value",
+                "name": "confusion_matrix_nn"
+              }
+            ],
+            "output": "Visualization_nn",
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
           }
-        ],
-        "output": null,
-        "colour": 230,
-        "tooltip": "",
-        "helpUrl": ""
-      }
     ]);
 
     Blockly.defineBlocksWithJsonArray([
         {
           "type": "ROC_curve_nn",
-          "message0": "ROC Curve %1",
+          "message0": "ROC Curve , SOM? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "ROC_curve_nn"
             }
           ],
-          "output": null,
+          "output": "Visualization_nn",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3683,14 +4415,19 @@ Blockly.defineBlocksWithJsonArray([
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "precision_recall_curve_nn",
-          "message0": "Precision-Recall Curve %1",
+          "message0": "Precision-Recall Curve , SOM? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "precision_recall_curve_nn"
             }
           ],
-          "output": null,
+          "output": "Visualization_nn",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3707,7 +4444,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "loss_accuracy_curve"
             }
           ],
-          "output": null,
+          "output": "Visualization_nn",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3724,7 +4461,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "word_cloud"
             }
           ],
-          "output": null,
+          "output": "Visualization_nn",
           "colour": 230,
           "tooltip": "",
           "helpUrl": ""
@@ -3742,7 +4479,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "ensemble_feature_importance"
               }
             ],
-            "output": null,
+            "output": "Visualization",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3759,7 +4496,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "oob_error_plot"
               }
             ],
-            "output": null,
+            "output": "Visualization",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""

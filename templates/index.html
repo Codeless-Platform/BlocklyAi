@@ -747,6 +747,36 @@
     </category>
 
         <category name="Codeless (neural network)" colour="%{BKY_LOGIC_HUE}">
+            <block type="kmeans_clustering">
+                <field type="kmeans_clustering">kmeans_clustering</field>
+            </block>
+            <block type="unsupervised_training">
+                <field type="unsupervised_training">unsupervised_training</field>
+            </block>
+            
+            <block type="rnn_model">
+                <field type="rnn_model">rnn_model</field>
+            </block>
+            
+            
+
+        
+
+            <block type="embedding">
+                <field type="embedding">embedding</field>
+            </block>
+            <block type="gru">
+                <field type="gru">gru</field>
+            </block>
+            <block type="lstm">
+                <field type="lstm">lstm</field>
+            </block>
+            <block type="simple_rnn">
+                <field type="simple_rnn">simple_rnn</field>
+            </block>
+
+            
+
             <block type="prediction">
                 <field type="prediction">Prediction</field>
             </block>
@@ -879,6 +909,9 @@
             <block type="cnn_model">
                 <field type="cnn_model">CNN Model</field>
             </block>
+            <block type="som">
+                <field type="som">SOM Model</field>
+            </block>
         </category>
         <category name="Layers" colour="%{BKY_LOGIC_HUE}">
             <block type="dense">
@@ -903,6 +936,12 @@
             </block>            
             <block type="compile">
                 <field type="compile">Model compile</field>
+            </block>
+            <block type="som_init">
+                <field type="som_init">SOM Initialization</field>
+            </block>
+            <block type="som_assign">
+                <field type="som_assign">SOM Label Assignment</field>
             </block>
            </category>
            <sep></sep>
@@ -966,8 +1005,8 @@
                <block type="ROC_curve_nn">
                    <field type="ROC_curve_nn">ROC Curve</field>
                </block>
-               <block type="precision_recall_curve">
-                   <field type="precision_recall_curve">precision-recall Curve</field>
+               <block type="precision_recall_curve_nn">
+                   <field type="precision_recall_curve_nn">precision-recall Curve</field>
                </block>
                <block type="loss_accuracy_curve">
                    <field type="loss_accuracy_curve">Loss and Accuracy Curves</field>
