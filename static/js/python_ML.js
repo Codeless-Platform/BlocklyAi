@@ -2285,8 +2285,10 @@ Blockly.Python['classification_models'] = function(block) {
                 code += `model = RandomForestClassifier(n_estimators=${n_estimators}, max_depth=${max_depth_rf}, random_state=42)\n`;
                 break;
             case 'Svm':
+                var C = block.getFieldValue('C') || '1';
+                var kernel = block.getFieldValue('kernel') || 'rbf';
                 code += 'from sklearn.svm import SVC\n';
-                code += 'model = SVC()\n';
+                code += `model = SVC(C=${C}, kernel='${kernel}')\n`;
                 break;
             case 'NaiveBayes':
                 code += 'from sklearn.naive_bayes import GaussianNB\n';
@@ -2324,27 +2326,35 @@ Blockly.Python['regression_models'] = function(block) {
     var value_visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
     
     var code = "";
-    code += "import pandas as pd \n";
+    code += "import pandas as pd\n";
     switch (dropdown_algorithm) {
         case 'LinearRegression':
             code += 'from sklearn.linear_model import LinearRegression\n';
             code += 'model = LinearRegression()\n';
             break;
-        case 'DecisionTreesRegressor':
+        case 'DecisionTree':
+            var max_depth_dt = block.getFieldValue('max_depth_dt') || '';
             code += 'from sklearn.tree import DecisionTreeRegressor\n';
-            code += 'model = DecisionTreeRegressor()\n';
+            code += `model = DecisionTreeRegressor(max_depth=${max_depth_dt}, random_state=42)\n`;
             break;
-        case 'RandomForestRegressor':
+        case 'RandomForest':
+            var n_estimators_rf = block.getFieldValue('n_estimators_rf') || '';
+            var max_depth_rf = block.getFieldValue('max_depth_rf') || '';
             code += 'from sklearn.ensemble import RandomForestRegressor\n';
-            code += 'model = RandomForestRegressor()\n';
+            code += `model = RandomForestRegressor(n_estimators=${n_estimators_rf}, max_depth=${max_depth_rf}, random_state=42)\n`;
             break;
-        case 'SVR':
+        case 'SVM':
+            var c_svm = block.getFieldValue('C_svm') || '';
+            var kernel_svm = block.getFieldValue('kernel_svm') || '';
             code += 'from sklearn.svm import SVR\n';
-            code += 'model = SVR()\n';
+            code += `model = SVR(C=${c_svm}, kernel='${kernel_svm}')\n`;
             break;
-        case 'GradientBoostingRegressor':
+        case 'GradientBoosting':
+            var n_estimators_gb = block.getFieldValue('n_estimators_gb') || '';
+            var max_depth_gb = block.getFieldValue('max_depth_gb') || '';
+            var learning_rate_gb = block.getFieldValue('learning_rate_gb') || '';
             code += 'from sklearn.ensemble import GradientBoostingRegressor\n';
-            code += 'model = GradientBoostingRegressor()\n';
+            code += `model = GradientBoostingRegressor(n_estimators=${n_estimators_gb}, max_depth=${max_depth_gb}, learning_rate=${learning_rate_gb}, random_state=42)\n`;
             break;
         default:
             break;
@@ -2358,7 +2368,8 @@ Blockly.Python['regression_models'] = function(block) {
     code += value_model_prediction + '\n';
     code += value_visualization + '\n';
     return code;
-  }; 
+};
+
 
 Blockly.Python['mae'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
