@@ -2200,7 +2200,7 @@ var VarData = {};
     return Blockly.Python;
 
 });
-var global_predicted_variable= "y_predicteed";
+var global_predicted_variable= "y_predicted";
 var input = "x";
 var output = "y";
 var x_train = 'X_train';
@@ -2381,6 +2381,9 @@ Blockly.Python['mse'] = function(block) {
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
+
+/* ------------------------------ Deep Learning Blocks begins ------------------------------ */
+/* Sequential Model begins */
 Blockly.Python['sequential'] = function(block) {
     var dataset_path = block.getFieldValue('dataset_path');
     var data_preprocessing = Blockly.Python.valueToCode(block, 'data_Preprocessing', Blockly.Python.ORDER_ATOMIC) || '';
@@ -2408,7 +2411,11 @@ Blockly.Python['sequential'] = function(block) {
     
     return code;
 };
+/* Sequential Model ends */
+
 var layersFlag = []
+
+/* CNN Model begins */
 Blockly.Python['cnn_model'] = function(block) {
     var training_path = block.getFieldValue('training_path');
     var test_path = block.getFieldValue('test_path');
@@ -2476,6 +2483,131 @@ Blockly.Python['cnn_model'] = function(block) {
     
     return code;
 };
+/* CNN Model ends */
+
+/* SOM MODEL begins */
+Blockly.Python['som'] = function(block) {
+    var dataset_path = block.getFieldValue('dataset_path');
+    var input_var = block.getFieldValue('input_var');
+    var output_var = block.getFieldValue('output_var');
+    var output_column = block.getFieldValue('output_column');
+    var input_train = block.getFieldValue('input_train');
+    var input_test = block.getFieldValue('input_test');
+    var output_train = block.getFieldValue('output_train');
+    var output_test = block.getFieldValue('output_test');
+    var test_size = block.getFieldValue('test_size');
+    var random_state = block.getFieldValue('random_state');
+    var encode_data = block.getFieldValue('encode_data') === 'TRUE';
+    var som_assign = Blockly.Python.valueToCode(block, 'som_assign', Blockly.Python.ORDER_ATOMIC) || '';
+    var som_init = Blockly.Python.valueToCode(block, 'som_init', Blockly.Python.ORDER_ATOMIC) || '';
+    var metrics = Blockly.Python.valueToCode(block, 'metrics', Blockly.Python.ORDER_ATOMIC) || '';
+    var value_visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `import numpy as np\n` +
+               `import pandas as pd\n` +
+               `from minisom import MiniSom\n` +
+               `from sklearn.model_selection import train_test_split\n` +
+               `from sklearn.preprocessing import StandardScaler\n`;
+    if (encode_data) {
+        code += `from sklearn.preprocessing import LabelEncoder\n`;
+    }
+
+    code += `\n# Load the dataset from a CSV file\n` +
+            `dataset_path = "${dataset_path}"\n` +
+            `data = pd.read_csv(dataset_path)\n\n` +
+            `# Prepare features and target\n` +
+            `${input_var} = data.drop(columns=['${output_column}'])\n` +
+            `${output_var} = data['${output_column}']\n`;
+
+    if (encode_data) {
+        code += `\n# Encode string columns in features\n` +
+                `label_encoders = {}\n` +
+                `for col in ${input_var}.columns:\n` +
+                `    if ${input_var}[col].dtype == 'object':\n` +
+                `        label_encoders[col] = LabelEncoder()\n` +
+                `        ${input_var}[col] = label_encoders[col].fit_transform(${input_var}[col])\n\n` +
+                `# Encode target column if it contains strings\n` +
+                `if ${output_var}.dtype == 'object':\n` +
+                `    label_encoders['${output_column}'] = LabelEncoder()\n` +
+                `    ${output_var} = label_encoders['${output_column}'].fit_transform(${output_var})\n` +
+                `\n# Convert to numpy arrays\n` +
+                `${input_var} = ${input_var}.values\n`;
+            
+    }
+
+    code += `# Train-test split\n` +
+            `${input_train}, ${input_test}, ${output_train}, ${output_test} = train_test_split(${input_var}, ${output_var}, test_size=${test_size}, random_state=${random_state})\n\n` +
+            `# Feature scaling\n` +
+            `sc = StandardScaler()\n` +
+            `${input_train} = sc.fit_transform(${input_train})\n` +
+            `${input_test} = sc.transform(${input_test})\n\n`;
+
+    code += som_init;
+
+    if (som_assign) {
+        code += som_assign;
+    }
+
+    code += metrics + '\n';
+    code += value_visualization + '\n';
+
+    return code;
+};
+
+/* SOM Model ends */
+
+/* SOM Blocks begins */
+Blockly.Python['som_init'] = function(block) {
+    var x_neurons = block.getFieldValue('x_neurons');
+    var y_neurons = block.getFieldValue('y_neurons');
+    var sigma = block.getFieldValue('sigma');
+    var learning_rate = block.getFieldValue('learning_rate');
+    
+    var code =  `# Initialize the SOM\n` +
+                `som_x, som_y = ${x_neurons}, ${y_neurons}\n` +
+                `som = MiniSom(x=${x_neurons}, y=${y_neurons}, input_len=${x_train}.shape[1], sigma=${sigma}, learning_rate=${learning_rate})\n` +
+                `som.random_weights_init(${x_train})\n\n`;
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
+  Blockly.Python['som_assign'] = function(block) {
+    var dropdown_label_assign = block.getFieldValue('label_assign');
+    var code ='';
+    
+    switch (dropdown_label_assign) {
+        case 'most_common':
+            code += `from collections import defaultdict\n` +
+                    `# Assign each neuron the most common label in its neighborhood\n` +
+                    `neuron_labels = defaultdict(list)\n` +
+                    `for i, x in enumerate(X_train):\n` +
+                    `    w = som.winner(x)\n` +
+                    `    neuron_labels[w].append(y_train[i])\n\n` +
+                    `# Determine the most common label for each neuron\n` +
+                    `for w in neuron_labels:\n` +
+                    `    neuron_labels[w] = np.bincount(neuron_labels[w]).argmax()\n`;
+            break;
+        case 'mean_value':
+            code += `from collections import defaultdict\n` +
+                    `# Assign each neuron the mean value of labels in its neighborhood\n` +
+                    `neuron_labels = defaultdict(list)\n` +
+                    `for i, x in enumerate(X_train):\n` +
+                    `    w = som.winner(x)` +
+                    `    neuron_labels[w].append(y_train[i])\n\n` +
+                    `# Determine the mean value for each neuron\n` +
+                    `for w in neuron_labels:\n` +
+                    `    neuron_labels[w] = np.mean(neuron_labels[w])\n`;
+            break;
+        default:
+        break;
+    }
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+/* SOM Blocks ends */
+
+/* ------------------------------ Deep Learning Blocks ends ------------------------------ */
+
 ///////////////////////////////////////////LAYERS///////////////////////////////////////////////////////   
 Blockly.Python['Conv2D'] = function(block) {
     var filters = block.getFieldValue('filters');
@@ -2970,7 +3102,7 @@ Blockly.Python['scatter_plot'] = function(block) {
                 '\n# Scatter plot for actual values\n' +
                 'ax.scatter(x=range(0, len(y_test)), y=y_test, c=\'blue\', label=\'Actual\', alpha=0.3)\n' +
                 '\n# Scatter plot for predicted values\n' +
-                'ax.scatter(x=range(0, len(y_predicted)), y=y_predicted, c=\'red\', label=\'Predicted\', alpha=0.3)\n'
+                `ax.scatter(x=range(0, len(${global_predicted_variable})), y=${global_predicted_variable}, c=\'red\', label=\'Predicted\', alpha=0.3)\n` +
                 '# Set plot title and labels\n' +
                 'plt.title(\'Actual and Predicted Values\')\n' +
                 'plt.xlabel(\'Actual Values\')\n' +
@@ -3069,7 +3201,7 @@ Blockly.Python['decision_boundary'] = function(block) {
                 'from sklearn.tree import DecisionTreeClassifier, plot_tree\n' +
                 'import matplotlib.pyplot as plt\n' +
                 '\ntree_model = DecisionTreeClassifier()\n' +
-                'tree_model.fit(X_train, y_train)\n' +
+                `tree_model.fit(${x_train}, ${y_train})\n` +
                 'plt.figure(figsize=(20, 10))\n' +
                 'plot_tree(tree_model, filled=True, feature_names=x.columns, class_names=[\'0\', \'1\'])\n' +
                 'plt.show()\n';
@@ -3089,7 +3221,7 @@ Blockly.Python['decision_boundary'] = function(block) {
                 'import matplotlib.pyplot as plt\n' +
                 'from sklearn.ensemble import RandomForestClassifier\n' +
                 '\nrf_model = RandomForestClassifier()\n' +
-                'rf_model.fit(X_train, y_train)\n' +
+                `rf_model.fit(${x_train}, ${y_train})\n` +
                 'importances = rf_model.feature_importances_\n' +
                 'indices = np.argsort(importances)[::-1]\n' +
                 'plt.figure(figsize=(12, 8))\n' +
@@ -3113,7 +3245,7 @@ Blockly.Python['decision_boundary'] = function(block) {
     var code =  '## Learning Curves\n' +
                 'import matplotlib.pyplot as plt\n' +
                 'from sklearn.model_selection import learning_curve\n' +
-                '\ntrain_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, cv=5)\n' +
+                `\ntrain_sizes, train_scores, test_scores = learning_curve(model, ${x_train}, ${y_train}, cv=5)\n` +
                 'train_mean = np.mean(train_scores, axis=1)\n' +
                 'test_mean = np.mean(test_scores, axis=1)\n' +
                 'plt.plot(train_sizes, train_mean, label=\'Training score\')\n' +
@@ -3139,7 +3271,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '# Confusion Matrix\n' +
                 'from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix\n' +
                 'import matplotlib.pyplot as plt\n\n' +
-                'cm = confusion_matrix(y_test, y_predicted)\n' +
+                `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
                 'disp = ConfusionMatrixDisplay(confusion_matrix=cm)\n' +
                 'disp.plot(cmap=\'Blues\')\n' +
                 'plt.show()\n';
@@ -3158,7 +3290,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '## ROC Curve\n' +
                 'from sklearn.metrics import RocCurveDisplay\n' +
                 'import matplotlib.pyplot as plt\n\n' +
-                'RocCurveDisplay.from_estimator(model, X_test, y_test)\n' +
+                `RocCurveDisplay.from_estimator(model, ${x_test}, ${y_test})\n` +
                 'plt.show()\n';
 
     // If there is an input value, append it to the code
@@ -3175,7 +3307,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var code =  '## Precision-Recall Curve\n' +
                 'from sklearn.metrics import PrecisionRecallDisplay\n' +
                 'import matplotlib.pyplot as plt\n' +
-                'PrecisionRecallDisplay.from_estimator(model, X_test, y_test)\n' +
+                `PrecisionRecallDisplay.from_estimator(model, ${x_test}, ${y_test})\n` +
                 'plt.show()\n';
 
     // If there is an input value, append it to the code
@@ -3262,7 +3394,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
                   'from sklearn.model_selection import GridSearchCV\n' +
                   'param_grid = {\'C\': [0.1, 1, 10, 100]}\n' +
                   'grid_search = GridSearchCV(LogisticRegression(), param_grid, cv=5)\n' +
-                  'grid_search.fit(X_train, y_train)\n' +
+                  `grid_search.fit(${x_train}, ${y_train})\n` +
                   'scores = grid_search.cv_results_[\'mean_test_score\'].reshape(len(param_grid[\'C\']), -1)\n' +
                   'plt.imshow(scores, interpolation=\'nearest\', cmap=\'viridis\')\n' +
                   'plt.xlabel(\'C\')\n' +
@@ -3282,20 +3414,39 @@ Blockly.Python['confusion_matrix'] = function(block) {
   /* ------------------------------ Neural Network begins ------------------------------ */
   Blockly.Python['confusion_matrix_nn'] = function(block) {
     var confusion_nn_input = Blockly.Python.valueToCode(block, 'confusion_matrix_nn', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# Confusion Matrix\n' +
+    if (som) {
+        var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
+                `${global_predicted_variable} = []\n` +
+                `for x in ${x_test}:\n` +
+                `    w = som.winner(x)\n` +
+                `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
+                '\n# Confusion Matrix\n' +
                 'from sklearn.metrics import confusion_matrix\n' +
                 'import matplotlib.pyplot as plt\n' +
                 'import seaborn as sns\n' +
-                'y_pred = (model.predict(X_test) > 0.5).astype("int32")\n' +
-                'cm = confusion_matrix(y_test, y_pred)\n' +
+                `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
                 'plt.figure(figsize=(8, 6))\n' +
                 'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
                 'plt.title(\'Confusion Matrix\')\n' +
                 'plt.xlabel(\'Predicted labels\')\n' +
                 'plt.ylabel(\'True labels\')\n' +
                 'plt.show()\n';
-
+    }else {
+        var code =  '# Confusion Matrix\n' +
+                    'from sklearn.metrics import confusion_matrix\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    `${global_predicted_variable} = (model.predict(${x_test}) > 0.5).astype("int32")\n` +
+                    `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
+                    'plt.figure(figsize=(8, 6))\n' +
+                    'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
+                    'plt.title(\'Confusion Matrix\')\n' +
+                    'plt.xlabel(\'Predicted labels\')\n' +
+                    'plt.ylabel(\'True labels\')\n' +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (confusion_nn_input) {
         code += `\n${confusion_nn_input}`;
@@ -3306,24 +3457,48 @@ Blockly.Python['confusion_matrix'] = function(block) {
 
   Blockly.Python['ROC_curve_nn'] = function(block) {
     var ROC_nn_input = Blockly.Python.valueToCode(block, 'ROC_curve_nn', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# ROC Curve\n' +
-                'from sklearn.metrics import auc\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'y_pred_proba = model.predict(X_test).ravel()\n' +
-                'fpr, tpr, _ = roc_curve(y_test, y_pred_proba)\n' +
-                'roc_auc = auc(fpr, tpr)\n' +
-                'plt.figure()\n' +
-                'plt.plot(fpr, tpr, color=\'darkorange\', lw=2, label=\'ROC curve (area = %0.2f)\' % roc_auc)\n' +
-                'plt.plot([0, 1], [0, 1], color=\'navy\', lw=2, linestyle=\'--\')\n' +
-                'plt.xlim([0.0, 1.0])\n' +
-                'plt.ylim([0.0, 1.05])\n' +
-                'plt.xlabel(\'False Positive Rate\')\n' +
-                'plt.ylabel(\'True Positive Rate\')\n' +
-                'plt.title(\'Receiver Operating Characteristic\')\n' +
-                'plt.legend(loc="lower right")\n' +
-                'plt.show()\n';
-
+    if (som) {
+    var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
+                `${global_predicted_variable} = []\n` +
+                `for x in ${x_test}:\n` +
+                `    w = som.winner(x)\n` +
+                `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
+                '\n# ROC Curve\n' +
+                    'from sklearn.metrics import auc, roc_curve\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `fpr, tpr, _ = roc_curve(${y_test}, ${global_predicted_variable})\n` +
+                    'roc_auc = auc(fpr, tpr)\n' +
+                    'plt.figure()\n' +
+                    'plt.plot(fpr, tpr, color=\'darkorange\', lw=2, label=\'ROC curve (area = %0.2f)\' % roc_auc)\n' +
+                    'plt.plot([0, 1], [0, 1], color=\'navy\', lw=2, linestyle=\'--\')\n' +
+                    'plt.xlim([0.0, 1.0])\n' +
+                    'plt.ylim([0.0, 1.05])\n' +
+                    'plt.xlabel(\'False Positive Rate\')\n' +
+                    'plt.ylabel(\'True Positive Rate\')\n' +
+                    'plt.title(\'Receiver Operating Characteristic\')\n' +
+                    'plt.legend(loc="lower right")\n' +
+                    'plt.show()\n';
+    }else {
+        var code =  '# ROC Curve\n' +
+                    'from sklearn.metrics import auc\n' +
+                    'from sklearn.metrics import RocCurveDisplay\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `${global_predicted_variable} = model.predict(${x_test}).ravel()\n` +
+                    `fpr, tpr, _ = roc_curve(${y_test}, ${global_predicted_variable})\n` +
+                    'roc_auc = auc(fpr, tpr)\n' +
+                    'plt.figure()\n' +
+                    'plt.plot(fpr, tpr, color=\'darkorange\', lw=2, label=\'ROC curve (area = %0.2f)\' % roc_auc)\n' +
+                    'plt.plot([0, 1], [0, 1], color=\'navy\', lw=2, linestyle=\'--\')\n' +
+                    'plt.xlim([0.0, 1.0])\n' +
+                    'plt.ylim([0.0, 1.05])\n' +
+                    'plt.xlabel(\'False Positive Rate\')\n' +
+                    'plt.ylabel(\'True Positive Rate\')\n' +
+                    'plt.title(\'Receiver Operating Characteristic\')\n' +
+                    'plt.legend(loc="lower right")\n' +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (ROC_nn_input) {
         code += `\n${ROC_nn_input}`;
@@ -3334,18 +3509,33 @@ Blockly.Python['confusion_matrix'] = function(block) {
 
   Blockly.Python['precision_recall_curve_nn'] = function(block) {
     var recall_nn_input = Blockly.Python.valueToCode(block, 'precision_recall_curve_nn', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# Precision-Recall Curve\n' +
-                'from sklearn.metrics import precision_recall_curve\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'precision, recall, _ = precision_recall_curve(y_test, y_pred_proba)\n' +
-                'plt.figure()\n' +
-                'plt.plot(recall, precision, color=\'b\', lw=2)\n' +
-                'plt.xlabel(\'Recall\')\n' +
-                'plt.ylabel(\'Precision\')\n' +
-                'plt.title(\'Precision-Recall Curve\')\n' +
-                'plt.show()\n';
-
+    if (som) {
+        var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
+                    `${global_predicted_variable} = []\n` +
+                    `for x in ${x_test}:\n` +
+                    `    w = som.winner(x)\n` +
+                    `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
+                    '\n# Precision-Recall Curve\n' +
+                    'from sklearn.metrics import PrecisionRecallDisplay, precision_recall_curve\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `precision, recall, _ = precision_recall_curve(${y_test}, ${global_predicted_variable})\n` +
+                    `disp = PrecisionRecallDisplay(precision=precision, recall=recall)\n` +
+                    `disp.plot()\n` +
+                    'plt.show()\n';
+    }else {
+        var code =  '# Precision-Recall Curve\n' +
+                    'from sklearn.metrics import precision_recall_curve\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `precision, recall, _ = precision_recall_curve(${y_test}, ${global_predicted_variable})\n` +
+                    'plt.figure()\n' +
+                    'plt.plot(recall, precision, color=\'b\', lw=2)\n' +
+                    'plt.xlabel(\'Recall\')\n' +
+                    'plt.ylabel(\'Precision\')\n' +
+                    'plt.title(\'Precision-Recall Curve\')\n' +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (recall_nn_input) {
         code += `\n${recall_nn_input}`;
@@ -3357,24 +3547,24 @@ Blockly.Python['confusion_matrix'] = function(block) {
   Blockly.Python['loss_accuracy_curve'] = function(block) {
     var loss_accuracy_input = Blockly.Python.valueToCode(block, 'loss_accuracy_curve', Blockly.Python.ORDER_ATOMIC) || '';
 
-    var code =  '# Loss and Accuracy Curves\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'plt.figure()\n' +
-                'plt.plot(history.history[\'loss\'], label=\'train_loss\')\n' +
-                'plt.plot(history.history[\'val_loss\'], label=\'val_loss\')\n' +
-                'plt.xlabel(\'Epochs\')\n' +
-                'plt.ylabel(\'Loss\')\n' +
-                'plt.title(\'Training and Validation Loss\')\n' +
-                'plt.legend()' +
-                'plt.show()\n\n' +
-                'plt.figure()\n' +
-                'plt.plot(history.history[\'accuracy\'], label=\'train_accuracy\')\n' +
-                'plt.plot(history.history[\'val_accuracy\'], label=\'val_accuracy\')\n' +
-                'plt.xlabel(\'Epochs\')\n' +
-                'plt.ylabel(\'Accuracy\')\n' +
-                'plt.title(\'Training and Validation Accuracy\')\n' +
-                'plt.legend()\n' +
-                'plt.show()\n';
+        var code =  '# Loss and Accuracy Curves\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'plt.figure()\n' +
+                    'plt.plot(history.history[\'loss\'], label=\'train_loss\')\n' +
+                    'plt.plot(history.history[\'val_loss\'], label=\'val_loss\')\n' +
+                    'plt.xlabel(\'Epochs\')\n' +
+                    'plt.ylabel(\'Loss\')\n' +
+                    'plt.title(\'Training and Validation Loss\')\n' +
+                    'plt.legend()\n' +
+                    'plt.show()\n\n' +
+                    'plt.figure()\n' +
+                    'plt.plot(history.history[\'accuracy\'], label=\'train_accuracy\')\n' +
+                    'plt.plot(history.history[\'val_accuracy\'], label=\'val_accuracy\')\n' +
+                    'plt.xlabel(\'Epochs\')\n' +
+                    'plt.ylabel(\'Accuracy\')\n' +
+                    'plt.title(\'Training and Validation Accuracy\')\n' +
+                    'plt.legend()\n' +
+                    'plt.show()\n';
 
     // If there is an input value, append it to the code
     if (loss_accuracy_input) {
@@ -3386,16 +3576,16 @@ Blockly.Python['confusion_matrix'] = function(block) {
 
   Blockly.Python['word_cloud'] = function(block) {
     var word_cloud_input = Blockly.Python.valueToCode(block, 'word_cloud', Blockly.Python.ORDER_ATOMIC) || '';
-
-    var code =  '# Word Cloud\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'from wordcloud import WordCloud\n' +
-                'wordcloud = WordCloud().generate(text_data)\n' +
-                'plt.figure()\n' +
-                'plt.imshow(wordcloud, interpolation=\'bilinear\')\n' +
-                'plt.axis(\'off\')\n' +
-                'plt.title(\'Word Cloud\')\n' +
-                'plt.show()';
+    
+        var code =  '# Word Cloud\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'from wordcloud import WordCloud\n' +
+                    'wordcloud = WordCloud().generate(text_data)\n' +
+                    'plt.figure()\n' +
+                    'plt.imshow(wordcloud, interpolation=\'bilinear\')\n' +
+                    'plt.axis(\'off\')\n' +
+                    'plt.title(\'Word Cloud\')\n' +
+                    'plt.show()';
 
     // If there is an input value, append it to the code
     if (word_cloud_input) {
@@ -3414,13 +3604,13 @@ Blockly.Python['ensemble_feature_importance'] = function(block) {
                 'import numpy as np\n' +
                 'from sklearn.ensemble import RandomForestClassifier\n' +
                 'model = RandomForestClassifier()\n' +
-                'model.fit(X_train, y_train)\n' +
+                `model.fit(${x_train}, ${y_train})\n` +
                 'importances = model.feature_importances_\n' +
                 'indices = np.argsort(importances)[::-1]\n' +
                 'plt.figure()\n' +
                 'plt.title("Feature Importances")\n' +
-                'plt.bar(range(X_train.shape[1]), importances[indices], align="center")\n' +
-                'plt.xticks(range(X_train.shape[1]), X_train.columns[indices], rotation=90)\n' +
+                `plt.bar(range(${x_train}.shape[1]), importances[indices], align="center")\n` +
+                `plt.xticks(range(${x_train}.shape[1]), ${x_train}.columns[indices], rotation=90)\n` +
                 'plt.tight_layout()\n' +
                 'plt.show()\n';
 
@@ -3442,7 +3632,7 @@ Blockly.Python['oob_error_plot'] = function(block) {
                 '# Iterate over a range of n_estimators\n' +
                 'for n_estimators in range(1, 101):\n' +
                 '    model = RandomForestClassifier(n_estimators=n_estimators, oob_score=True)\n' +
-                '    model.fit(X_train, y_train)\n' +
+                `    model.fit(${x_train}, ${y_train})\n` +
                 '    oob_error = 1 - model.oob_score_\n' +
                 '    oob_errors.append(oob_error)\n\n' +
                 '# Plot the OOB error\n' +
@@ -3722,7 +3912,7 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         var code = `import pandas as pd\n`;
         code += `from sklearn.cluster import KMeans\n`;
         code += `\n`;
-        code += `dataset = pd.read_csv('${dataset_path}')\n`;
+        code += `data = pd.read_csv('${dataset_path}')\n`;
         code += `\n`;
         code += data_preprocessing + '\n'; 
         code += `\n`;
