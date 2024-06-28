@@ -3691,11 +3691,11 @@ Blockly.Python['rnn_model'] = function(block) {
     code += `from tensorflow.keras.models import Sequential\n`;
 
     if (layers && layersFlag.includes("Embedding")) { code += 'from tensorflow.keras.layers import Embedding\n'; }
-    if (layers && layersFlag.includes("SimpleRNN")) { code += 'from tensorflow.keras.layers import SimpleRNN\n'; }
+    if (layers && layersFlag.includes("Simple_RNN")) { code += 'from tensorflow.keras.layers import SimpleRNN\n'; }
     if (layers && layersFlag.includes("LSTM")) { code += 'from tensorflow.keras.layers import LSTM\n'; }
     if (layers && layersFlag.includes("GRU")) { code += 'from tensorflow.keras.layers import GRU\n'; }
     if (layers && layersFlag.includes("Dense")) { code += 'from tensorflow.keras.layers import Dense\n'; }
-    if (layers && layersFlag.includes("Dropout")) { code += 'from tensorflow.keras.layers import Dropout\n'; }
+    if (layers && layersFlag.includes("dropout")) { code += 'from tensorflow.keras.layers import Dropout\n'; }
 
 
     if (data_type === 'audio') {
@@ -3907,7 +3907,7 @@ Blockly.Python['simple_rnn'] = function(block) {
         layersFlag.push("Simple_RNN");
     }
     
-    var code = `SimpleRNN(${units}, activation='${activation}')`;
+    var code = `SimpleRNN(${units}, activation='${activation}' , input_shape=(X_train.shape[1], X_train.shape[2])`;
     if (nextLayer) {
         code += `,\n${nextLayer}`;
     }
