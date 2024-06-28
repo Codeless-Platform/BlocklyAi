@@ -1881,6 +1881,135 @@ Blockly.defineBlocksWithJsonArray([
 
     // ]);
 
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "remove_outliers",
+            "message0": "Remove Outliers in Column: %1 %2 Method: %3 %4",
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "COLUMN_NAME",
+                    "text": "column_name"
+                },
+                {
+                    "type": "input_dummy"
+                },
+                {
+                    "type": "field_dropdown",
+                    "name": "method",
+                    "options": [
+                        ["IQR", "IQR"],
+                        ["Z-score", "Z-score"]
+                    ]
+                },
+                {
+                    "type": "input_value",
+                    "name": "nextblock",
+                    "check": "Preprocessing"
+                }
+            ],
+            "inputsInline": false,
+            "output": "Preprocessing",
+            "colour": 230,
+            "tooltip": "Remove outliers using specified method",
+            "helpUrl": ""
+        }
+    ]);
+    
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "remove_duplicates",
+            "message0": "Remove Duplicates %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "nextblock",
+                    "check": "Preprocessing"
+                }
+            ],
+            "inputsInline": false,
+            "output": "Preprocessing",
+            "colour": 230,
+            "tooltip": "Remove duplicate rows",
+            "helpUrl": ""
+        }
+    ]);
+    
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "handle_missing_data",
+            "message0": "Impute Missing Data with %1 %2",
+            "args0": [
+                {
+                    "type": "field_dropdown",
+                    "name": "strategy",
+                    "options": [
+                        ["mean", "mean"],
+                        ["median", "median"],
+                        ["most_frequent", "most_frequent"]
+                    ]
+                },
+                {
+                    "type": "input_value",
+                    "name": "nextblock",
+                    "check": "Preprocessing"
+                }
+            ],
+            "inputsInline": false,
+            "output": "Preprocessing",
+            "colour": 230,
+            "tooltip": "Impute missing data with specified strategy",
+            "helpUrl": ""
+        }
+    ]);
+    
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "remove_null_values",
+            "message0": "Remove Null Values %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "nextblock",
+                    "check": "Preprocessing"
+                }
+            ],
+            "inputsInline": false,
+            "output": "Preprocessing",
+            "colour": 230,
+            "tooltip": "Remove rows with null values",
+            "helpUrl": ""
+        }
+    ]);
+    
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+        "type": "one_hot_encoding",
+        "message0": "Encode Column: %1 %2",
+        "args0": [
+          {
+            "type": "field_input",
+            "name": "COLUMN_NAME",
+            "text": "column_name"
+          },
+          {
+            "type": "input_value",
+            "name": "nextblock",
+            "check": "Preprocessing"
+            }
+        ],
+        "inputsInline": false,
+        "output": "Preprocessing",
+        "colour": 230,
+        "tooltip": "One-Hot Encode a specified column",
+        "helpUrl": ""
+      }
+    ]);  
+
     // RNN Layers //
 
     Blockly.defineBlocksWithJsonArray([{

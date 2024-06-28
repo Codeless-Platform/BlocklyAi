@@ -3928,7 +3928,7 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         var code = `import pandas as pd\n`;
         code += `from sklearn.cluster import KMeans\n`;
         code += `\n`;
-        code += `dataset = pd.read_csv('${dataset_path}')\n`;
+        code += `data = pd.read_csv('${dataset_path}')\n`;
         code += `\n`;
         code += data_preprocessing + '\n'; 
         code += `\n`;
@@ -3954,9 +3954,59 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         return code;
 };
 
-    Blockly.Python['unsupervised_training'] = function(block) {
+Blockly.Python['unsupervised_training'] = function(block) {
         var text_training_input = block.getFieldValue('Training_input');
         var code = `model.fit(${text_training_input})\n`;
         return [code, Blockly.Python.ORDER_ATOMIC];
-    };
+};
 
+Blockly.Python['one_hot_encoding'] = function(block) {
+    var column_name = block.getFieldValue('COLUMN_NAME');
+    var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
+  
+    var code = `data = pd.get_dummies(data, columns=['${column_name}'])\n` + next_block_code;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['remove_null_values'] = function(block) {
+    var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `data = data.dropna()\n` + next_block_code;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['handle_missing_data'] = function(block) {
+    var strategy = block.getFieldValue('strategy');
+    var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `from sklearn.impute import SimpleImputer\n`;
+    code += `imputer = SimpleImputer(strategy='${strategy}')\n`;
+    code += `data = pd.DataFrame(imputer.fit_transform(data), columns=data.columns)\n` + next_block_code;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['remove_duplicates'] = function(block) {
+    var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `data = data.drop_duplicates()\n` + next_block_code;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['remove_outliers'] = function(block) {
+    var column_name = block.getFieldValue('COLUMN_NAME');
+    var method = block.getFieldValue('method');
+    var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
+    
+    var code = "";
+    if (method === "IQR") {
+        code += `Q1 = data['${column_name}'].quantile(0.25)\n`;
+        code += `Q3 = data['${column_name}'].quantile(0.75)\n`;
+        code += `IQR = Q3 - Q1\n`;
+        code += `data = data[~((data['${column_name}'] < (Q1 - 1.5 * IQR)) | (data['${column_name}'] > (Q3 + 1.5 * IQR)))]\n`;
+    } else if (method === "Z-score") {
+        code += `from scipy import stats\n`;
+        code += `data = data[(np.abs(stats.zscore(data['${column_name}'])) < 3)]\n`;
+    }
+    
+    code += next_block_code;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+  
+      
