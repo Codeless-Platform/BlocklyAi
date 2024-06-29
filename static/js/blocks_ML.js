@@ -2010,6 +2010,17 @@ Blockly.defineBlocksWithJsonArray([
       }
     ]);  
 
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "label_encoding",
+            "message0": "Label Encoding",
+            "output": "Preprocessing",
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+          }
+    ]);
+
     // RNN Layers //
 
     Blockly.defineBlocksWithJsonArray([{
@@ -2127,7 +2138,7 @@ Blockly.defineBlocksWithJsonArray([
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "rnn_model",
-            "message0": "RNN model %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Data type %6 %7 label %8 %9 Layers %10 compile %11 Model fit %12 Model evaluate %13 %14 Use Augmentation %15",
+            "message0": "RNN model %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Data type %6 %7 label %8 %9 Layers %10 compile %11 Model fit %12 Model evaluate %13 %14 Use Augmentation %15 %16 Visualization %17",
             "args0": [
                 {
                     "type": "input_dummy"
@@ -2194,6 +2205,14 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "field_checkbox",
                     "name": "use_augmentation",
                     "checked": false
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_value",
+                  "name": "Visualization",
+                  "check": "Visualization_nn"
                 }
             ],
             "colour": 230,
@@ -2990,7 +3009,7 @@ Blockly.defineBlocksWithJsonArray([
           Blockly.defineBlocksWithJsonArray([
             {
                 "type": "som",
-                "message0": "SOM  %1 Dataset path %2 %3 Input Variable: %4 , Output Variable: %5 ,Target Column %6 %7 Split Variables into: %8 , %9 , %10 , %11 , test size= %12 , random state= %13 %14 %15 Encode Data (String data?) %16 %17 Model Initialization %18 SOM Label Assignment %19 Model Metrics %20 Visualization %21",
+                "message0": "SOM  %1 Dataset path %2 %3 Preprocessing %4 Encoding %5 Data Split %6 Model Initialization %7 SOM Label Assignment %8 Model Evaluation %9 Model Metrics %10 Visualization %11",
                 "args0": [
                   {
                     "type": "input_dummy"
@@ -3004,66 +3023,19 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_dummy"
                   },
                   {
-                    "type": "field_input",
-                    "name": "input_var",
-                    "text": "x"
+                    "type": "input_value",
+                    "name": "input_output",
+                    "check" : "Preprocessing"
                   },
                   {
-                    "type": "field_input",
-                    "name": "output_var",
-                    "text": "y"
+                    "type": "input_value",
+                    "name": "encoding",
+                    "check" : "Preprocessing"
                   },
                   {
-                    "type": "field_input",
-                    "name": "output_column",
-                    "text": "output_column"
-                  },
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "input_train",
-                    "text": "X_train"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "input_test",
-                    "text": "X_test"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "output_train",
-                    "text": "y_train"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "output_test",
-                    "text": "y_test"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "test_size",
-                    "text": "0.2"
-                  },
-                  {
-                    "type": "field_input",
-                    "name": "random_state",
-                    "text": "42"
-                  },
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                    "type": "input_dummy"
-                  },
-                  {
-                      "type": "field_checkbox",
-                      "name": "encode_data",
-                      "checked": false
-                  },
-                  {
-                    "type": "input_dummy"
+                    "type": "input_value",
+                    "name": "split",
+                    "check" : "Preprocessing"
                   },
                   {
                     "type": "input_value",
@@ -3074,6 +3046,11 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_value",
                     "name": "som_assign",
                     "check" : "som_assign"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "som_evaluation",
+                    "check" : "som_evaluate"
                   },
                   {
                     "type": "input_value",
@@ -3093,6 +3070,16 @@ Blockly.defineBlocksWithJsonArray([
             ]);
 /* Deep Learning ends */
 /* SOM Blocks begins */
+Blockly.defineBlocksWithJsonArray([
+{
+    "type": "som_evaluation",
+    "message0": "Som Evaluation",
+    "output": "som_evaluate",
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }
+]);
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "som_init",
@@ -4486,8 +4473,13 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "histograms",
-          "message0": "Histograms %1",
+          "message0": "Histograms , SOM? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "histograms"
@@ -4503,8 +4495,13 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "box_plots",
-          "message0": "Box Plots %1",
+          "message0": "Box Plots , SOM? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "box_plots"
@@ -4520,8 +4517,13 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "heatmaps",
-          "message0": "Heatmaps %1",
+          "message0": "Heatmaps , SOM? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "som",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "heatmaps"

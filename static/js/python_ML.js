@@ -2200,6 +2200,8 @@ var VarData = {};
     return Blockly.Python;
 
 });
+
+/* ------------------------------ Global Variables section begins ------------------------------ */
 var global_predicted_variable= "y_predicted";
 var input = "x";
 var output = "y";
@@ -2208,33 +2210,41 @@ var x_test = 'X_test';
 var y_train = 'y_train';
 var y_test = 'y_test';
 var test_size = 'test_size';
+var target_column = 'target_column'
+/* ------------------------------ Global Variables section ends ------------------------------ */
 
+/* ------------------------------ Classification Metrics section begins ------------------------------ */
 Blockly.Python['f1score'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import f1_score\nf1 = f1_score(${y_test},${global_predicted_variable}) \n`;
+    var code =  `\nfrom sklearn.metrics import f1_score\nf1 = f1_score(${y_test},${global_predicted_variable}) \n`; +
+                `print(f'F1 Score: {f1}')`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 
 Blockly.Python['recall'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import recall_score\nrecall =recall_score(${y_test},${global_predicted_variable}) \n`;
+    var code =  `\nfrom sklearn.metrics import recall_score\nrecall =recall_score(${y_test},${global_predicted_variable}) \n` +
+                `print(f'Recall: {recall}')`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 
 Blockly.Python['precision'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import precision_score\nprecision = precision_score(${y_test},${global_predicted_variable}) \n`;
+    var code = `\nfrom sklearn.metrics import precision_score\nprecision = precision_score(${y_test},${global_predicted_variable}) \n` +
+               `print(f'Precision: {precision}')`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 Blockly.Python['accuracy'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `\nfrom sklearn.metrics import accuracy_score\naccuracy = accuracy_score(${y_test},${global_predicted_variable}) \n`;
+    var code =  `\nfrom sklearn.metrics import accuracy_score\naccuracy = accuracy_score(${y_test},${global_predicted_variable}) \n` +
+                `print(f'Accuracy: {accuracy}')`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
+/* ------------------------------ Classification Metrics section begins ------------------------------ */
 
 Blockly.Python['evaluation'] = function(block) {
     var text_training_input = block.getFieldValue('predicted_variable');
@@ -2504,16 +2514,11 @@ Blockly.Python['cnn_model'] = function(block) {
 /* SOM MODEL begins */
 Blockly.Python['som'] = function(block) {
     var dataset_path = block.getFieldValue('dataset_path');
-    var input_var = block.getFieldValue('input_var');
-    var output_var = block.getFieldValue('output_var');
-    var output_column = block.getFieldValue('output_column');
-    var input_train = block.getFieldValue('input_train');
-    var input_test = block.getFieldValue('input_test');
-    var output_train = block.getFieldValue('output_train');
-    var output_test = block.getFieldValue('output_test');
-    var test_size = block.getFieldValue('test_size');
-    var random_state = block.getFieldValue('random_state');
+    var input_output = Blockly.Python.valueToCode(block, 'input_output', Blockly.Python.ORDER_ATOMIC) || '';
+    var encoding = Blockly.Python.valueToCode(block, 'encoding', Blockly.Python.ORDER_ATOMIC) || '';
+    var splitting = Blockly.Python.valueToCode(block, 'split', Blockly.Python.ORDER_ATOMIC) || '';
     var encode_data = block.getFieldValue('encode_data') === 'TRUE';
+    var som_evaluate = Blockly.Python.valueToCode(block, 'som_evaluation', Blockly.Python.ORDER_ATOMIC) || '';
     var som_assign = Blockly.Python.valueToCode(block, 'som_assign', Blockly.Python.ORDER_ATOMIC) || '';
     var som_init = Blockly.Python.valueToCode(block, 'som_init', Blockly.Python.ORDER_ATOMIC) || '';
     var metrics = Blockly.Python.valueToCode(block, 'metrics', Blockly.Python.ORDER_ATOMIC) || '';
@@ -2524,17 +2529,22 @@ Blockly.Python['som'] = function(block) {
                `from minisom import MiniSom\n` +
                `from sklearn.model_selection import train_test_split\n` +
                `from sklearn.preprocessing import StandardScaler\n`;
+    /*
     if (encode_data) {
         code += `from sklearn.preprocessing import LabelEncoder\n`;
     }
+    */
 
     code += `\n# Load the dataset from a CSV file\n` +
             `dataset_path = "${dataset_path}"\n` +
             `data = pd.read_csv(dataset_path)\n\n` +
-            `# Prepare features and target\n` +
-            `${input_var} = data.drop(columns=['${output_column}'])\n` +
-            `${output_var} = data['${output_column}']\n`;
+            `# Prepare features and target\n`;
+    
+    code += input_output + '\n';
+    code += encoding + '\n';
+    code += splitting + '\n';
 
+    /*
     if (encode_data) {
         code += `\n# Encode string columns in features\n` +
                 `label_encoders = {}\n` +
@@ -2558,12 +2568,15 @@ Blockly.Python['som'] = function(block) {
             `${input_train} = sc.fit_transform(${input_train})\n` +
             `${input_test} = sc.transform(${input_test})\n\n`;
 
+    */
+
     code += som_init;
 
     if (som_assign) {
         code += som_assign;
     }
 
+    code += som_evaluate + '\n';
     code += metrics + '\n';
     code += value_visualization + '\n';
 
@@ -2573,6 +2586,17 @@ Blockly.Python['som'] = function(block) {
 /* SOM Model ends */
 
 /* SOM Blocks begins */
+Blockly.Python['som_evaluation'] = function(block) {
+
+    var code =  `# Predict clusters for the test set based on the trained SOM\n` +
+                `${global_predicted_variable} = []\n` +
+                `for x in X_test:\n` +
+                `    w = som.winner(x)\n` +
+                `    y_predicted.append(neuron_labels[w])\n\n`;
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
+
 Blockly.Python['som_init'] = function(block) {
     var x_neurons = block.getFieldValue('x_neurons');
     var y_neurons = block.getFieldValue('y_neurons');
@@ -3091,7 +3115,7 @@ Blockly.Python['input_output'] = function(block) {
     var value_preprocessing = Blockly.Python.valueToCode(block,'input_output', Blockly.Python.ORDER_ATOMIC) || '';
     input = block.getFieldValue('input_variable');
     output = block.getFieldValue('output_variable');
-    var target_column = block.getFieldValue('target_column');
+    target_column = block.getFieldValue('target_column');
 
     var code = `${input} = data.drop(columns=['${target_column}'], axis=1);\n`
     code += `${output} = data['${target_column}'];\n`
@@ -3136,12 +3160,20 @@ Blockly.Python['scatter_plot'] = function(block) {
 
   Blockly.Python['histograms'] = function(block) {
     var histograms_input = Blockly.Python.valueToCode(block, 'histograms', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# Histograms\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'x.hist(bins=20, figsize=(20, 15))\n' +
-                'plt.show()\n';
-
+    if (som) {
+        var code =  '# Histograms\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `${input}_df = pd.DataFrame(x)\n` +
+                    `${input}_df.hist(bins=20, figsize=(20, 15))\n` +
+                    'plt.show()\n';
+    }else {
+        var code =  '# Histograms\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `${input}.hist(bins=20, figsize=(20, 15))\n` +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (histograms_input) {
         code += `\n${histograms_input}`;
@@ -3152,12 +3184,19 @@ Blockly.Python['scatter_plot'] = function(block) {
 
   Blockly.Python['box_plots'] = function(block) {
     var box_plots_input = Blockly.Python.valueToCode(block, 'box_plots', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# Box Plots\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'x.plot(kind=\'box\', subplots=True, layout=(20, 20), figsize=(20, 15), sharex=False, sharey=False)\n' +
-                'plt.show()\n';
-
+    if (som) {
+        var code =  '# Box Plots for feature distribution\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `${input}_df.plot(kind=\'box\', subplots=True, layout=(5, 5), figsize=(20, 15), sharex=False, sharey=False)\n` +
+                    'plt.show()\n';
+    }else {
+        var code =  '# Box Plots\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `${input}.plot(kind=\'box\', subplots=True, layout=(20, 20), figsize=(20, 15), sharex=False, sharey=False)\n` +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (box_plots_input) {
         code += `\n${box_plots_input}`;
@@ -3168,14 +3207,24 @@ Blockly.Python['scatter_plot'] = function(block) {
 
   Blockly.Python['heatmaps'] = function(block) {
     var heatmaps_input = Blockly.Python.valueToCode(block, 'heatmaps', Blockly.Python.ORDER_ATOMIC) || '';
+    var som = block.getFieldValue('som') === 'TRUE';
 
-    var code =  '# Heatmaps\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'import seaborn as sns\n' +
-                'plt.figure(figsize=(12, 10))\n' +
-                'sns.heatmap(x.corr(), annot=True, cmap=\'coolwarm\')\n' +
-                'plt.show()\n';
-
+    if (som) {
+        var code =  '# Heatmaps\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    'plt.figure(figsize=(12, 10))\n' +
+                    `sns.heatmap(${input}_df.corr(), annot=True, cmap=\'coolwarm\')\n` +
+                    'plt.show()\n';
+    }else {
+        var code =  '# Heatmaps\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    'plt.figure(figsize=(12, 10))\n' +
+                    `sns.heatmap(${input}.corr(), annot=True, cmap=\'coolwarm\')\n` +
+                    'plt.title(\'Feature Correlation Heatmap\')\n' +
+                    'plt.show()\n';
+    }
     // If there is an input value, append it to the code
     if (heatmaps_input) {
         code += `\n${heatmaps_input}`;
@@ -3433,22 +3482,17 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var som = block.getFieldValue('som') === 'TRUE';
 
     if (som) {
-        var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
-                `${global_predicted_variable} = []\n` +
-                `for x in ${x_test}:\n` +
-                `    w = som.winner(x)\n` +
-                `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
-                '\n# Confusion Matrix\n' +
-                'from sklearn.metrics import confusion_matrix\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'import seaborn as sns\n' +
-                `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
-                'plt.figure(figsize=(8, 6))\n' +
-                'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
-                'plt.title(\'Confusion Matrix\')\n' +
-                'plt.xlabel(\'Predicted labels\')\n' +
-                'plt.ylabel(\'True labels\')\n' +
-                'plt.show()\n';
+        var code =  '\n# Confusion Matrix\n' +
+                    'from sklearn.metrics import confusion_matrix\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
+                    'plt.figure(figsize=(8, 6))\n' +
+                    'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
+                    'plt.title(\'Confusion Matrix\')\n' +
+                    'plt.xlabel(\'Predicted labels\')\n' +
+                    'plt.ylabel(\'True labels\')\n' +
+                    'plt.show()\n';
     }else {
         var code =  '# Confusion Matrix\n' +
                     'from sklearn.metrics import confusion_matrix\n' +
@@ -3476,12 +3520,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var som = block.getFieldValue('som') === 'TRUE';
 
     if (som) {
-    var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
-                `${global_predicted_variable} = []\n` +
-                `for x in ${x_test}:\n` +
-                `    w = som.winner(x)\n` +
-                `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
-                '\n# ROC Curve\n' +
+    var code =      '\n# ROC Curve\n' +
                     'from sklearn.metrics import auc, roc_curve\n' +
                     'import matplotlib.pyplot as plt\n' +
                     `fpr, tpr, _ = roc_curve(${y_test}, ${global_predicted_variable})\n` +
@@ -3528,12 +3567,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
     var som = block.getFieldValue('som') === 'TRUE';
 
     if (som) {
-        var code = `\n# Predict clusters for the test set based on the trained SOM\n` +
-                    `${global_predicted_variable} = []\n` +
-                    `for x in ${x_test}:\n` +
-                    `    w = som.winner(x)\n` +
-                    `    ${global_predicted_variable}.append(neuron_labels[w])\n` +
-                    '\n# Precision-Recall Curve\n' +
+        var code =  '\n# Precision-Recall Curve\n' +
                     'from sklearn.metrics import PrecisionRecallDisplay, precision_recall_curve\n' +
                     'import matplotlib.pyplot as plt\n' +
                     `precision, recall, _ = precision_recall_curve(${y_test}, ${global_predicted_variable})\n` +
@@ -3686,6 +3720,7 @@ Blockly.Python['rnn_model'] = function(block) {
     var compile = Blockly.Python.valueToCode(block, 'rnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
     var fit = Blockly.Python.valueToCode(block, 'rnnFit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'rnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
+    var visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
 
     var code = `import pandas as pd\n`;
     code += `from tensorflow.keras.models import Sequential\n`;
@@ -3829,17 +3864,10 @@ Blockly.Python['rnn_model'] = function(block) {
     code += compile;
     code += fit;
     code += evaluate;
+    code += visualization;
 
     return code;
 };
-
-
-
-
-
-
-
-
 
 Blockly.Python['embedding'] = function(block) {
     var input_dim = block.getFieldValue('input_dim');
@@ -3967,6 +3995,26 @@ Blockly.Python['one_hot_encoding'] = function(block) {
     var code = `data = pd.get_dummies(data, columns=['${column_name}'])\n` + next_block_code;
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
+
+Blockly.Python['label_encoding'] = function(block) {
+
+    var code =  `from sklearn.preprocessing import LabelEncoder\n` +
+                `import numpy as np\n` +
+                `# Encode string columns in features\n` +
+                `label_encoders = {}\n` +
+                `for col in ${input}.columns:\n` +
+                `    if ${input}[col].dtype == 'object':\n` +
+                `        label_encoders[col] = LabelEncoder()\n` +
+                `        ${input}[col] = label_encoders[col].fit_transform(${input}[col])\n\n` +
+                `# Encode target column if it contains strings\n` +
+                `if ${output}.dtype == 'object':\n` +
+                `    label_encoders['${target_column}'] = LabelEncoder()\n` +
+                `    ${output} = label_encoders['${target_column}'].fit_transform(${output})\n\n` +
+                `# Convert to numpy arrays\n` +
+                `${input} =  ${input}.values\n\n`;
+
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
 
 Blockly.Python['remove_null_values'] = function(block) {
     var next_block_code = Blockly.Python.valueToCode(block, 'nextblock', Blockly.Python.ORDER_ATOMIC) || '';
