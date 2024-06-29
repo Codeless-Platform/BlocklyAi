@@ -3759,7 +3759,7 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))\n`;
         code += `X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))\n\n`;
     } else if (data_type === 'video') {
-        code += ` import random \n`;
+        code += `import random \n`;
         code += `def augment_frame(frame):\n`;
         code += `    if random.random() < 0.5:\n`;
         code += `        frame = cv2.flip(frame, 1)  # Horizontal flip\n`;
@@ -3907,7 +3907,7 @@ Blockly.Python['simple_rnn'] = function(block) {
         layersFlag.push("Simple_RNN");
     }
     
-    var code = `SimpleRNN(${units}, activation='${activation}' , input_shape=(X_train.shape[1], X_train.shape[2])`;
+    var code = `SimpleRNN(${units}, activation='${activation}' , input_shape=(X_train.shape[1], X_train.shape[2]))`;
     if (nextLayer) {
         code += `,\n${nextLayer}`;
     }
