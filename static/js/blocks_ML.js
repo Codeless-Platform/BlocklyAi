@@ -1883,6 +1883,41 @@ Blockly.defineBlocksWithJsonArray([
 
     Blockly.defineBlocksWithJsonArray([
         {
+            "type": "silhouette_score",
+            "message0": "Silhouette Score %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "metric",
+                    "check": "Metric"
+                }
+            ],
+            "output": "Metric",
+            "colour": 230,
+            "tooltip": "Calculate Silhouette Score",
+            "helpUrl": ""
+        },
+        {
+            "type": "davies_bouldin_index",
+            "message0": "Davies-Bouldin Index %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "metric",
+                    "check": "Metric"
+                }
+            ],
+            "output": "Metric",
+            "colour": 230,
+            "tooltip": "Calculate Davies-Bouldin Index",
+            "helpUrl": ""
+        }
+    ]);
+    
+    
+
+    Blockly.defineBlocksWithJsonArray([
+        {
             "type": "remove_outliers",
             "message0": "Remove Outliers in Column: %1 %2 Method: %3 %4",
             "args0": [
@@ -2215,7 +2250,7 @@ Blockly.defineBlocksWithJsonArray([
                   "check": "Visualization_nn"
                 }
             ],
-            "colour": 230,
+            "colour": 140,
             "tooltip": "",
             "helpUrl": ""
         }
@@ -2293,7 +2328,7 @@ Blockly.defineBlocksWithJsonArray([
                     "value": "3"
                 }
             ],
-            "colour": 230,
+            "colour": 140,
             "tooltip": "",
             "helpUrl": ""
         }
@@ -2628,7 +2663,7 @@ Blockly.defineBlocksWithJsonArray([
             }
         ],
         "mutator": "regression_models_mutator",
-        "colour": 230,
+        "colour": 140,
         "tooltip": "",
         "helpUrl": ""
       }]);
@@ -2923,7 +2958,7 @@ Blockly.defineBlocksWithJsonArray([
               "check": "visualization"
             }
           ],
-          "colour": 230,
+          "colour": 140,
           "tooltip": "",
           "helpUrl": ""
         }
@@ -3000,7 +3035,7 @@ Blockly.defineBlocksWithJsonArray([
                   "check": "visualization"
                 }
               ],
-              "colour": 230,
+              "colour": 140,
               "tooltip": "",
               "helpUrl": ""
             }
@@ -3063,7 +3098,7 @@ Blockly.defineBlocksWithJsonArray([
                     "check": "Visualization_nn"
                   },
                 ],
-                "colour": 230,
+                "colour": 140,
                 "tooltip": "",
                 "helpUrl": ""
               }
@@ -4163,7 +4198,7 @@ Blockly.defineBlocksWithJsonArray([{
         }
     ],
     "mutator": "classification_models_mutator",
-    "colour": 230,
+    "colour": 140,
     "tooltip": "",
     "helpUrl": ""
   }]);

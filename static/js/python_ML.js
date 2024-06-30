@@ -2383,22 +2383,26 @@ Blockly.Python['regression_models'] = function(block) {
 
 Blockly.Python['mae'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code =`from sklearn.metrics import mean_absolute_error\nmae = mean_absolute_error(${y_test},${global_predicted_variable})\n`;
+    var code = `from sklearn.metrics import mean_absolute_error\n`;
+    code += `mae = mean_absolute_error(${y_test}, ${global_predicted_variable})\n`;
+    code += `print(f'Mean Absolute Error: {mae}')\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
-  };
+};
 Blockly.Python['mse'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = 'from sklearn.metrics import mean_squared_error\n';
+    var code = `from sklearn.metrics import mean_squared_error\n`;
     code += `mse = mean_squared_error(${y_test}, ${global_predicted_variable})\n`;
+    code += `print(f'Mean Squared Error: {mse}')\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
-  };
+};
   
-  Blockly.Python['r_squared'] = function(block) {
+Blockly.Python['r_squared'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = 'from sklearn.metrics import r2_score\n';
-    code += `r_squared = r2_score(${y_test},${global_predicted_variable})\n`;
+    var code = `from sklearn.metrics import r2_score\n`;
+    code += `r_squared = r2_score(${y_test}, ${global_predicted_variable})\n`;
+    code += `print(f'R-Squared: {r_squared}')\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
@@ -3744,7 +3748,7 @@ Blockly.Python['rnn_model'] = function(block) {
 
     if (data_type === 'audio') {
         if (use_augmentation) {
-            code += ` import random \n`;
+            code += `import random \n`;
             code += `def augment_audio(data, sr):\n`;
             code += `    if random.random() < 0.5:\n`;
             code += `        data = data + 0.005 * np.random.randn(len(data))  # Add noise\n`;
@@ -4058,3 +4062,20 @@ Blockly.Python['remove_outliers'] = function(block) {
 };
   
       
+Blockly.Python['silhouette_score'] = function(block) {
+    var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `from sklearn.metrics import silhouette_score\n`;
+    code += `silhouette = silhouette_score(${y_test}, ${global_predicted_variable})\n`;
+    code += `print(f'Silhouette Score: {silhouette}')\n`;
+    code += value_metric + '\n';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['davies_bouldin_index'] = function(block) {
+    var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `from sklearn.metrics import davies_bouldin_score\n`;
+    code += `davies_bouldin = davies_bouldin_score(${y_test}, ${global_predicted_variable})\n`;
+    code += `print(f'Davies-Bouldin Index: {davies_bouldin}')\n`;
+    code += value_metric + '\n';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};

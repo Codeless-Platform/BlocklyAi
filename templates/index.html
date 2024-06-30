@@ -635,118 +635,16 @@
         </category>
         <sep></sep>
         <sep></sep>
-        <category name="Shoghl" colour="%{BKY_LOGIC_HUE}">
-            <category name="Agu" colour="%{BKY_LOGIC_HUE}">
-                <block type="rescale">
-                    <field name="rescale">1.0/255</field>
-                </block>
-                <block type="vertical_flip">
-                    <field name="vertical_flip"></field>
-                </block>
-                <block type="zoom_range">
-                    <field name="zoom_range">0.2</field>
-                </block>
-                <block type="shear_range">
-                    <field name="shear_range">0.2</field>
-                </block>
-                <block type="width_shift_range">
-                    <field name="width_shift_range">0.2</field>
-                </block>
-                <block type="rotation_range">
-                    <field name="rotation_range">40</field>
-                </block>
-                <block type="height_shift_range">
-                    <field name="height_shift_range">0.2</field>
-                </block>
-                <block type="channel_shift_range">
-                    <field name="channel_shift_range">0.2</field>
-                </block>
-                <block type="horizontal_flip">
-                    <field name="horizontal_flip"></field>
-                </block>
-                <block type="featurewise_center">
-                    <field name="featurewise_center"></field>
-                </block>
-                <block type="featurewise_std_normalization">
-                    <field name="featurewise_std_normalization"></field>
-                </block>
-                <block type="samplewise_std_normalization">
-                    <field name="samplewise_std_normalization"></field>
-                </block>
-                <block type="samplewise_center">
-                    <field name="samplewise_center"></field>
-                </block>
-                <block type="zca_whitening">
-                    <field name="zca_whitening"></field>
-                </block>
-                <block type="brightness_range">
-                    <field name="brightness_min">0.2</field>
-                    <field name="brightness_max">1.0</field>
-                </block>
-                <block type="fill_mode">
-                    <field name="fill_mode">constant</field>
-                </block>
-            </category>
-            <category name="Gen" colour="%{BKY_LOGIC_HUE}">
-                <block type="color_mode">
-                    <field name="color_mode">rgb</field>
-                </block>
-                <block type="interpolation">
-                    <field name="interpolation">bilinear</field>
-                </block>
-                <block type="subset">
-                    <field name="subset">training</field>
-                </block>
-                <block type="shuffle">
-                </block>
-                <block type="augment">
-                </block>
-                <block type="save_format">
-                    <field name="save_format">png</field>
-                </block>
-                <block type="seed">
-                    <field name="seed">42</field>
-                </block>
-                <block type="save_to_dir">
-                    <field name="save_to_dir">/path/to/save/directories</field>
-                </block>
-                <block type="save_prefix">
-                    <field name="save_prefix">image</field>
-                </block>
-                <block type="class_mode">
-                    <field name="class_mode">Class mode</field>
-                </block>
-                <block type="target_size">
-                    <field name="target_size">Target size</field>
-                </block>
-                <block type="batch_size">
-                    <field name="batch_size">32</field>
-                </block>
-            </category>
-            <category name="layers" colour="%{BKY_LOGIC_HUE}">
-                <block type="averagepooling2d">
-                    <field name="averagepooling2d">Averagepooling2d</field>
-                </block>
-                <block type="maxpooling2d">
-                    <field name="maxpooling2d">Maxpooling2d</field>
-                </block>
-                <block type="Conv2D">
-                    <field name="Conv2D">Conv2D</field>
-                </block>
-                <block type="Conv2Dfirst">
-                    <field name="Conv2Dfirst">Conv input layer</field>
-                </block>
-                <block type="flatten">
-                    <field name="flatten">flatten</field>
-                </block>
-                <block type="dropout">
-                    <field type="dropout">Dropout</field>
-                </block>
-                
-        </category>
-    </category>
 
         <category name="Codeless (neural network)" colour="%{BKY_LOGIC_HUE}">
+            <block type="silhouette_score">
+                <field type="silhouette_score">Silhouette score</field>
+            </block>
+            <block type="davies_bouldin_index">
+                <field type="davies_bouldin_index">Davies_bouldin index</field>
+            </block>
+
+
             <block type="one_hot_encoding">
                 <field type="one_hot_encoding">one-hot encoding</field>
             </block>
@@ -933,24 +831,101 @@
                 <field type="mae">Mae</field>
             </block>
         </category>
+        <sep></sep>
+        
+        <category name="Unsupervised Machine Learning"></category>
+        <category name="Models" colour="%{BKY_LOGIC_HUE}">
+            <block type="kmeans_clustering">
+                <field type="kmeans_clustering">kmeans_clustering</field>
+            </block>
+            <block type="som">
+                <field type="som">SOM Model</field>
+            </block>
+
+        </category>
+
+        <category name="Train & Evaluation " colour="%{BKY_LOGIC_HUE}">
+            <block type="unsupervised_training">
+                <field type="unsupervised_training">unsupervised_training</field>
+            </block>
+            <block type="evaluation">
+                <field type="evaluation"> Evaluation</field>
+            </block>
+            <block type="prediction">
+                <field type="prediction">Prediction</field>
+            </block>
+            <block type="som_evaluation">
+                <field type="som_evaluation">SOM Evaluation</field>
+            </block>
+            <block type="som_init">
+                <field type="som_init">SOM Initialization</field>
+            </block>
+            <block type="som_assign">
+                <field type="som_assign">SOM Label Assignment</field>
+            </block>
+        </category>
+        <category name="Metrics" colour="%{BKY_LOGIC_HUE}">
+            <block type="silhouette_score">
+                <field type="silhouette_score">Silhouette score</field>
+            </block>
+            <block type="davies_bouldin_index">
+                <field type="davies_bouldin_index">Davies_bouldin index</field>
+            </block>
+        </category>
+
 
         <sep></sep>
         <category name=" Deep Learning"></category>
         <category name="Models" colour="%{BKY_LOGIC_HUE}">
          <block type="sequential">
-             <field type="sequential">Sequentiale Model</field>
+             <field type="sequential">Sequential NN Model</field>
             </block>
             <block type="cnn_model">
                 <field type="cnn_model">CNN Model</field>
             </block>
-            <block type="som">
-                <field type="som">SOM Model</field>
+            <block type="rnn_model">
+                <field type="rnn_model">RNN Model</field>
             </block>
+            
         </category>
         <category name="Layers" colour="%{BKY_LOGIC_HUE}">
+
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
+            <block type="averagepooling2d">
+                <field name="averagepooling2d">Averagepooling2d</field>
+            </block>
+            <block type="maxpooling2d">
+                <field name="maxpooling2d">Maxpooling2d</field>
+            </block>
+            <block type="Conv2D">
+                <field name="Conv2D">Conv2D</field>
+            </block>
+            <block type="Conv2Dfirst">
+                <field name="Conv2Dfirst">Conv input layer</field>
+            </block>
+            <block type="flatten">
+                <field name="flatten">flatten</field>
+            </block>
+            <block type="dropout">
+                <field type="dropout">Dropout</field>
+            </block>
+
+            <block type="embedding">
+                <field type="embedding">embedding</field>
+            </block>
+            <block type="gru">
+                <field type="gru">gru</field>
+            </block>
+            <block type="lstm">
+                <field type="lstm">lstm</field>
+            </block>
+            <block type="simple_rnn">
+                <field type="simple_rnn">simple_rnn</field>
+            </block>
+
+
            </category>
            <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
             <block type="evaluate">
@@ -965,22 +940,104 @@
             <block type="cnn_fit">
                 <field type="cnn_fit">Cnn fit</field>
             </block>
-            <block type="sequential">
-                <field type="sequential">Sequentiale Model</field>
-            </block>            
+                       
             <block type="compile">
                 <field type="compile">Model compile</field>
             </block>
-            <block type="som_evaluation">
-                <field type="som_evaluation">SOM Evaluation</field>
-            </block>
-            <block type="som_init">
-                <field type="som_init">SOM Initialization</field>
-            </block>
-            <block type="som_assign">
-                <field type="som_assign">SOM Label Assignment</field>
-            </block>
+
            </category>
+
+           <category name="Augmentation" colour="%{BKY_LOGIC_HUE}">
+            <block type="rescale">
+                <field name="rescale">1.0/255</field>
+            </block>
+            <block type="vertical_flip">
+                <field name="vertical_flip"></field>
+            </block>
+            <block type="zoom_range">
+                <field name="zoom_range">0.2</field>
+            </block>
+            <block type="shear_range">
+                <field name="shear_range">0.2</field>
+            </block>
+            <block type="width_shift_range">
+                <field name="width_shift_range">0.2</field>
+            </block>
+            <block type="rotation_range">
+                <field name="rotation_range">40</field>
+            </block>
+            <block type="height_shift_range">
+                <field name="height_shift_range">0.2</field>
+            </block>
+            <block type="channel_shift_range">
+                <field name="channel_shift_range">0.2</field>
+            </block>
+            <block type="horizontal_flip">
+                <field name="horizontal_flip"></field>
+            </block>
+            <block type="featurewise_center">
+                <field name="featurewise_center"></field>
+            </block>
+            <block type="featurewise_std_normalization">
+                <field name="featurewise_std_normalization"></field>
+            </block>
+            <block type="samplewise_std_normalization">
+                <field name="samplewise_std_normalization"></field>
+            </block>
+            <block type="samplewise_center">
+                <field name="samplewise_center"></field>
+            </block>
+            <block type="zca_whitening">
+                <field name="zca_whitening"></field>
+            </block>
+            <block type="brightness_range">
+                <field name="brightness_min">0.2</field>
+                <field name="brightness_max">1.0</field>
+            </block>
+            <block type="fill_mode">
+                <field name="fill_mode">constant</field>
+            </block>
+        </category>
+
+        <category name="Generator" colour="%{BKY_LOGIC_HUE}">
+            <block type="color_mode">
+                <field name="color_mode">rgb</field>
+            </block>
+            <block type="interpolation">
+                <field name="interpolation">bilinear</field>
+            </block>
+            <block type="subset">
+                <field name="subset">training</field>
+            </block>
+            <block type="shuffle">
+            </block>
+            <block type="augment">
+            </block>
+            <block type="save_format">
+                <field name="save_format">png</field>
+            </block>
+            <block type="seed">
+                <field name="seed">42</field>
+            </block>
+            <block type="save_to_dir">
+                <field name="save_to_dir">/path/to/save/directories</field>
+            </block>
+            <block type="save_prefix">
+                <field name="save_prefix">image</field>
+            </block>
+            <block type="class_mode">
+                <field name="class_mode">Class mode</field>
+            </block>
+            <block type="target_size">
+                <field name="target_size">Target size</field>
+            </block>
+            <block type="batch_size">
+                <field name="batch_size">32</field>
+            </block>
+        </category>
+
+
+
            <sep></sep>
            <category name=" Visualization"></category>
            <category name="Data Visualization" colour="%{BKY_LOGIC_HUE}">
