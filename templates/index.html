@@ -49,74 +49,27 @@
 
 <body onclick="CloseAllNav()" id="body">
 
-    <nav
-        class="navbar navbar-expand-lg  navbar-expand-sm  navbar-expand-md  navbar-expand-xl navbar-light bg-light nav-colors">
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             &nbsp;
             &nbsp;
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="visibility: hidden;">
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" h data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" onclick="blockly.runJS();CloseAllNav();">
                         File
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                onclick="getReport()">DataFrame Visualizer(Sample) </a>
-                            <ul class="dropdown-menu DataFrameReportViewer">
-                                <div class="DataFrameReportViewer" id="DataFrameReportViewer">
-                                    <li><a class="dropdown-item" href="#">Report is Loading please Wait</a></li>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" onclick="blockly.runJS();CloseAllNav();getDataDownload()">
-                        Download
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
-                        <li><a class="dropdown-item" onclick="downloadView()">Download Code</a></li>
-                        <li><a class="dropdown-item" onclick="blockly.DownloadCode()">Download layout</a></li>
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Download DataFrames</a>
-                            <ul class="dropdown-menu DataFrameViewer">
-                                <div class="DataFrameDownload" id="DataFrameDownload">
-                                    <li><a class="dropdown-item" href="#">DataFrame is Loading please Wait</a>
-                                    </li>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" onclick="CloseAllNav()">
-                        About
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item"
-                                href="https://github.com/chekoduadarsh/BlocklyML/blob/main/README.md" target="_blank"
-                                rel="noopener noreferrer">About BlocklyML</a></li>
-                        <li><a class="dropdown-item" href="https://chekoduadarsh.github.io/" target="_blank"
-                                rel="noopener noreferrer">About me</a></li>
-                        <li><a class="dropdown-item" href="mailto:chekodu.adarsh@gmail.com" target="_blank"
-                                rel="noopener noreferrer">Contact me</a></li>
-                    </ul>
+                    
+                
                 </li>
             </ul>
-            <a href="https://github.com/chekoduadarsh/BlocklyML" target="_blank"><img
-                    src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="48px"
-                    height="48px"></a>
 
-            <select id="languageMenu"></select>
+            <select id="languageMenu" style="visibility: hidden;"></select>
         </div>
     </nav>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
-
+<div style="width: 100%; height: 19%;"></div>
     <table width="100%" height="95%">
         <tr>
             <td colspan=2>
@@ -133,13 +86,13 @@
                         </td>
                         <td class="tabmax">
                             <button id="downlaodButton" class="notext" title="download layout">
-                                <img src='/static/media/download.png' class="icon">
+                                <img id ="downloadIcon" src='/static/media/download2.png' class="icon">
                             </button>
-                    
+
                             <div class="upload-btn-wrapper">
                                 <button id="uplaodButton" onclick="blockly.UploadXml()" class="notext"
                                     title="upload saved layout">
-                                    <img src='/static/media/upload.png' class="icon">
+                                    <img id="uploadIcon" src='/static/media/upload-2.png' class="icon">
                                 </button>
                             </div>
 
@@ -186,56 +139,27 @@
 
                                 </div>
                             </div>
-                            <div class="tool-tip-popup" id="tip-popup">
-                                <a href="#" class="tool-tip-close" onclick=closeToolTip()></a>
-                                <h2>Tool Tip 💡</h2>
-                                <h4>How to upload layouts? </h4>
-                                </br>
-                                </br>
-                                <div class="tool-tip-github-button">
-                                    <a class="github-button" href="https://www.instagram.com/hazem.abdelnasser?igsh=MXA0cGZtMnhtd2tzaw%3D%3D&utm_source=qr"
-                                        data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-                                        data-size="large" data-show-count="true"
-                                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                                        aria-label="Follow @fhx7 on instagram">Follow @fhx7</a>
-                                    <a class="github-button" href="https://www.instagram.com/hazem.abdelnasser/"
-                                        data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-                                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                                        aria-label="Star chekoduadarsh/BlocklyML on GitHub">Follow @hazem.abdelnasser</a>
-                                    <a class="github-button" href="https://www.instagram.com/@hesham.deebo/"
-                                        data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-                                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                                        aria-label="Star chekoduadarsh/BlocklyML on GitHub">Follow @hesham.deebo</a>
-                                </div>
-                                <p>
-                                    1. Click on <img src='/static/media/upload.png' class="icon"> upload button </br>
-                                    </br>
-                                    <img src='https://raw.githubusercontent.com/chekoduadarsh/BlocklyML/main/media/blocklyML_upload.png'
-                                        class="tool-tip-upload-page">
-                                    </br>
-                                    2. Edit the Url to downloadable xml link / Or drop you xml to drop in zone</br>
-                                    3. Click on Upload button </br>
-                                    </br>
-                                    <b>Pro Tip: </b> You can use the default url to setup Pycaret Classifier on Iris
-                                    data</br>
-                                </p>
-                            </div>
 
                             <button id="copyButton" class="notext" title="copy python code">
-                                <img src='/static/media/copy.png' class="icon">
+                                <img id ="copyIcon"src='/static/media/copy-2.png' class="icon">
                             </button>
-                            <button id="colabButton" class="notext" title="launch google colab">
+
+                            <button id="colabButton" class="notext" title="launch google colab" >
                                 <img src='/static/media/colab_favicon.ico' class="icon">
                             </button>
+                            
                             <button id="trashButton" class="notext" title="...">
-                                <img src='/static/media/1x1.gif' class="trash icon21">
+                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" viewBox="10 10 20 40" width="20" height="200">
+                                    <path class="trash-lid" fill-rule="evenodd" d="M6 15l4 0 0-3 8 0 0 3 4 0 0 2 -16 0zM12 14l4 0 0 1 -4 0z" />
+                                    <path class="trash-can" d="M8 17h2v9h8v-9h2v9a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2z" />
+                                  </svg>
                             </button>
 
                             <button id="linkButton" class="notext" title="...">
                                 <img src='/static/media/1x1.gif' class="link icon21">
                             </button>
-                            <button id="runButton" class="notext primary" title="..." disabled>
-                                <img src='/static/media/1x1.gif' class="run icon21">
+                            <button id="runButton" title="..." style="display: none;">
+                                <img src='/static/media/play-icon.png'>
                             </button>
                         </td>
                     </tr>
@@ -253,534 +177,10 @@
 
     <pre><code id="content_python" class="language-python content prettyprint lang-py" ></code></pre>
 
-    <xml id="toolbox">
-        <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
-            <block type="controls_if"></block>
-            <block type="logic_compare"></block>
-            <block type="logic_operation"></block>
-            <block type="logic_negate"></block>
-            <block type="logic_boolean"></block>
-            <block type="logic_null"></block>
-            <block type="logic_ternary"></block>
-        </category>
-        <category name="%{BKY_CATLOOPS}" colour="%{BKY_LOOPS_HUE}">
-            <block type="controls_repeat_ext">
-                <value name="TIMES">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="controls_whileUntil"></block>
-            <block type="controls_for">
-                <value name="FROM">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="TO">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-                <value name="BY">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="controls_forEach"></block>
-            <block type="controls_flow_statements"></block>
-        </category>
-        <category name="%{BKY_CATMATH}" colour="%{BKY_MATH_HUE}">
-            <block type="math_number">
-                <field name="NUM">123</field>
-            </block>
-            <block type="math_arithmetic">
-                <value name="A">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="B">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_single">
-                <value name="NUM">
-                    <shadow type="math_number">
-                        <field name="NUM">9</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_trig">
-                <value name="NUM">
-                    <shadow type="math_number">
-                        <field name="NUM">45</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_constant"></block>
-            <block type="math_number_property">
-                <value name="NUMBER_TO_CHECK">
-                    <shadow type="math_number">
-                        <field name="NUM">0</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_round">
-                <value name="NUM">
-                    <shadow type="math_number">
-                        <field name="NUM">3.1</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_on_list"></block>
-            <block type="math_modulo">
-                <value name="DIVIDEND">
-                    <shadow type="math_number">
-                        <field name="NUM">64</field>
-                    </shadow>
-                </value>
-                <value name="DIVISOR">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_constrain">
-                <value name="VALUE">
-                    <shadow type="math_number">
-                        <field name="NUM">50</field>
-                    </shadow>
-                </value>
-                <value name="LOW">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="HIGH">
-                    <shadow type="math_number">
-                        <field name="NUM">100</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_random_int">
-                <value name="FROM">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="TO">
-                    <shadow type="math_number">
-                        <field name="NUM">100</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="math_random_float"></block>
-            <block type="math_atan2">
-                <value name="X">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="Y">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-        </category>
-        <category name="%{BKY_CATTEXT}" colour="%{BKY_TEXTS_HUE}">
-            <block type="text"></block>
-            <block type="text_join"></block>
-            <block type="text_append">
-                <value name="TEXT">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <block type="text_length">
-                <value name="VALUE">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_isEmpty">
-                <value name="VALUE">
-                    <shadow type="text">
-                        <field name="TEXT"></field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_indexOf">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">{textVariable}</field>
-                    </block>
-                </value>
-                <value name="FIND">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_charAt">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">{textVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="text_getSubstring">
-                <value name="STRING">
-                    <block type="variables_get">
-                        <field name="VAR">{textVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="text_changeCase">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_trim">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_print">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_prompt_ext">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-        </category>
-        <category name="%{BKY_CATLISTS}" colour="%{BKY_LISTS_HUE}">
-            <block type="lists_create_with">
-                <mutation items="0"></mutation>
-            </block>
-            <block type="lists_create_with"></block>
-            <block type="lists_repeat">
-                <value name="NUM">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="lists_length"></block>
-            <block type="lists_isEmpty"></block>
-            <block type="lists_indexOf">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">{listVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_getIndex">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">{listVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_setIndex">
-                <value name="LIST">
-                    <block type="variables_get">
-                        <field name="VAR">{listVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_getSublist">
-                <value name="LIST">
-                    <block type="variables_get">
-                        <field name="VAR">{listVariable}</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_split">
-                <value name="DELIM">
-                    <shadow type="text">
-                        <field name="TEXT">,</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="lists_sort"></block>
-            <block type="hello"></block>
-        </category>
-        <category name="%{BKY_CATCOLOUR}" colour="%{BKY_COLOUR_HUE}">
-            <block type="colour_picker"></block>
-            <block type="colour_random"></block>
-            <block type="colour_rgb">
-                <value name="RED">
-                    <shadow type="math_number">
-                        <field name="NUM">100</field>
-                    </shadow>
-                </value>
-                <value name="GREEN">
-                    <shadow type="math_number">
-                        <field name="NUM">50</field>
-                    </shadow>
-                </value>
-                <value name="BLUE">
-                    <shadow type="math_number">
-                        <field name="NUM">0</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="colour_blend">
-                <value name="COLOUR1">
-                    <shadow type="colour_picker">
-                        <field name="COLOUR">#ff0000</field>
-                    </shadow>
-                </value>
-                <value name="COLOUR2">
-                    <shadow type="colour_picker">
-                        <field name="COLOUR">#3333ff</field>
-                    </shadow>
-                </value>
-                <value name="RATIO">
-                    <shadow type="math_number">
-                        <field name="NUM">0.5</field>
-                    </shadow>
-                </value>
-            </block>
-        </category>
-
-
-
-        <category name="Input/Output" colour="%{BKY_LISTS_HUE}">
-
-            <block type="Print">
-                <field name="Print">Print</field>
-            </block>
-            <block type="Input">
-                <field name="Input">Input</field>
-            </block>
-
-        </category>
-        <sep></sep>
-
-
-        <category name=DataFrame colour="%{BKY_TEXTS_HUE}">
-
-            <block type="pandas_read_csv">
-                <field type="pandas.read_csv">Read DataFrame</field>
-            </block>
-            <block type="pandas_select_columns">
-                <field type="pandas_select_columns">Select DataFrame Column</field>
-            </block>
-
-            <block type="pandas_set_columns">
-                <field type="pandas_set_columns">Add Column to DataFrame</field>
-            </block>
-
-            <block type="pandas_drop_columns">
-                <field type="pandas_drop_columns">Dataframe Drop Columns </field>
-            </block>
-            <block type="pandas_sample">
-                <field type="pandas_sample">Dataframe Sampling</field>
-            </block>
-            <block type="dataframe_Filter">
-                <field type="pandas.filter">DataFrame Filter</field>
-            </block>
-            <block type="dataframe_Map">
-                <field type="dataframe_Map">DataFrame Map</field>
-            </block>
-            <block type="skl_train_test_split">
-                <field type="skl_train_test_split">Train Test split</field>
-                <value name="TESTSIZE">
-                    <shadow type="math_number">
-                        <field name="NUM">0.2</field>
-                    </shadow>
-                </value>
-
-            </block>
-
-            <block type="Classification_Report">
-                <field type="Classification_Report">Generate Classification Report</field>
-            </block>
-            <block type="R2_Report">
-                <field type="R2_Report">Generate Regression Report</field>
-            </block>
-
-        </category>
-
-        <category name=Datasets colour="%{BKY_LOGIC_HUE}">
-
-            <block type="seaborn_dataset">
-                <field name="Dataset">iris</field>
-            </block>
-
-        </category>
-        <category name=Dictionary colour="%{BKY_COLOUR_HUE}">
-            <block type="create_dict">
-            </block>
-            <block type="dict_append">
-            </block>
-        </category>
-        <sep></sep>
-        <sep></sep>
-
-        <category name="Codeless (neural network)" colour="%{BKY_LOGIC_HUE}">
-            <block type="silhouette_score">
-                <field type="silhouette_score">Silhouette score</field>
-            </block>
-            <block type="davies_bouldin_index">
-                <field type="davies_bouldin_index">Davies_bouldin index</field>
-            </block>
-
-
-            <block type="one_hot_encoding">
-                <field type="one_hot_encoding">one-hot encoding</field>
-            </block>
-            <block type="remove_null_values">
-                <field type="remove_null_values">remove null values</field>
-            </block>
-            <block type="handle_missing_data">
-                <field type="handle_missing_data">handle missing data</field>
-            </block>
-            <block type="remove_duplicates">
-                <field type="remove_duplicates">remove duplicates</field>
-            </block>
-            <block type="remove_outliers">
-                <field type="remove_outliers">remove outliers</field>
-            </block>
-            
-            <block type="kmeans_clustering">
-                <field type="kmeans_clustering">kmeans_clustering</field>
-            </block>
-            <block type="unsupervised_training">
-                <field type="unsupervised_training">unsupervised_training</field>
-            </block>
-            
-            <block type="rnn_model">
-                <field type="rnn_model">rnn_model</field>
-            </block>
-            
-            
-
-        
-
-            <block type="embedding">
-                <field type="embedding">embedding</field>
-            </block>
-            <block type="gru">
-                <field type="gru">gru</field>
-            </block>
-            <block type="lstm">
-                <field type="lstm">lstm</field>
-            </block>
-            <block type="simple_rnn">
-                <field type="simple_rnn">simple_rnn</field>
-            </block>
-
-            
-
-            <block type="prediction">
-                <field type="prediction">Prediction</field>
-            </block>
-            <block type="dense">
-                <field type="dense">Dense</field>
-            </block>
-            <block type="evaluate">
-                <field type="evaluate">Model evaluate</field>
-            </block>
-            <block type="fit">
-                <field type="fit">Model fit</field>
-            </block>
-            <block type="sequential">
-                <field type="sequential">Sequentiale Model</field>
-            </block>
-            <block type="compile">
-                <field type="compile">Model compile</field>
-            </block>
-            <block type="classification_models">
-                <field type="classification_models"> Algorithm :</field>
-            </block>
-            <block type="training">
-                <field type="training"> traning</field>
-            </block>
-            <block type="evaluation">
-                <field type="evaluation"> evaluation</field>
-            </block>
-            <block type="accuracy">
-                <field type="accuracy">Accuracy</field>
-            </block>
-            <block type="precision">
-                <field type="precision">Precision</field>
-            </block>
-            <block type="recall">
-                <field type="recall">Recall</field>
-            </block>
-            <block type="f1score">
-                <field type="f1score">F1 score</field>
-            </block>
-
-            <block type="regression_models">
-                <field type="regression_models">regression_models</field>
-            </block>
-            
-            <block type="r_squared">
-                <field type="r_squared">r_squared</field>
-            </block>
-            
-            <block type="mse">
-                <field type="mse">mse</field>
-            </block>
-            
-            <block type="mae">
-                <field type="mae">mae</field>
-            </block>
-
-
-        </category>
-        <sep></sep>
-
-        <category name="preprocessing" colour="%{BKY_LOGIC_HUE}">
-            <block type="one_hot_encoding">
-                <field type="one_hot_encoding">one-hot encoding</field>
-            </block>
-            <block type="label_encoding">
-                <field type="label_encoding">Label Encoding</field>
-            </block>
-            <block type="remove_null_values">
-                <field type="remove_null_values">remove null values</field>
-            </block>
-            <block type="handle_missing_data">
-                <field type="handle_missing_data">handle missing data</field>
-            </block>
-            <block type="remove_duplicates">
-                <field type="remove_duplicates">remove duplicates</field>
-            </block>
-            <block type="remove_outliers">
-                <field type="remove_outliers">remove outliers</field>
-            </block>
-
-            <block type="data_split">
-                <field type="data_split"> Data spliting</field>
-            </block>
-            <block type="input_output">
-                <field type="input_output"> input output</field>
-            </block>
-        </category>
+    <xml id="toolbox" style="visibility: hidden;">
         <sep></sep>
         <category name="Classical Machine Learning"></category>
-        <category name="Models" colour="%{BKY_LOGIC_HUE}">
+        <category name="Models" colour="#1FA6EF">
             <block type="classification_models">
                 <field type="classification_models">Classification models </field>
             </block>
@@ -790,7 +190,7 @@
             </block>
         </category>
 
-        <category name="Train & Evaluation " colour="%{BKY_LOGIC_HUE}">
+        <category name="Train & Evaluation " colour="#1FA6EF">
             <block type="training">
                 <field type="training"> Training</field>
             </block>
@@ -801,7 +201,7 @@
                 <field type="prediction">Prediction</field>
             </block>
         </category>
-        <category name="Classification Metrics " colour="%{BKY_LOGIC_HUE}">
+        <category name="Classification Metrics " colour="#1FA6EF">
 
             <block type="accuracy">
                 <field type="accuracy">Accuracy</field>
@@ -817,7 +217,7 @@
             </block>
         </category>
 
-        <category name="Regression Metrics " colour="%{BKY_LOGIC_HUE}">
+        <category name="Regression Metrics " colour="#1FA6EF">
 
             <block type="r_squared">
                 <field type="r_squared">r_squared</field>
@@ -834,7 +234,7 @@
         <sep></sep>
         
         <category name="Unsupervised Machine Learning"></category>
-        <category name="Models" colour="%{BKY_LOGIC_HUE}">
+        <category name="Models" colour="#1FA6EF">
             <block type="kmeans_clustering">
                 <field type="kmeans_clustering">kmeans_clustering</field>
             </block>
@@ -844,7 +244,7 @@
 
         </category>
 
-        <category name="Train & Evaluation " colour="%{BKY_LOGIC_HUE}">
+        <category name="Train & Evaluation " colour="#1FA6EF">
             <block type="unsupervised_training">
                 <field type="unsupervised_training">unsupervised_training</field>
             </block>
@@ -864,7 +264,7 @@
                 <field type="som_assign">SOM Label Assignment</field>
             </block>
         </category>
-        <category name="Metrics" colour="%{BKY_LOGIC_HUE}">
+        <category name="Metrics" colour="#1FA6EF">
             <block type="silhouette_score">
                 <field type="silhouette_score">Silhouette score</field>
             </block>
@@ -876,7 +276,7 @@
 
         <sep></sep>
         <category name=" Deep Learning"></category>
-        <category name="Models" colour="%{BKY_LOGIC_HUE}">
+        <category name="Models" colour="#1FA6EF">
          <block type="sequential">
              <field type="sequential">Sequential NN Model</field>
             </block>
@@ -888,7 +288,7 @@
             </block>
             
         </category>
-        <category name="Layers" colour="%{BKY_LOGIC_HUE}">
+        <category name="Layers" colour="#1FA6EF">
 
             <block type="dense">
                 <field type="dense">Dense</field>
@@ -927,7 +327,7 @@
 
 
            </category>
-           <category name="Model evaluation" colour="%{BKY_LOGIC_HUE}">
+           <category name="Model evaluation" colour="#1FA6EF">
             <block type="evaluate">
                 <field type="evaluate">Model evaluate</field>
             </block>
@@ -947,7 +347,7 @@
 
            </category>
 
-           <category name="Augmentation" colour="%{BKY_LOGIC_HUE}">
+           <category name="Augmentation" colour="#1FA6EF">
             <block type="rescale">
                 <field name="rescale">1.0/255</field>
             </block>
@@ -999,7 +399,7 @@
             </block>
         </category>
 
-        <category name="Generator" colour="%{BKY_LOGIC_HUE}">
+        <category name="Generator" colour="#1FA6EF">
             <block type="color_mode">
                 <field name="color_mode">rgb</field>
             </block>
@@ -1036,11 +436,37 @@
             </block>
         </category>
 
-
-
            <sep></sep>
+           <category name="preprocessing" colour="#1FA6EF">
+            <block type="one_hot_encoding">
+                <field type="one_hot_encoding">one-hot encoding</field>
+            </block>
+            <block type="label_encoding">
+                <field type="label_encoding">Label Encoding</field>
+            </block>
+            <block type="remove_null_values">
+                <field type="remove_null_values">remove null values</field>
+            </block>
+            <block type="handle_missing_data">
+                <field type="handle_missing_data">handle missing data</field>
+            </block>
+            <block type="remove_duplicates">
+                <field type="remove_duplicates">remove duplicates</field>
+            </block>
+            <block type="remove_outliers">
+                <field type="remove_outliers">remove outliers</field>
+            </block>
+
+            <block type="data_split">
+                <field type="data_split"> Data spliting</field>
+            </block>
+            <block type="input_output">
+                <field type="input_output"> input output</field>
+            </block>
+        </category>
+        <sep></sep>
            <category name=" Visualization"></category>
-           <category name="Data Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Data Visualization" colour="#1FA6EF">
                <block type="scatter_plot">
                    <field type="scatter_plot">Scatter Plot</field>
                </block>
@@ -1054,7 +480,7 @@
                    <field type="heatmaps">Heatmaps</field>
                </block>
            </category>
-           <category name="Model Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Model Visualization" colour="#1FA6EF">
                <block type="decision_boundary">
                    <field type="decision_boundary">Decision Boundary</field>
                </block>
@@ -1068,7 +494,7 @@
                    <field type="learning_curves">Learning Curves</field>
                </block>
            </category>
-           <category name="Model Performance Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Model Performance Visualization" colour="#1FA6EF">
                <block type="confusion_matrix">
                    <field type="confusion_matrix">Confusion Matrix</field>
                </block>
@@ -1076,7 +502,7 @@
                    <field type="ROC_curve">ROC Curve</field>
                </block>
            </category>
-           <category name="Clustering and Dimensionality Reduction" colour="%{BKY_LOGIC_HUE}">
+           <category name="Clustering and Dimensionality Reduction" colour="#1FA6EF">
                <block type="elbow_plot">
                    <field name="elbow_plot">Elbow Plot - KMeans</field>
                </block>
@@ -1087,12 +513,12 @@
                    <field name="pca_plot">PCA Plot</field>
                </block>
            </category>
-           <category name="Hyperparameter Tuning Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Hyperparameter Tuning Visualization" colour="#1FA6EF">
                <block type="hyperparameter_heatmaps">
                    <field name="hyperparameter_heatmaps">Hyperparameter Heatmaps</field>
                </block>
            </category>
-           <category name="Neural Network Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Neural Network Visualization" colour="#1FA6EF">
                <block type="confusion_matrix_nn">
                    <field type="confusion_matrix_nn">Confusion Matrix</field>
                </block>
@@ -1106,7 +532,7 @@
                    <field type="loss_accuracy_curve">Loss and Accuracy Curves</field>
                </block>
            </category>
-           <category name="Ensemble Methods Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Ensemble Methods Visualization" colour="#1FA6EF">
                <block type="ensemble_feature_importance">
                    <field type="ensemble_feature_importance">Feature Importance - GradientBoostingClassifier</field>
                </block>
@@ -1114,16 +540,70 @@
                    <field type="oob_error_plot">Out-of-Bag Error - RandomForestClassifier</field>
                </block>
            </category>                
-           <category name="Text Data Visualization" colour="%{BKY_LOGIC_HUE}">
+           <category name="Text Data Visualization" colour="#1FA6EF">
                <block type="word_cloud">
                    <field type="word_cloud">Word Cloud</field>
                </block>
            </category>
         </category>
         <sep></sep>
-        <category name="%{BKY_CATVARIABLES}" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
-        <category name="%{BKY_CATFUNCTIONS}" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"> </category>
+        <sep></sep>
+        <sep></sep>
     </xml>
+    <script>
+        document.getElementById('uplaodButton').addEventListener('mouseenter', function() {
+            let img = document.getElementById('uploadIcon');
+            setTimeout(function() {
+                img.src = '/static/media/upload-hover.png'; 
+                img.style.opacity = 1;
+            }, 100); // Duration matches the CSS transition duration
+        });
+        
+        document.getElementById('uplaodButton').addEventListener('mouseleave', function() {
+            let img = document.getElementById('uploadIcon');
+            setTimeout(function() {
+                img.src = '/static/media/upload-2.png'; // The original image source
+                img.style.opacity = 0.6;
+            }, 100); // Duration matches the CSS transition duration
+        });
+    </script>
+
+<script>
+    document.getElementById('downlaodButton').addEventListener('mouseenter', function() {
+        let img = document.getElementById('downloadIcon');
+        setTimeout(function() {
+            img.src = '/static/media/download-hover.png'; 
+            img.style.opacity = 1;
+        }, 100); // Duration matches the CSS transition duration
+    });
+    
+    document.getElementById('downlaodButton').addEventListener('mouseleave', function() {
+        let img = document.getElementById('downloadIcon');
+        setTimeout(function() {
+            img.src = '/static/media/download2.png'; // The original image source
+            img.style.opacity = 0.6;
+        }, 100); // Duration matches the CSS transition duration
+    });
+</script>
+
+<script>
+    document.getElementById('copyButton').addEventListener('mouseenter', function() {
+        let img = document.getElementById('copyIcon');
+        setTimeout(function() {
+            img.src = '/static/media/copy-hover.png'; 
+            img.style.opacity = 1;
+        }, 100); // Duration matches the CSS transition duration
+    });
+    
+    document.getElementById('copyButton').addEventListener('mouseleave', function() {
+        let img = document.getElementById('copyIcon');
+        setTimeout(function() {
+            img.src = '/static/media/copy-2.png'; // The original image source
+            img.style.opacity = 0.6;
+        }, 100); // Duration matches the CSS transition duration
+    });
+</script>
+
 
 </body>
 </html>

@@ -17,16 +17,16 @@ goog.require('Blockly.Theme');
 Blockly.Themes.Dark = Blockly.Theme.defineTheme('dark', {
   'base': Blockly.Themes.Classic,
   'componentStyles': {
-    'workspaceBackgroundColour': '#1e1e1e',
-    'toolboxBackgroundColour': 'blackBackground',
-    'toolboxForegroundColour': '#fff',
-    'flyoutBackgroundColour': '#252526',
+    'workspaceBackgroundColour': '#FFFFFF',
+    'toolboxBackgroundColour': '#f3f3f3',
+    'toolboxForegroundColour': '64748B',
+    'flyoutBackgroundColour': '#e3e3e3',
     'flyoutForegroundColour': '#ccc',
-    'flyoutOpacity': 1,
-    'scrollbarColour': '#797979',
+    'flyoutOpacity': 0.3,
+    'scrollbarColour': '#363636',
     'insertionMarkerColour': '#fff',
     'insertionMarkerOpacity': 0.3,
-    'scrollbarOpacity': 0.4,
+    'scrollbarOpacity': 0.5,
     'cursorColour': '#d0d0d0',
     'blackBackground': '#333'
   }

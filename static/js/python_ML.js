@@ -2250,7 +2250,7 @@ Blockly.Python['evaluation'] = function(block) {
     var text_training_input = block.getFieldValue('predicted_variable');
     global_predicted_variable = text_training_input ;
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
-    var code = `${text_training_input}= model.predict(${x_test }) \n`;
+    var code = `${text_training_input}= model.predict(${x_test}) \n`;
     code += value_metric +'\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
@@ -2259,6 +2259,12 @@ Blockly.Python['training'] = function(block) {
     var text_training_input = block.getFieldValue('Training_input');
     var text_training_output = block.getFieldValue('Training_output');
     var code = `model.fit(${text_training_input},${text_training_output})\n`;
+    if(text_training_input !=x_train){
+        alert("wrong training input : "+text_training_input)
+    }
+    if(text_training_output != y_train){
+        alert("wrong training input : "+text_training_output)
+    }
     return [code, Blockly.Python.ORDER_ATOMIC];
 }; 
 
