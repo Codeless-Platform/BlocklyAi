@@ -2681,11 +2681,44 @@ Blockly.Python['cnn_model'] = function(block) {
     }
 
 
-     code += compile;
-     code += fit;
-     code += evaluate;
-     code += visualization;
+    code += compile;
+    code += fit;
+    code += evaluate;
+    code += visualization;
      
+    // make sure that only correct visualization has been added
+    var wrong = [
+        "# Box Plots",
+        "# Decision Boundary Plot",
+        "# Feature Importances (Random Forest Classification)",
+        "# Learning Curves for classical models",
+        "# Confusion Matrix for classical models",
+        "# ROC Curve for classical models",
+        "# ROC Curve for neural network models",
+        "# Precision-Recall Curve for classical models",
+        "# Hyperparameter Heatmaps",
+        "# Loss and Accuracy Curves for neural network models",
+        "# Word Cloud",
+        "# Feature Importance from Ensemble Methods",
+        "# Out-of-Bag Error",
+        "# Elbow Plot",
+        "# TSNE Plot",
+        "## PCA Plot"
+    ];
+
+    function containsAnySentence(value, sentences) {
+    for (var i = 0; i < sentences.length; i++) {
+        if (value.includes(sentences[i])) {
+            return true;
+        }
+    }
+    return false;
+    }
+    
+    if (containsAnySentence(visualization, wrong)) {
+        alert("Only these visualizations can be used with CNN Model:\nScatter Plot, Histograms, Heatmaps\nfor neural network: Loss and accuracy curves, Learning Curves, Confusion Matrix");
+    }
+
     return code;
 };
 
@@ -3360,21 +3393,39 @@ Blockly.Python['prediction'] = function(block) {
 
 Blockly.Python['scatter_plot'] = function(block) {
     var scatter_plot_input = Blockly.Python.valueToCode(block, 'scatter_plot', Blockly.Python.ORDER_ATOMIC) || '';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
 
-    var code =  '# Scatter plot\n' +
-                'import matplotlib.pyplot as plt\n' +
-                'fig, ax = plt.subplots() # Create a figure and axis object\n' +
-                '\n# Scatter plot for actual values\n' +
-                `ax.scatter(${input}=range(0, len(${y_test})), ${output}=${y_test}, c=\'blue\', label=\'Actual\', alpha=0.3)\n` +
-                '\n# Scatter plot for predicted values\n' +
-                `ax.scatter(${input}=range(0, len(${global_predicted_variable})), ${output}=${global_predicted_variable}, c=\'red\', label=\'Predicted\', alpha=0.3)\n`
-                '# Set plot title and labels\n' +
-                'plt.title(\'Actual and Predicted Values\')\n' +
-                'plt.xlabel(\'Actual Values\')\n' +
-                'plt.ylabel(\'Predicted Values\')\n' +
-                'plt.legend() # Display legend\n' +
-                'plt.show() # Show the plot\n';
-
+    if (cnn) {
+        var code =  `# Scatter plot\n` +
+                    `# Get true labels and predictions from the test generator\n` +
+                    `${y_test} = test_generator.classes\n` +
+                    `y_pred_prob = model.predict(test_generator)\n` +
+                    `${global_predicted_variable} = np.argmax(y_pred_prob, axis=1)\n` +
+                    `fig, ax = plt.subplots()  # Create a figure and axis object\n\n` +
+                    `# Scatter plot for actual values\n` +
+                    `ax.scatter(x=range(len(${y_test})), ${output}=${y_test}, c='blue', label='Actual', alpha=0.3)\n\n` +
+                    `# Scatter plot for predicted values\n` +
+                    `ax.scatter(x=range(len(${global_predicted_variable})), ${output}=${global_predicted_variable}, c='red', label='Predicted', alpha=0.3)\n\n` +
+                    `ax.set_title('Scatter Plot of Actual vs Predicted Values')\n` +
+                    `ax.set_xlabel('Index')\n` +
+                    `ax.set_ylabel('Class')\n` +
+                    `ax.legend()\n` +
+                    `plt.show()\n`;
+    }else {
+        var code =  '# Scatter plot\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'fig, ax = plt.subplots() # Create a figure and axis object\n' +
+                    '\n# Scatter plot for actual values\n' +
+                    `ax.scatter(${input}=range(0, len(${y_test})), ${output}=${y_test}, c=\'blue\', label=\'Actual\', alpha=0.3)\n` +
+                    '\n# Scatter plot for predicted values\n' +
+                    `ax.scatter(${input}=range(0, len(${global_predicted_variable})), ${output}=${global_predicted_variable}, c=\'red\', label=\'Predicted\', alpha=0.3)\n`
+                    '# Set plot title and labels\n' +
+                    'plt.title(\'Actual and Predicted Values\')\n' +
+                    'plt.xlabel(\'Actual Values\')\n' +
+                    'plt.ylabel(\'Predicted Values\')\n' +
+                    'plt.legend() # Display legend\n' +
+                    'plt.show() # Show the plot\n';
+    }
     // If there is an input value, append it to the code
     if (scatter_plot_input) {
         code += `\n${scatter_plot_input}`;
@@ -3386,6 +3437,11 @@ Blockly.Python['scatter_plot'] = function(block) {
   Blockly.Python['histograms'] = function(block) {
     var histograms_input = Blockly.Python.valueToCode(block, 'histograms', Blockly.Python.ORDER_ATOMIC) || '';
     var som = block.getFieldValue('som') === 'TRUE';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
+
+    if (som && cnn) {
+        alert("You can't select two models in histogram visualization block");
+    }
 
     if (som) {
         var code =  '# Histograms\n' +
@@ -3393,7 +3449,18 @@ Blockly.Python['scatter_plot'] = function(block) {
                     `${input}_df = pd.DataFrame(${input})\n` +
                     `${input}_df.hist(bins=20, figsize=(20, 15))\n` +
                     'plt.show()\n';
-    }else {
+    }else if (cnn){
+        var code =  '# Histograms\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `import seaborn as sns\n` +
+                    `plt.figure(figsize=(20, 15))\n` +
+                    `for i in range(len(train_generator.class_indices)):\n` +
+                    `    plt.subplot(1, len(train_generator.class_indices), i + 1)\n` +
+                    `    sns.histplot(y_true[y_true == i], bins=20, kde=False)\n` +
+                    `    plt.title(f'Class {i}')\n` +
+                    `plt.show()\n`;
+    }
+    else {
         var code =  '# Histograms\n' +
                     'import matplotlib.pyplot as plt\n' +
                     `${input}.hist(bins=20, figsize=(20, 15))\n` +
@@ -3433,6 +3500,11 @@ Blockly.Python['scatter_plot'] = function(block) {
   Blockly.Python['heatmaps'] = function(block) {
     var heatmaps_input = Blockly.Python.valueToCode(block, 'heatmaps', Blockly.Python.ORDER_ATOMIC) || '';
     var som = block.getFieldValue('som') === 'TRUE';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
+
+    if (som && cnn) {
+        alert("You can't select two models in heatmaps visualization block");
+    }
 
     if (som) {
         var code =  '# Heatmaps\n' +
@@ -3440,6 +3512,20 @@ Blockly.Python['scatter_plot'] = function(block) {
                     'import seaborn as sns\n' +
                     'plt.figure(figsize=(12, 10))\n' +
                     `sns.heatmap(${input}_df.corr(), annot=True, cmap=\'coolwarm\')\n` +
+                    'plt.show()\n';
+    }else if (cnn) {
+        var code =  '# Heatmaps\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    `import pandas as pd\n` +
+                    `import numpy as np\n` +
+                    `${y_test} = test_generator.classes\n` +
+                    `plt.figure(figsize=(12, 10))\n` +
+                    `# Note: Heatmap of feature correlation is not typically meaningful for image data\n` +
+                    `# Using random data here just to show how it could be done if we had numerical features\n` +
+                    `dummy_data = pd.DataFrame(np.random.rand(len(${y_test}), 10))  # Replace with your actual data if applicable\n` +
+                    `sns.heatmap(dummy_data.corr(), annot=True, cmap='coolwarm')\n` +
+                    `plt.title('Feature Correlation Heatmap')\n` +
                     'plt.show()\n';
     }else {
         var code =  '# Heatmaps\n' +
@@ -3705,7 +3791,11 @@ Blockly.Python['confusion_matrix'] = function(block) {
   Blockly.Python['confusion_matrix_nn'] = function(block) {
     var confusion_nn_input = Blockly.Python.valueToCode(block, 'confusion_matrix_nn', Blockly.Python.ORDER_ATOMIC) || '';
     var som = block.getFieldValue('som') === 'TRUE';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
 
+    if (som && cnn) {
+        alert("You can't select two models in Confusion Matrix visualization block");
+    }
     if (som) {
         var code =  '\n# Confusion Matrix for neural network models\n' +
                     'from sklearn.metrics import confusion_matrix\n' +
@@ -3714,6 +3804,22 @@ Blockly.Python['confusion_matrix'] = function(block) {
                     `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
                     'plt.figure(figsize=(8, 6))\n' +
                     'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
+                    'plt.title(\'Confusion Matrix\')\n' +
+                    'plt.xlabel(\'Predicted labels\')\n' +
+                    'plt.ylabel(\'True labels\')\n' +
+                    'plt.show()\n';
+    }else if (cnn) {
+        var code =  '\n# Confusion Matrix for neural network models\n' +
+                    'from sklearn.metrics import confusion_matrix\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    'import seaborn as sns\n' +
+                    `import numpy as np\n` +
+                    `${y_test} = test_generator.classes\n` +
+                    `y_pred_prob = model.predict(test_generator)\n` +
+                    `${global_predicted_variable} = np.argmax(y_pred_prob, axis=1)\n` +
+                    `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
+                    'plt.figure(figsize=(8, 6))\n' +
+                    'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\')\n' +
                     'plt.title(\'Confusion Matrix\')\n' +
                     'plt.xlabel(\'Predicted labels\')\n' +
                     'plt.ylabel(\'True labels\')\n' +
@@ -3822,6 +3928,11 @@ Blockly.Python['confusion_matrix'] = function(block) {
   Blockly.Python['loss_accuracy_curve'] = function(block) {
     var loss_accuracy_input = Blockly.Python.valueToCode(block, 'loss_accuracy_curve', Blockly.Python.ORDER_ATOMIC) || '';
     var numerical = block.getFieldValue('Numerical') === 'TRUE';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
+
+    if (numerical && cnn) {
+        alert("You can't select two models in loss and accuracy curve visualization block");
+    }
 
     if (numerical) {
         var code =  '\n# Numerical Loss and Accuracy Curves for neural network models\n' +
@@ -3831,6 +3942,28 @@ Blockly.Python['confusion_matrix'] = function(block) {
                     `plt.xlabel('Epochs')\n` +
                     `plt.ylabel('Loss')\n` +
                     `plt.title('Training and Validation Loss')\n` +
+                    `plt.legend()\n` +
+                    'plt.show()\n';
+    }else if (cnn) {
+        var code =  '\n# # Plot training & validation loss values\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `plt.figure()\n` +
+                    `plt.plot(history.history['loss'], label='train_loss')\n` +
+                    `if 'val_loss' in history.history:\n` +
+                    `    plt.plot(history.history['val_loss'], label='val_loss')\n` +
+                    `plt.xlabel('Epochs')\n` +
+                    `plt.ylabel('Loss')\n` +
+                    `plt.title('Training and Validation Loss')\n` +
+                    `plt.legend()\n` +
+                    'plt.show()\n\n' +
+                    `# Plot training & validation accuracy values\n` +
+                    `plt.figure()\n` +
+                    `plt.plot(history.history['accuracy'], label='train_accuracy')\n` +
+                    `if 'val_accuracy' in history.history:\n` +
+                    `    plt.plot(history.history['val_accuracy'], label='val_accuracy')\n` +
+                    `plt.xlabel('Epochs')\n` +
+                    `plt.ylabel('Accuracy')\n` +
+                    `plt.title('Training and Validation Accuracy')\n` +
                     `plt.legend()\n` +
                     'plt.show()\n';
     }else {
@@ -3864,28 +3997,52 @@ Blockly.Python['confusion_matrix'] = function(block) {
 
   Blockly.Python['learning_curves_nn'] = function(block) {
     var learning_curves_input = Blockly.Python.valueToCode(block, 'learning_curves_nn', Blockly.Python.ORDER_ATOMIC) || '';
+    var cnn = block.getFieldValue('cnn') === 'TRUE';
 
-    var code =  `\n# Learning Curves for neural network models\n` +
-                `train_sizes = np.linspace(0.1, 1.0, 10)\n` +
-                `train_scores = []\n` +
-                `test_scores = []\n` +
-                `for train_size in train_sizes:\n` +
-                `    ${x_train}_subset = ${x_train}[:int(train_size * len(${x_train}))]\n` +
-                `    ${y_train}_subset = ${y_train}[:int(train_size * len(${y_train}))]\n\n` +
-                `    model.fit(${x_train}_subset, ${y_train}_subset, epochs=10, verbose=0)\n` +
-                `    train_loss = model.evaluate(${x_train}_subset, ${y_train}_subset, verbose=0)\n` +
-                `    test_loss = model.evaluate(${x_test}, ${y_test}, verbose=0)\n\n` +
-                `    train_scores.append(train_loss)\n` +
-                `    test_scores.append(test_loss)\n\n` +
-                `plt.figure()\n` +
-                `plt.plot(train_sizes, train_scores, label='Training loss')\n` +
-                `plt.plot(train_sizes, test_scores, label='Validation loss')\n` +
-                `plt.xlabel('Training Size')\n` +
-                `plt.ylabel('Loss')\n` +
-                `plt.title('Learning Curves')\n` +
-                `plt.legend()\n` +
-                `plt.show()\n`;
-
+    if (cnn) {
+        var code =  '\n# Learning Curves for neural network models\n' +
+                    'import matplotlib.pyplot as plt\n' +
+                    `import numpy as np\n` +
+                    `train_sizes = np.linspace(0.1, 1.0, 10)\n` +
+                    `train_scores = []\n` +
+                    `test_scores = []\n` +
+                    `for train_size in train_sizes:\n` +
+                    `    ${x_train}_subset, ${y_train}_subset = next(train_generator)\n\n` +
+                    `    model.fit(${x_train}_subset, ${y_train}_subset, epochs=10, verbose=0)\n` +
+                    `    train_loss, train_acc = model.evaluate(${x_train}_subset, ${y_train}_subset, verbose=0)\n` +
+                    `    test_loss, test_acc = model.evaluate(test_generator, verbose=0)\n\n` +
+                    `    train_scores.append(train_loss)\n` +
+                    `    test_scores.append(test_loss)\n\n` +
+                    `plt.figure()\n` +
+                    `plt.plot(train_sizes, train_scores, label='Training loss')\n` +
+                    `plt.plot(train_sizes, test_scores, label='Validation loss')\n` +
+                    `plt.xlabel('Training Size')\n` +
+                    `plt.ylabel('Loss')\n` +
+                    `plt.title('Learning Curves')\n` +
+                    `plt.legend()\n` +
+                    'plt.show()\n';
+    }else {
+        var code =  `\n# Learning Curves for neural network models\n` +
+                    `train_sizes = np.linspace(0.1, 1.0, 10)\n` +
+                    `train_scores = []\n` +
+                    `test_scores = []\n` +
+                    `for train_size in train_sizes:\n` +
+                    `    ${x_train}_subset = ${x_train}[:int(train_size * len(${x_train}))]\n` +
+                    `    ${y_train}_subset = ${y_train}[:int(train_size * len(${y_train}))]\n\n` +
+                    `    model.fit(${x_train}_subset, ${y_train}_subset, epochs=10, verbose=0)\n` +
+                    `    train_loss = model.evaluate(${x_train}_subset, ${y_train}_subset, verbose=0)\n` +
+                    `    test_loss = model.evaluate(${x_test}, ${y_test}, verbose=0)\n\n` +
+                    `    train_scores.append(train_loss)\n` +
+                    `    test_scores.append(test_loss)\n\n` +
+                    `plt.figure()\n` +
+                    `plt.plot(train_sizes, train_scores, label='Training loss')\n` +
+                    `plt.plot(train_sizes, test_scores, label='Validation loss')\n` +
+                    `plt.xlabel('Training Size')\n` +
+                    `plt.ylabel('Loss')\n` +
+                    `plt.title('Learning Curves')\n` +
+                    `plt.legend()\n` +
+                    `plt.show()\n`;
+    }
     // If there is an input value, append it to the code
     if (learning_curves_input) {
         code += `\n${learning_curves_input}`;

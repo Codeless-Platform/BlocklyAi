@@ -4519,8 +4519,13 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "scatter_plot",
-          "message0": "Scatter Plot %1",
+          "message0": "Scatter Plot , CNN? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "cnn",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "scatter_plot"
@@ -4536,16 +4541,22 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "histograms",
-          "message0": "Histograms , SOM? %1 %2",
+          "message0": "Histograms , SOM? %1 ,CNN? %2 %3",
           "args0": [
             {
                 "type": "field_checkbox",
                 "name": "som",
-                "checked": false
+              "checked": false
+            },
+            {
+              "type": "field_checkbox",
+              "name": "cnn",
+              "checked": false
             },
             {
               "type": "input_value",
-              "name": "histograms"
+              "name": "histograms",
+              "check": "visualization"
             }
           ],
           "output": "visualization",
@@ -4580,12 +4591,17 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "heatmaps",
-          "message0": "Heatmaps , SOM? %1 %2",
+          "message0": "Heatmaps , SOM? %1 ,CNN? %2 %3",
           "args0": [
             {
                 "type": "field_checkbox",
                 "name": "som",
-                "checked": false
+              "checked": false
+            },
+            {
+              "type": "field_checkbox",
+              "name": "cnn",
+              "checked": false
             },
             {
               "type": "input_value",
@@ -4654,8 +4670,13 @@ Blockly.defineBlocksWithJsonArray([{
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "learning_curves",
-          "message0": "Learning Curves %1",
+          "message0": "Learning Curves , CNN? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "cnn",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "learning_curves"
@@ -4794,13 +4815,18 @@ Blockly.defineBlocksWithJsonArray([
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "confusion_matrix_nn",
-            "message0": "Confusion Matrix , SOM? %1 %2",
+            "message0": "Confusion Matrix , SOM? %1 ,CNN? %2 %3",
             "args0": [
-              {
-                "type": "field_checkbox",
-                "name": "som",
-                "checked": false
-              },
+                {
+                    "type": "field_checkbox",
+                    "name": "som",
+                  "checked": false
+                },
+                {
+                  "type": "field_checkbox",
+                  "name": "cnn",
+                  "checked": false
+                },
               {
                 "type": "input_value",
                 "name": "confusion_matrix_nn"
@@ -4860,12 +4886,17 @@ Blockly.defineBlocksWithJsonArray([
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "loss_accuracy_curve",
-          "message0": "Loss and Accuracy Curves , Numerical dataset? %1 %2",
+          "message0": "Loss and Accuracy Curves , Numerical? %1 ,CNN? %2 %3",
           "args0": [
             {
                 "type": "field_checkbox",
                 "name": "Numerical",
                 "checked": false
+            },
+            {
+              "type": "field_checkbox",
+              "name": "cnn",
+              "checked": false
             },
             {
               "type": "input_value",
@@ -4882,8 +4913,13 @@ Blockly.defineBlocksWithJsonArray([
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "learning_curves_nn",
-          "message0": "Learning Curves %1",
+          "message0": "Learning Curves , CNN? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "cnn",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "learning_curves_nn"
