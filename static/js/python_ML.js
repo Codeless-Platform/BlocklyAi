@@ -2276,6 +2276,13 @@ Blockly.Python['classification_models'] = function(block) {
     var value_model_evaluation = Blockly.Python.valueToCode(block, 'Model_Evaluation', Blockly.Python.ORDER_ATOMIC) || '';
     var value_model_prediction = Blockly.Python.valueToCode(block, 'Model_Prediction', Blockly.Python.ORDER_ATOMIC) || '';
     var value_visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if(!value_data_preprocessing){
+        alert("Add preprocess block");
+    }
+    if(!value_model_training){
+        alert("Add training block");
+    }
     
     var code = "";
     code += "import pandas as pd \n";
@@ -2340,7 +2347,14 @@ Blockly.Python['regression_models'] = function(block) {
     var value_model_evaluation = Blockly.Python.valueToCode(block, 'Model_Evaluation', Blockly.Python.ORDER_ATOMIC) || '';
     var value_model_prediction = Blockly.Python.valueToCode(block, 'Model_Prediction', Blockly.Python.ORDER_ATOMIC) || '';
     var value_visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
-    
+
+    if(!value_data_preprocessing){
+        alert("Add preprocess block");
+    }
+    if(!value_model_training){
+        alert("Add training block");
+    }
+
     var code = "";
     code += "import pandas as pd\n";
     switch (dropdown_algorithm) {
@@ -2423,6 +2437,19 @@ Blockly.Python['sequential'] = function(block) {
     var fit = Blockly.Python.valueToCode(block, 'fit', Blockly.Python.ORDER_ATOMIC) || '';
     var evaluate = Blockly.Python.valueToCode(block, 'evaluate', Blockly.Python.ORDER_ATOMIC) || '';
     var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
+
+    if(!data_preprocessing){
+        alert("Add preprocess block");
+    }
+    if(!layers){
+        alert("Add layers block");
+    }
+    if(!compile){
+        alert("Add compile block");
+    }
+    if(!fit){
+        alert("Add fit block");
+    }
   
     var code = `import numpy as np\nimport pandas as pd\nfrom tensorflow.keras.models import Sequential\n\n`;
     if (layers) {
@@ -2466,6 +2493,16 @@ Blockly.Python['cnn_model'] = function(block) {
     var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
 
     var code = `from tensorflow.keras.models import Sequential\n`;
+
+    if(!layers){
+        alert("Add layers block");
+    }
+    if(!compile){
+        alert("Add compile block");
+    }
+    if(!fit){
+        alert("Add fit block");
+    }
 
     if (trainAug||testAug) {
         code += `from tensorflow.keras.preprocessing.image import ImageDataGenerator\n\n`;
@@ -3880,6 +3917,16 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `${x_train} = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
         code += `${x_test} = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
     }
+    
+    if(!layers){
+        alert("Add layers block");
+    }
+    if(!compile){
+        alert("Add compile block");
+    }
+    if(!fit){
+        alert("Add fit block");
+    }
 
     if (layers) {
         code += `model = Sequential([\n${layers}\n])\n`;
@@ -3976,6 +4023,13 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         var model_Prediction = Blockly.Python.valueToCode(block, 'model_Prediction', Blockly.Python.ORDER_ATOMIC) || '';
         var visualization = Blockly.Python.valueToCode(block, 'visualization', Blockly.Python.ORDER_ATOMIC) || '';
         var hyperparameters = block.getFieldValue('hyperparameters');
+
+        if(!data_preprocessing){
+            alert("Add preprocess block");
+        }
+        if(!model_training){
+            alert("Add training block");
+        }
     
         var code = `import pandas as pd\n`;
         code += `from sklearn.cluster import KMeans\n`;
