@@ -2048,8 +2048,16 @@ Blockly.defineBlocksWithJsonArray([
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "label_encoding",
-            "message0": "Label Encoding",
-            "output": "Preprocessing",
+            "message0": "Label Encoding %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "label_encoding",
+                    "check": "split"
+                }
+            ],
+            "inputsInline": false,
+            "output": "split",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -2247,7 +2255,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                   "type": "input_value",
                   "name": "Visualization",
-                  "check": "Visualization_nn"
+                  "check": "visualization"
                 }
             ],
             "colour": 140,
@@ -2320,7 +2328,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "input_value",
                     "name": "visualization",
-                    "check": "Visualization"
+                    "check": "visualization"
                 },
                 {
                     "type": "field_number",
@@ -2659,7 +2667,7 @@ Blockly.defineBlocksWithJsonArray([
             {
                 "type": "input_value",
                 "name": "Visualization",
-                "check": "Visualization"
+                "check": "visualization"
             }
         ],
         "mutator": "regression_models_mutator",
@@ -3070,7 +3078,7 @@ Blockly.defineBlocksWithJsonArray([
                   {
                     "type": "input_value",
                     "name": "split",
-                    "check" : "Preprocessing"
+                    "check" : "split"
                   },
                   {
                     "type": "input_value",
@@ -3095,7 +3103,7 @@ Blockly.defineBlocksWithJsonArray([
                   {
                     "type": "input_value",
                     "name": "Visualization",
-                    "check": "Visualization_nn"
+                    "check": "visualization"
                   },
                 ],
                 "colour": 140,
@@ -4214,7 +4222,7 @@ Blockly.defineBlocksWithJsonArray([{
         {
             "type": "input_value",
             "name": "Visualization",
-            "check": "Visualization"
+            "check": "visualization"
         }
     ],
     "mutator": "classification_models_mutator",
@@ -4518,7 +4526,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "scatter_plot"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4540,7 +4548,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "histograms"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4562,7 +4570,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "box_plots"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4584,7 +4592,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "heatmaps"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4602,7 +4610,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "decision_boundary"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4619,7 +4627,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "tree_visualization"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4636,7 +4644,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "feature_importances"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4653,7 +4661,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "learning_curves"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4671,7 +4679,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "confusion_matrix"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4688,7 +4696,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "ROC_curve"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4705,7 +4713,7 @@ Blockly.defineBlocksWithJsonArray([{
               "name": "precision_recall_curve"
             }
           ],
-          "output": null,
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4723,7 +4731,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "elbow_plot"
         }
       ],
-      "output": null,
+      "output": "visualization",
       "colour": "#255782",
       "tooltip": "",
       "helpUrl": ""
@@ -4740,7 +4748,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "tsne_plot"
         }
       ],
-      "output": null,
+      "output": "visualization",
       "colour": "#255782",
       "tooltip": "",
       "helpUrl": ""
@@ -4757,7 +4765,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "pca_plot"
         }
       ],
-      "output": null,
+      "output": "visualization",
       "colour": "#255782",
       "tooltip": "",
       "helpUrl": ""
@@ -4775,7 +4783,7 @@ Blockly.defineBlocksWithJsonArray([
           "name": "hyperparameter_heatmaps"
         }
       ],
-      "output": null,
+      "output": "visualization",
       "colour": "#255782",
       "tooltip": "",
       "helpUrl": ""
@@ -4798,7 +4806,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "confusion_matrix_nn"
               }
             ],
-            "output": "Visualization_nn",
+            "output": "visualization",
             "colour": "#255782",
             "tooltip": "",
             "helpUrl": ""
@@ -4820,7 +4828,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "ROC_curve_nn"
             }
           ],
-          "output": "Visualization_nn",
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4842,7 +4850,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "precision_recall_curve_nn"
             }
           ],
-          "output": "Visualization_nn",
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4852,14 +4860,36 @@ Blockly.defineBlocksWithJsonArray([
       Blockly.defineBlocksWithJsonArray([
         {
           "type": "loss_accuracy_curve",
-          "message0": "Loss and Accuracy Curves %1",
+          "message0": "Loss and Accuracy Curves , Numerical dataset? %1 %2",
           "args0": [
+            {
+                "type": "field_checkbox",
+                "name": "Numerical",
+                "checked": false
+            },
             {
               "type": "input_value",
               "name": "loss_accuracy_curve"
             }
           ],
-          "output": "Visualization_nn",
+          "output": "visualization",
+          "colour": "#255782",
+          "tooltip": "",
+          "helpUrl": ""
+        }
+      ]);
+
+      Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "learning_curves_nn",
+          "message0": "Learning Curves %1",
+          "args0": [
+            {
+              "type": "input_value",
+              "name": "learning_curves_nn"
+            }
+          ],
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4876,7 +4906,7 @@ Blockly.defineBlocksWithJsonArray([
               "name": "word_cloud"
             }
           ],
-          "output": "Visualization_nn",
+          "output": "visualization",
           "colour": "#255782",
           "tooltip": "",
           "helpUrl": ""
@@ -4894,7 +4924,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "ensemble_feature_importance"
               }
             ],
-            "output": null,
+            "output": "visualization",
             "colour": "#255782",
             "tooltip": "",
             "helpUrl": ""
@@ -4911,7 +4941,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "oob_error_plot"
               }
             ],
-            "output": null,
+            "output": "visualization",
             "colour": "#255782",
             "tooltip": "",
             "helpUrl": ""
