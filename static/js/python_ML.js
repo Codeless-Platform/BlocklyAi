@@ -2491,17 +2491,21 @@ Blockly.Python['cnn_model'] = function(block) {
         code += testAug;
         code += `\n)\n`;
     }
-
-
     if (trainGen) {
         code += `train_generator = train_datagen.flow_from_directory(train_dir,\n`;
         code += trainGen;
         code += `\n)\n`;
+        if (!trainGen.includes("target_size")) {
+            alert("You must specify target size for training generator");
+          }
     }
     if (testGen) {
         code += `test_generator = test_datagen.flow_from_directory(validation_dir,\n`;
         code += testGen;
         code += `\n)\n`;
+        if (!testGen.includes("target_size")) {
+            alert("You must specify target size for test generator");
+          }
     }
 
     if (layers) {
@@ -3052,7 +3056,6 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
     var target_size1 = block.getFieldValue('target_size1');
     var target_size2 = block.getFieldValue('target_size2');
     var input = Blockly.Python.valueToCode(block, 'target_size', Blockly.Python.ORDER_ATOMIC) || '';
-  
     var code = `target_size = (${target_size1},${target_size2})`;
     if (input) {
         code += `,\n${input}`;
@@ -3072,14 +3075,20 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
   }; 
 /////////////////////////////////// FITING //////////////////////////////////////////////////////////
   Blockly.Python['fit'] = function(block) {
-    var x_train = block.getFieldValue('X_train');
-    var y_train = block.getFieldValue('y_train');
+    var x_Ftrain = block.getFieldValue('X_train');
+    var y_Ftrain = block.getFieldValue('y_train');
     var epochs = block.getFieldValue('epochs');
     var verbose = block.getFieldValue('verbose');
-  
-    var code = `model.fit(${x_train}, ${y_train}, epochs=${epochs}, verbose=${verbose})\n`;
+  if(x_Ftrain != x_train){
+    alert("Wrong input : "+x_Ftrain)
+  }
+  if(y_Ftrain != y_train){
+    alert("Wrong input : "+y_Ftrain)
+  }
+    var code = `model.fit(${x_Ftrain}, ${y_Ftrain}, epochs=${epochs}, verbose=${verbose})\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+
   Blockly.Python['cnn_fit'] = function(block) {
     var epochs = block.getFieldValue('cnn_epochs');
     var verbose = block.getFieldValue('cnn_verbose');
@@ -3089,10 +3098,15 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
   };
   /////////////////////////////////EVALUATION ////////////////////////////////////////////////
   Blockly.Python['evaluate'] = function(block) {
-    var x_test = block.getFieldValue('X_test');
-    var y_test = block.getFieldValue('y_test');
-  
-    var code = `model.evaluate(${x_test}, ${y_test})\n`;
+    var x_Ftest = block.getFieldValue('X_test');
+    var y_Ftest = block.getFieldValue('y_test');
+    if(x_Ftest != x_test){
+        alert("Wrong input : "+x_Ftest)
+      }
+      if(y_Ftest  != y_test ){
+        alert("Wrong input : "+y_Ftest)
+      }
+    var code = `model.evaluate(${x_Ftest}, ${y_Ftest})\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
   Blockly.Python['cnn_evaluation'] = function(block) {
@@ -3496,7 +3510,7 @@ Blockly.Python['confusion_matrix'] = function(block) {
                     'from sklearn.metrics import confusion_matrix\n' +
                     'import matplotlib.pyplot as plt\n' +
                     'import seaborn as sns\n' +
-                    `cm = confusion_matrix(${y_test}, ${global_predicted_variable})\n` +
+                    `cm = confusion_matrix(${y_test},${global_predicted_variable})\n` +
                     'plt.figure(figsize=(8, 6))\n' +
                     'sns.heatmap(cm, annot=True, fmt=\'d\', cmap=\'Oranges\', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)\n' +
                     'plt.title(\'Confusion Matrix\')\n' +
@@ -3858,13 +3872,13 @@ Blockly.Python['rnn_model'] = function(block) {
 
         code += `# Convert lists to numpy arrays\n`;
         code += `X_train = np.array(X_train)\n`;
-        code += `y_train = np.array(y_train)\n`;
+        code += `${y_train} = np.array(y_train)\n`;
         code += `X_test = np.array(X_test)\n`;
-        code += `y_test = np.array(y_test)\n\n`;
+        code += `${y_test} = np.array(y_test)\n\n`;
 
         code += `# Reshape data for RNN input: (num_samples, timesteps, height, width, channels)\n`;
-        code += `X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
-        code += `X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
+        code += `${x_train} = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
+        code += `${x_test} = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
     }
 
     if (layers) {
@@ -3992,11 +4006,24 @@ Blockly.Python['kmeans_clustering'] = function(block) {
         return code;
 };
 
-Blockly.Python['unsupervised_training'] = function(block) {
+     Blockly.Python['unsupervised_training'] = function(block) {
         var text_training_input = block.getFieldValue('Training_input');
         var code = `model.fit(${text_training_input})\n`;
+
+        if(text_training_input != x_train){
+            alert("Wrong input : "+ text_training_input);
+        }
+
         return [code, Blockly.Python.ORDER_ATOMIC];
 };
+Blockly.Python['Unsuper_evaluation'] = function(block) {
+    var text_training_input = block.getFieldValue('predicted_variable');
+    global_predicted_variable = text_training_input ;
+    var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `${text_training_input}= model.predict(${x_test}) \n`;
+    code += value_metric +'\n';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+}; 
 
 Blockly.Python['one_hot_encoding'] = function(block) {
     var column_name = block.getFieldValue('COLUMN_NAME');
@@ -4071,7 +4098,7 @@ Blockly.Python['remove_outliers'] = function(block) {
 Blockly.Python['silhouette_score'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
     var code = `from sklearn.metrics import silhouette_score\n`;
-    code += `silhouette = silhouette_score(${y_test}, ${global_predicted_variable})\n`;
+    code += `silhouette = silhouette_score(${x_test}, ${global_predicted_variable})\n`;
     code += `print(f'Silhouette Score: {silhouette}')\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];
@@ -4080,7 +4107,7 @@ Blockly.Python['silhouette_score'] = function(block) {
 Blockly.Python['davies_bouldin_index'] = function(block) {
     var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
     var code = `from sklearn.metrics import davies_bouldin_score\n`;
-    code += `davies_bouldin = davies_bouldin_score(${y_test}, ${global_predicted_variable})\n`;
+    code += `davies_bouldin = davies_bouldin_score(${x_test}, ${global_predicted_variable})\n`;
     code += `print(f'Davies-Bouldin Index: {davies_bouldin}')\n`;
     code += value_metric + '\n';
     return [code, Blockly.Python.ORDER_ATOMIC];

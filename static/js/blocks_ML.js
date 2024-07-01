@@ -1889,10 +1889,10 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "input_value",
                     "name": "metric",
-                    "check": "Metric"
+                    "check": "UMetric"
                 }
             ],
-            "output": "Metric",
+            "output": "UMetric",
             "colour": "#AE2283",
             "tooltip": "Calculate Silhouette Score",
             "helpUrl": ""
@@ -1904,10 +1904,10 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "input_value",
                     "name": "metric",
-                    "check": "Metric"
+                    "check": "UMetric"
                 }
             ],
-            "output": "Metric",
+            "output": "UMetric",
             "colour": "#AE2283",
             "tooltip": "Calculate Davies-Bouldin Index",
             "helpUrl": ""
@@ -2273,7 +2273,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "input_dummy"
             }
         ],
-        "output": "Training",
+        "output": "UTraining",
         "colour": "#F5C043",
         "tooltip": "",
         "helpUrl": ""
@@ -2305,12 +2305,12 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "input_value",
                     "name": "model_training",
-                    "check": "Training"
+                    "check": "UTraining"
                 },
                 {
                     "type": "input_value",
                     "name": "model_evaluation",
-                    "check": "Evaluation"
+                    "check": "UEvaluation"
                 },
                 {
                     "type": "input_value",
@@ -2386,7 +2386,7 @@ Blockly.defineBlocksWithJsonArray([
               {
                 "type": "input_value",
                 "name": "input_output",
-                "check": "Preprocessing"
+                "check": "split"
               }
             ],
             "output": "Preprocessing",
@@ -2604,7 +2604,7 @@ Blockly.defineBlocksWithJsonArray([
                 "value": "0.2"
               }
             ],
-            "output": "Preprocessing",
+            "output": "split",
             "colour": 230,
             "tooltip": "",
             "helpUrl": ""
@@ -3012,7 +3012,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                   "type": "input_value",
                   "name": "layers",
-                  "check": "Layers"
+                  "check": "cnn_input_layer"
                 },
                 {
                   "type": "input_value",
@@ -3861,7 +3861,7 @@ Blockly.defineBlocksWithJsonArray([{
         "check": "Layers"
       }
     ],
-    "output": "Layers",
+    "output": "cnn_input_layer",
     "colour": "#1fa2e5",
     "tooltip": "",
     "helpUrl": ""
@@ -4101,7 +4101,27 @@ Blockly.defineBlocksWithJsonArray([
             "output": "Evaluation",
             "colour": "#F5C043",
             "tooltip": "",
-            "helpUrl": ""
+            "helpUrl": ""},
+            {
+                "type": "Unsuper_evaluation",
+                "message0": "Predicted variable :  %1 %2",
+                "args0": [
+                  {
+                    "type": "field_input",
+                    "name": "predicted_variable",
+                    "text": "y_predicted"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "metric",
+                    "check": "UMetric"
+                  }
+                ],
+                "output": "UEvaluation",
+                "colour": "#F5C043",
+                "tooltip": "",
+                "helpUrl": ""
+
           },{
             "type": "cnn_evaluation",
             "message0": "Cnn evaluation",
