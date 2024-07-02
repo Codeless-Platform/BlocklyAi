@@ -3327,7 +3327,7 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
     var epochs = block.getFieldValue('cnn_epochs');
     var verbose = block.getFieldValue('cnn_verbose');
   
-    var code = `model.fit(train_generator, epochs=${epochs}, verbose=${verbose})\n`;
+    var code = `model.fit(train_generator, epochs=${epochs}, validation_data= test_generator, verbose=${verbose} )\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
   /////////////////////////////////EVALUATION ////////////////////////////////////////////////
