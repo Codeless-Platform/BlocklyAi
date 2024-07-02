@@ -3347,6 +3347,10 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
     var code = `model.evaluate(test_generator)\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+  Blockly.Python['RNN_evaluation'] = function(block) {
+    var code = `model.evaluate(X_test,y_test)\n`;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
   
   
      Blockly.Python['compile'] = function(block) {
@@ -4275,13 +4279,13 @@ Blockly.Python['rnn_model'] = function(block) {
 
         code += `# Convert lists to numpy arrays\n`;
         code += `X_train = np.array(X_train)\n`;
-        code += `${y_train} = np.array(y_train)\n`;
+        code += `y_train = np.array(y_train)\n`;
         code += `X_test = np.array(X_test)\n`;
-        code += `${y_test} = np.array(y_test)\n\n`;
+        code += `y_test = np.array(y_test)\n\n`;
 
         code += `# Reshape data for RNN input: (num_samples, timesteps, height, width, channels)\n`;
-        code += `${x_train} = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
-        code += `${x_test} = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
+        code += `x_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
+        code += `x_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
     }
     
     if(!layers){

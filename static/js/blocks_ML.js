@@ -2239,7 +2239,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "input_value",
                     "name": "rnnEvaluate",
-                    "check": "Evaluation"
+                    "check": "REvaluation"
                 },
                 {
                     "type": "input_dummy"
@@ -3035,7 +3035,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                   "type": "input_value",
                   "name": "cnnEvaluate",
-                  "check": "Evaluation"
+                  "check": "CEvaluation"
                 },
                 {
                   "type": "input_value",
@@ -4133,7 +4133,14 @@ Blockly.defineBlocksWithJsonArray([
           },{
             "type": "cnn_evaluation",
             "message0": "Cnn evaluation",
-            "output": "Evaluation",
+            "output": "CEvaluation",
+            "colour": "#F5C043",
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "RNN_evaluation",
+            "message0": "RNN evaluation",
+            "output": "REvaluation",
             "colour": "#F5C043",
             "tooltip": "",
             "helpUrl": ""
