@@ -238,6 +238,7 @@
         </category>
 
         <category name="Train & Evaluation " colour="#1FA6EF">
+            <label  text="Unsupervised section"></label>
             <block type="unsupervised_training">
                 <field type="unsupervised_training">Unsupervised Training</field>
             </block>
@@ -247,6 +248,7 @@
             <block type="prediction">
                 <field type="prediction">Prediction</field>
             </block>
+            <label  text="SOM section"></label>
             <block type="som_evaluation">
                 <field type="som_evaluation">SOM Evaluation</field>
             </block>
@@ -282,7 +284,8 @@
             
         </category>
         <category name="Layers" colour="#1FA6EF">
-
+            <!-- Dense and Pooling Layers -->
+            <label text="Dense and Pooling Layers"></label>
             <block type="dense">
                 <field type="dense">Dense</field>
             </block>
@@ -292,6 +295,9 @@
             <block type="maxpooling2d">
                 <field name="maxpooling2d">Maxpooling2d</field>
             </block>
+        
+            <!-- Convolutional Layers -->
+            <label text="Convolutional Layers"></label>
             <block type="Conv2D">
                 <field name="Conv2D">Conv2D</field>
             </block>
@@ -299,49 +305,56 @@
                 <field name="Conv2Dfirst">Conv input layer</field>
             </block>
             <block type="flatten">
-                <field name="flatten">flatten</field>
+                <field name="flatten">Flatten</field>
             </block>
             <block type="dropout">
                 <field type="dropout">Dropout</field>
             </block>
-
+        
+            <!-- Embedding and Recurrent Layers -->
+            <label text="Embedding and Recurrent Layers"></label>
             <block type="embedding">
-                <field type="embedding">embedding</field>
+                <field type="embedding">Embedding</field>
             </block>
             <block type="gru">
-                <field type="gru">gru</field>
+                <field type="gru">GRU</field>
             </block>
             <block type="lstm">
-                <field type="lstm">lstm</field>
+                <field type="lstm">LSTM</field>
             </block>
             <block type="simple_rnn">
-                <field type="simple_rnn">simple_rnn</field>
+                <field type="simple_rnn">Simple RNN</field>
             </block>
+        </category>
 
 
            </category>
            <category name="Model evaluation" colour="#1FA6EF">
+            <!-- Model Evaluation Blocks -->
+            <label text="Evaluation"></label>
             <block type="evaluate">
                 <field type="evaluate">Model evaluate</field>
             </block>
             <block type="cnn_evaluation">
                 <field type="evaluate">Cnn evaluate</field>
             </block>
+        
+            <!-- Model Fit Blocks -->
+            <label text="Fit"></label>
             <block type="fit">
                 <field type="fit">Model fit</field>
             </block>
             <block type="cnn_fit">
                 <field type="cnn_fit">Cnn fit</field>
             </block>
-                       
+        
+            <!-- Model Compile Blocks -->
+            <label text="Compile"></label>
             <block type="compile">
                 <field type="compile">Model compile</field>
             </block>
-            <block type="RNN_evaluation">
-                <field type="RNN_evaluation">RNN evaluation</field>
-            </block>
-
-           </category>
+        </category>
+        
 
            <category name="Augmentation" colour="#1FA6EF">
             <block type="rescale">
@@ -435,33 +448,41 @@
         </category>
 
            <sep></sep>
-           <category name="preprocessing" colour="#1FA6EF">
+           <category name="Preprocessing" colour="#1FA6EF">
+            <!-- Encoding Methods -->
+            <label text="Encoding Methods"></label>
             <block type="one_hot_encoding">
-                <field type="one_hot_encoding">one-hot encoding</field>
+                <field type="one_hot_encoding">One-hot encoding</field>
             </block>
             <block type="label_encoding">
                 <field type="label_encoding">Label Encoding</field>
             </block>
+        
+            <!-- Data Cleaning -->
+            <label text="Data Cleaning"></label>
             <block type="remove_null_values">
-                <field type="remove_null_values">remove null values</field>
+                <field type="remove_null_values">Remove null values</field>
             </block>
             <block type="handle_missing_data">
-                <field type="handle_missing_data">handle missing data</field>
+                <field type="handle_missing_data">Handle missing data</field>
             </block>
             <block type="remove_duplicates">
-                <field type="remove_duplicates">remove duplicates</field>
+                <field type="remove_duplicates">Remove duplicates</field>
             </block>
             <block type="remove_outliers">
-                <field type="remove_outliers">remove outliers</field>
+                <field type="remove_outliers">Remove outliers</field>
             </block>
-
+        
+            <!-- Data Preparation -->
+            <label text="Data Preparation"></label>
             <block type="data_split">
-                <field type="data_split"> Data spliting</field>
+                <field type="data_split">Data splitting</field>
             </block>
             <block type="input_output">
-                <field type="input_output"> input output</field>
+                <field type="input_output">Input output</field>
             </block>
         </category>
+        
         <sep></sep>
            <category name=" Visualization"></category>
            <category name="Data Visualization" colour="#1FA6EF">

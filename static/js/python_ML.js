@@ -3171,7 +3171,7 @@ Blockly.Python['rescale'] = function(block) {
     var fill_mode = block.getFieldValue('fill_mode');
     var input = Blockly.Python.valueToCode(block, 'fill_mode', Blockly.Python.ORDER_ATOMIC) || '';
   
-    var code = `fill_mode=${fill_mode}`;
+    var code = `fill_mode='${fill_mode}'s`;
     if (input) {
         code += `,\n${input}`;
       }
