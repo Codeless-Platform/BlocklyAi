@@ -3763,8 +3763,8 @@ Blockly.defineBlocksWithJsonArray([{
       }
     ],
     "output": "Generating",
-    "colour": "#B63C1A",
-    "tooltip": "",
+    "colour": "#8B2F15",
+    "tooltip": "Must be used when using generator blocks",
     "helpUrl": ""
   },{
     "type": "batch_size",
