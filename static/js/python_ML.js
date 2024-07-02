@@ -4303,6 +4303,36 @@ Blockly.Python['rnn_model'] = function(block) {
     code += evaluate;
     code += visualization;
 
+    // make sure that only correct visualization has been added
+    var wrong = [
+        "# Tree Visualization (Decision Tree Classification)",
+        "# Feature Importances (Random Forest Classification)",
+        "# Learning Curves for classical models",
+        "# Confusion Matrix for classical models",
+        "# ROC Curve for classical models",
+        "# Confusion Matrix for neural network models",
+        "# ROC Curve for neural network models",
+        "# Precision-Recall Curve for classical models",
+        "# Hyperparameter Heatmaps",
+        "# Loss and Accuracy Curves for neural network models",
+        "# Word Cloud",
+        "# Feature Importance from Ensemble Methods",
+        "# Out-of-Bag Error"
+    ];
+
+    function containsAnySentence(value, sentences) {
+    for (var i = 0; i < sentences.length; i++) {
+        if (value.includes(sentences[i])) {
+            return true;
+        }
+    }
+    return false;
+    }
+    
+    if (containsAnySentence(visualization, wrong)) {
+        alert("Only these visualizations can be used with RNN Model:\nScatter Plot, Histograms, Heatmaps, Box Plots\nfor neural network: Loss and accuracy curves, Learning Curves\nTSNE, PCA, Elbow Plot");
+    }
+
     return code;
 };
 
