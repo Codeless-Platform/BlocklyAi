@@ -2216,7 +2216,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                     "type": "field_number",
                     "name": "placeholder_label",
-                    "value": "0"
+                    "value": "Folder name"
                 },
                 {
                     "type": "input_dummy"

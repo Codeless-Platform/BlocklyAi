@@ -4205,7 +4205,7 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `        file_path = os.path.join(train_dir, filename)\n`;
         code += `        mfccs = load_audio_data(file_path, augment=True)\n`;
         code += `        X_train.append(mfccs)\n`;
-        code += `        y_train.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+        code += `        y_train.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
 
         code += `# Load test data\n`;
         code += `for filename in os.listdir(validation_dir):\n`;
@@ -4213,7 +4213,7 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `        file_path = os.path.join(validation_dir, filename)\n`;
         code += `        mfccs = load_audio_data(file_path, augment=False)\n`;
         code += `        X_test.append(mfccs)\n`;
-        code += `        y_test.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+        code += `        y_test.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
 
         code += `# Convert lists to numpy arrays\n`;
         code += `X_train = np.array(X_train)\n`;
@@ -4267,7 +4267,7 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `        file_path = os.path.join(train_dir, filename)\n`;
         code += `        frames = load_video_data(file_path, augment=True)\n`;
         code += `        X_train.append(frames)\n`;
-        code += `        y_train.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+        code += `        y_train.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
 
         code += `# Load test data\n`;
         code += `for filename in os.listdir(validation_dir):\n`;
@@ -4275,7 +4275,7 @@ Blockly.Python['rnn_model'] = function(block) {
         code += `        file_path = os.path.join(validation_dir, filename)\n`;
         code += `        frames = load_video_data(file_path, augment=False)\n`;
         code += `        X_test.append(frames)\n`;
-        code += `        y_test.append(${placeholder_label})  # Placeholder label, replace with your actual labels\n\n`;
+        code += `        y_test.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
 
         code += `# Convert lists to numpy arrays\n`;
         code += `X_train = np.array(X_train)\n`;
