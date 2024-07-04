@@ -260,11 +260,19 @@
             </block>
         </category>
         <category name="Metrics" colour="#1FA6EF">
+            <label  text="Kmeans Metrics"></label>
             <block type="silhouette_score">
                 <field type="silhouette_score">Silhouette score</field>
             </block>
             <block type="davies_bouldin_index">
                 <field type="davies_bouldin_index">Davies_bouldin index</field>
+            </block>
+            <label  text="SOM Metrics"></label>
+            <block type="quantization_error">
+                <field type="quantization_error">Quantization Error</field>
+            </block>
+            <block type="topographic_error">
+                <field type="topographic_error">Topographic Error</field>
             </block>
         </category>
 
@@ -501,9 +509,11 @@
                </block>
            </category>
            <category name="Model Visualization" colour="#1FA6EF">
+            <!--
                <block type="decision_boundary">
                    <field type="decision_boundary">Decision Boundary</field>
                </block>
+            -->
                <block type="tree_visualization">
                    <field type="tree_visualization">Tree Visualization - DecisionTreeClassifier</field>
                </block>
@@ -565,12 +575,14 @@
                <block type="oob_error_plot">
                    <field type="oob_error_plot">Out-of-Bag Error - RandomForestClassifier</field>
                </block>
-           </category>                
+           </category>
+           <!--
            <category name="Text Data Visualization" colour="#1FA6EF">
                <block type="word_cloud">
                    <field type="word_cloud">Word Cloud</field>
                </block>
            </category>
+           -->
         </category>
         <sep></sep>
         <sep></sep>

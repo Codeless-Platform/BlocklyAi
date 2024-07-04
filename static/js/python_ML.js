@@ -2727,10 +2727,9 @@ Blockly.Python['cnn_model'] = function(block) {
 /* SOM MODEL begins */
 Blockly.Python['som'] = function(block) {
     var dataset_path = block.getFieldValue('dataset_path');
-    var input_output = Blockly.Python.valueToCode(block, 'input_output', Blockly.Python.ORDER_ATOMIC) || '';
+    var preprocessing = Blockly.Python.valueToCode(block, 'input_output', Blockly.Python.ORDER_ATOMIC) || '';
     var encoding = Blockly.Python.valueToCode(block, 'encoding', Blockly.Python.ORDER_ATOMIC) || '';
     var splitting = Blockly.Python.valueToCode(block, 'split', Blockly.Python.ORDER_ATOMIC) || '';
-    var encode_data = block.getFieldValue('encode_data') === 'TRUE';
     var som_evaluate = Blockly.Python.valueToCode(block, 'som_evaluation', Blockly.Python.ORDER_ATOMIC) || '';
     var som_assign = Blockly.Python.valueToCode(block, 'som_assign', Blockly.Python.ORDER_ATOMIC) || '';
     var som_init = Blockly.Python.valueToCode(block, 'som_init', Blockly.Python.ORDER_ATOMIC) || '';
@@ -2749,12 +2748,12 @@ Blockly.Python['som'] = function(block) {
             `# Prepare features and target\n`;
     
     // make sure that user dropped Preprocessing blocks
-    if(input_output){
-        code += input_output + '\n';
+    if(preprocessing){
+        code += preprocessing + '\n';
     }else{
         alert("Please add Preprocessing blocks and data splitting block");
     }
-    
+    /*
     code += encoding + '\n';
 
     // make sure that user dropped data split block after input - output block
@@ -2765,16 +2764,16 @@ Blockly.Python['som'] = function(block) {
     }else if(!splitting && input_output){
         alert("Please add data splitting block");
     }
-
+*/
     // make sure that user dropped SOM Initialization block
-    if(splitting && input_output && som_init){
+    if(preprocessing && som_init){
         code += som_init;
-    }else if((!splitting || !input_output) && som_init){
+    }else if(!preprocessing && som_init){
         alert("Please add Preprocessing and data splitting blocks first to be able to add initialization block");
     }
     
     // make sure that user dropped SOM Initialization block before Assign block
-    if(splitting && input_output && som_init && som_assign){
+    if(preprocessing && som_init && som_assign){
         code += som_assign;
     }else if(!som_init && som_assign){
         alert("Please add initialization block before adding assign block");
@@ -2835,11 +2834,13 @@ Blockly.Python['som'] = function(block) {
 
 /* SOM Blocks begins */
 Blockly.Python['som_evaluation'] = function(block) {
+    var text_training_input = block.getFieldValue('predicted_variable');
+    global_predicted_variable = text_training_input ;
 
     var code =  `# Predict clusters for the test set based on the trained SOM\n` +
                 `${global_predicted_variable} = []\n` +
-                `for x in X_test:\n` +
-                `    w = som.winner(x)\n` +
+                `for ${input} in ${x_test}:\n` +
+                `    w = som.winner(${input})\n` +
                 `    ${global_predicted_variable}.append(neuron_labels[w])\n\n`;
 
     return [code, Blockly.Python.ORDER_ATOMIC];
@@ -2892,6 +2893,39 @@ Blockly.Python['som_init'] = function(block) {
 
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+
+
+  Blockly.Python['quantization_error'] = function(block) {
+    var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
+    var code =  `# Quantization Error\n` +
+                `quantization_error = som.quantization_error(${x_train})\n` +
+                `print(f'Quantization Error: {quantization_error}')\n`;
+    code += value_metric + '\n';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['topographic_error'] = function(block) {
+    var value_metric = Blockly.Python.valueToCode(block, 'metric', Blockly.Python.ORDER_ATOMIC) || '';
+    var code =  `# Topographic Error\n` +
+                `def topographic_error(som, data):\n` +
+                `    error_count = 0\n` +
+                `    for ${input} in data:\n` +
+                `        winner = som.winner(${input})\n` +
+                `        distances = []\n` +
+                `        for i in range(som_${input}):\n` +
+                `            for j in range(som_${output}):\n` +
+                `                distances.append(((i, j), np.linalg.norm(som.get_weights()[i, j] - ${input})))\n` +
+                `        distances.sort(key=lambda ${input}: ${input}[1])\n` +
+                `        second_winner = distances[1][0]\n` +
+                `        if abs(winner[0] - second_winner[0]) > 1 or abs(winner[1] - second_winner[1]) > 1:\n` +
+                `            error_count += 1\n` +
+                `    return error_count / len(data)\n` +
+                `topographic_error_value = topographic_error(som, ${x_train})\n` +
+                `print(f'Topographic Error: {topographic_error_value}')\n`;
+
+    code += value_metric + '\n';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 /* SOM Blocks ends */
 
 /* ------------------------------ Deep Learning Blocks ends ------------------------------ */

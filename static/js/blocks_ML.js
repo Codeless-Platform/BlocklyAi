@@ -3052,7 +3052,7 @@ Blockly.defineBlocksWithJsonArray([
           Blockly.defineBlocksWithJsonArray([
             {
                 "type": "som",
-                "message0": "SOM  %1 Dataset path %2 %3 Preprocessing %4 Encoding %5 Data Split %6 Model Initialization %7 SOM Label Assignment %8 Model Evaluation %9 Model Metrics %10 Visualization %11",
+                "message0": "SOM  %1 Dataset path %2 %3 Preprocessing %4 Model Initialization %5 SOM Label Assignment %6 Model Evaluation %7 Model Metrics %8 Visualization %9",
                 "args0": [
                   {
                     "type": "input_dummy"
@@ -3069,7 +3069,7 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_value",
                     "name": "input_output",
                     "check" : "Preprocessing"
-                  },
+                  },/*
                   {
                     "type": "input_value",
                     "name": "encoding",
@@ -3079,7 +3079,7 @@ Blockly.defineBlocksWithJsonArray([
                     "type": "input_value",
                     "name": "split",
                     "check" : "split"
-                  },
+                  },*/
                   {
                     "type": "input_value",
                     "name": "som_init",
@@ -3114,14 +3114,20 @@ Blockly.defineBlocksWithJsonArray([
 /* Deep Learning ends */
 /* SOM Blocks begins */
 Blockly.defineBlocksWithJsonArray([
-{
+  {
     "type": "som_evaluation",
-    "message0": "Som Evaluation",
+    "message0": "Predicted variable :  %1",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "predicted_variable",
+        "text": "y_predicted"
+      }
+    ],
     "output": "som_evaluate",
     "colour": "#F5C043",
     "tooltip": "",
-    "helpUrl": ""
-  }
+    "helpUrl": ""}
 ]);
 Blockly.defineBlocksWithJsonArray([
     {
@@ -3181,6 +3187,40 @@ Blockly.defineBlocksWithJsonArray([
         "helpUrl": ""
       }
     ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            "type": "quantization_error",
+            "message0": "Quantization Error %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "metric",
+                    "check": "Metric"
+                }
+            ],
+            "output": "Metric",
+            "colour": "#AE2283",
+            "tooltip": "Calculate Quantization Error for SOM",
+            "helpUrl": ""
+        },
+        {
+            "type": "topographic_error",
+            "message0": "Topographic Error %1",
+            "args0": [
+                {
+                    "type": "input_value",
+                    "name": "metric",
+                    "check": "Metric"
+                }
+            ],
+            "output": "Metric",
+            "colour": "#AE2283",
+            "tooltip": "Calculate Topographic Error for SOM",
+            "helpUrl": ""
+        }
+    ]);
+
     /* som blocks end */
 
     Blockly.defineBlocksWithJsonArray([
@@ -4144,7 +4184,7 @@ Blockly.defineBlocksWithJsonArray([
             "colour": "#F5C043",
             "tooltip": "",
             "helpUrl": ""
-          }
+          },
 
      ]);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
