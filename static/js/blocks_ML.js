@@ -2144,32 +2144,18 @@ Blockly.defineBlocksWithJsonArray([
         "helpUrl": ""
     }]);
     
-    Blockly.defineBlocksWithJsonArray([{
-        "type": "embedding",
-        "message0": "Embedding input_dim: %1 output_dim: %2 input_length: %3 %4",
-        "args0": [
+    Blockly.defineBlocksWithJsonArray([
+        {
+          "type": "embedding",
+          "message0": "Embedding %1",
+          "args0": [
             {
-                "type": "field_number",
-                "name": "input_dim",
-                "value": "10000"
-            },
-            {
-                "type": "field_number",
-                "name": "output_dim",
-                "value": "128"
-            },
-            {
-                "type": "field_number",
-                "name": "input_length",
-                "value": "100"
-            },
-            {
-                "type": "input_value",
-                "name": "nextLayer",
-                "check": "Layers"
+              "type": "input_value",
+              "name": "nextLayer",
+              "check": "Layers"
             }
-        ],
-        "output": "Layers",
+          ],
+        "output": "ELayer",
         "colour": "#1fa2e5",
         "tooltip": "",
         "helpUrl": ""
@@ -2179,89 +2165,90 @@ Blockly.defineBlocksWithJsonArray([
     
   
     Blockly.defineBlocksWithJsonArray([
-        {
+         {
             "type": "rnn_model",
-            "message0": "RNN model %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Data type %6 %7 label %8 %9 Layers %10 compile %11 Model fit %12 Model evaluate %13 %14 Use Augmentation %15 %16 Visualization %17",
+            "message0": "Path for training dataset %1 %2 Path for test dataset %3 %4 Input column %5 Target column %6 %7 Vocabulary size : %8 , Max length : %9 %10 Embedding dimension  : %11 %12 Layers  %13 Model compile %14 Model fit %15 Model Evaluation %16 Visualization %17",
             "args0": [
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "field_input",
-                    "name": "training_path",
-                    "text": "/path/to/data/train"
-                },
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "field_input",
-                    "name": "test_path",
-                    "text": "/path/to/data/test"
-                },
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "field_dropdown",
-                    "name": "data_type",
-                    "options": [
-                        ["Audio", "audio"],
-                        ["Video", "video"]
-                    ]
-                },
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "field_number",
-                    "name": "placeholder_label",
-                    "value": "Folder name"
-                },
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "input_value",
-                    "name": "layers",
-                    "check": "Layers"
-                },
-                {
-                    "type": "input_value",
-                    "name": "rnnCompile",
-                    "check": "Compile"
-                },
-                {
-                    "type": "input_value",
-                    "name": "rnnFit",
-                    "check": "Fit"
-                },
-                {
-                    "type": "input_value",
-                    "name": "rnnEvaluate",
-                    "check": "REvaluation"
-                },
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "field_checkbox",
-                    "name": "use_augmentation",
-                    "checked": false
-                },
-                {
-                  "type": "input_dummy"
-                },
-                {
-                  "type": "input_value",
-                  "name": "Visualization",
-                  "check": "visualization"
-                }
+              {
+                "type": "field_input",
+                "name": "trainPath",
+                "text": "/path/to/data/train"
+              },
+              {
+                "type": "input_dummy"
+              },
+              {
+                "type": "field_input",
+                "name": "testPath",
+                "text": "/path/to/data/test"
+              },
+              {
+                "type": "input_dummy"
+              },
+              {
+                "type": "field_input",
+                "name": "inputColumn",
+                "text": "text"
+              },
+              {
+                "type": "field_input",
+                "name": "targetColumn",
+                "text": "label"
+              },
+              {
+                "type": "input_dummy"
+              },
+              {
+                "type": "field_number",
+                "name": "vocab_size",
+                "value": 10000
+              },
+              {
+                "type": "field_number",
+                "name": "maxlen",
+                "value": 100
+              },
+              {
+                "type": "input_dummy"
+              },
+              {
+                "type": "field_number",
+                "name": "embedding_dim",
+                "value": 32
+              },
+              {
+                "type": "input_dummy"
+              },
+              {
+                "type": "input_value",
+                "name": "layers",
+                "check": "ELayer"
+              },
+              {
+                "type": "input_value",
+                "name": "model_compile",
+                "check": "Compile"
+              },
+              {
+                "type": "input_value",
+                "name": "model_fit",
+                "check": "RFit"
+              },
+              {
+                "type": "input_value",
+                "name": "Model_Evaluation",
+                "check": "REvaluation"
+              },
+              {
+                "type": "input_value",
+                "name": "Visualization",
+                "check": "visualization"
+              }
             ],
             "colour": 140,
             "tooltip": "",
             "helpUrl": ""
-        }
+          }
     ]);
     
 
@@ -2484,7 +2471,30 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "cnn_fit"
               }
             ],
-            "output": "Fit",
+            "output": "CFit",
+            "colour": "#F5C043",
+            "tooltip": "",
+            "helpUrl": ""
+          },{
+            "type": "rnn_fit",
+            "message0": "Rnn fit , epochs %1 verbose %2 %3",
+            "args0": [
+              {
+                "type": "field_number",
+                "name": "rnn_epochs",
+                "value": "10"
+              },
+              {
+                "type": "field_number",
+                "name": "rnn_verbose",
+                "value": "1"
+              },
+              {
+                "type": "input_dummy",
+                "name": "rnn_fit"
+              }
+            ],
+            "output": "RFit",
             "colour": "#F5C043",
             "tooltip": "",
             "helpUrl": ""
@@ -3030,7 +3040,7 @@ Blockly.defineBlocksWithJsonArray([
                 {
                   "type": "input_value",
                   "name": "cnnFit",
-                  "check": "Fit"
+                  "check": "CFit"
                 },
                 {
                   "type": "input_value",

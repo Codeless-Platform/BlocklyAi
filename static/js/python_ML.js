@@ -3364,6 +3364,13 @@ var input = Blockly.Python.valueToCode(block, 'shuffle', Blockly.Python.ORDER_AT
     var code = `model.fit(train_generator, epochs=${epochs}, validation_data= test_generator, verbose=${verbose} )\n`;
     return [code, Blockly.Python.ORDER_ATOMIC];
   };
+  Blockly.Python['rnn_fit'] = function(block) {
+    var epochs = block.getFieldValue('rnn_epochs');
+    var verbose = block.getFieldValue('rnn_verbose');
+  
+    var code = `model.fit(X_train, y_train, epochs=${epochs}, validation_data=(X_test,y_test), verbose=${verbose} )\n`;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+  };
   /////////////////////////////////EVALUATION ////////////////////////////////////////////////
   Blockly.Python['evaluate'] = function(block) {
     var x_Ftest = block.getFieldValue('X_test');
@@ -4170,158 +4177,46 @@ Blockly.Python['oob_error_plot'] = function(block) {
 
 
 ///////////////////////////////////////////////////////
+function modifyLastRnnLayer(layers) {
 
+    const layerArray = layers.split('\n').map(line => line.trim());
+  
+    for (let i = layerArray.length - 1; i >= 0; i--) {
+      if (
+        layerArray[i].startsWith('SimpleRNN') ||
+        layerArray[i].startsWith('LSTM') ||
+        layerArray[i].startsWith('GRU')
+      ) {
+
+        layerArray[i] = layerArray[i].replace('return_sequences=True', 'return_sequences=False');
+        break; 
+      }
+    }
+    return layerArray.join('\n');
+  }
 // var layersFlag = [];
-
+var globalVocab_size= 10000;
+var globalMaxlen= 100;
+var globalVocabEmbeddingDim = 32;
 
 Blockly.Python['rnn_model'] = function(block) {
-    var training_path = block.getFieldValue('training_path');
-    var test_path = block.getFieldValue('test_path');
-    var data_type = block.getFieldValue('data_type');
-    var placeholder_label = block.getFieldValue('placeholder_label');
-    var use_augmentation = block.getFieldValue('use_augmentation') === 'TRUE';
-
+    var trainPath = block.getFieldValue('trainPath');
+    var testPath = block.getFieldValue('testPath');
+    var inputColumn = block.getFieldValue('inputColumn');
+    var targetColumn = block.getFieldValue('targetColumn');
+    var vocab_size = block.getFieldValue('vocab_size');
+    var maxlen = block.getFieldValue('maxlen');
+    var embedding_dim = block.getFieldValue('embedding_dim');
     var layers = Blockly.Python.valueToCode(block, 'layers', Blockly.Python.ORDER_ATOMIC) || '';
-    var compile = Blockly.Python.valueToCode(block, 'rnnCompile', Blockly.Python.ORDER_ATOMIC) || '';
-    var fit = Blockly.Python.valueToCode(block, 'rnnFit', Blockly.Python.ORDER_ATOMIC) || '';
-    var evaluate = Blockly.Python.valueToCode(block, 'rnnEvaluate', Blockly.Python.ORDER_ATOMIC) || '';
+    var compile = Blockly.Python.valueToCode(block, 'model_compile', Blockly.Python.ORDER_ATOMIC) || '';
+    var fit = Blockly.Python.valueToCode(block, 'model_fit', Blockly.Python.ORDER_ATOMIC) || '';
+    var evaluation = Blockly.Python.valueToCode(block, 'Model_Evaluation', Blockly.Python.ORDER_ATOMIC) || '';
     var visualization = Blockly.Python.valueToCode(block, 'Visualization', Blockly.Python.ORDER_ATOMIC) || '';
-
-    var code = `import pandas as pd\n`;
-    code += `from tensorflow.keras.models import Sequential\n`;
-
-    if (layers && layersFlag.includes("Embedding")) { code += 'from tensorflow.keras.layers import Embedding\n'; }
-    if (layers && layersFlag.includes("Simple_RNN")) { code += 'from tensorflow.keras.layers import SimpleRNN\n'; }
-    if (layers && layersFlag.includes("LSTM")) { code += 'from tensorflow.keras.layers import LSTM\n'; }
-    if (layers && layersFlag.includes("GRU")) { code += 'from tensorflow.keras.layers import GRU\n'; }
-    if (layers && layersFlag.includes("Dense")) { code += 'from tensorflow.keras.layers import Dense\n'; }
-    if (layers && layersFlag.includes("dropout")) { code += 'from tensorflow.keras.layers import Dropout\n'; }
-
-
-    if (data_type === 'audio') {
-        code += `import librosa\nimport numpy as np\nimport os\n\n`;
-    } else if (data_type === 'video') {
-        code += `import cv2\nimport numpy as np\nimport os\nimport random\n\n`;
-    }
-
-    code += `train_dir = '${training_path}'\n`;
-    code += `validation_dir = '${test_path}'\n\n`;
-
-    if (data_type === 'audio') {
-        if (use_augmentation) {
-            code += `import random \n`;
-            code += `def augment_audio(data, sr):\n`;
-            code += `    if random.random() < 0.5:\n`;
-            code += `        data = data + 0.005 * np.random.randn(len(data))  # Add noise\n`;
-            code += `    if random.random() < 0.5:\n`;
-            code += `        data = librosa.effects.pitch_shift(data, sr, n_steps=random.randint(-3, 3))  # Pitch shift\n`;
-            code += `    if random.random() < 0.5:\n`;
-            code += `        data = librosa.effects.time_stretch(data, rate=random.uniform(0.8, 1.2))  # Time stretch\n`;
-            code += `    return data\n\n`;
-        }
-        code += `def load_audio_data(file_path, augment=False):\n`;
-        code += `    data, sr = librosa.load(file_path)\n`;
-        if (use_augmentation) {
-            code += `    if augment:\n`;
-            code += `        data = augment_audio(data, sr)\n`;
-        }
-        code += `    mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=40)\n`;
-        code += `    return mfccs\n\n`;
-
-        code += `X_train = []\n`;
-        code += `y_train = []\n`;
-        code += `X_test = []\n`;
-        code += `y_test = []\n\n`;
-
-        code += `# Load training data\n`;
-        code += `for filename in os.listdir(train_dir):\n`;
-        code += `    if filename.endswith(".wav"):\n`;
-        code += `        file_path = os.path.join(train_dir, filename)\n`;
-        code += `        mfccs = load_audio_data(file_path, augment=True)\n`;
-        code += `        X_train.append(mfccs)\n`;
-        code += `        y_train.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
-
-        code += `# Load test data\n`;
-        code += `for filename in os.listdir(validation_dir):\n`;
-        code += `    if filename.endswith(".wav"):\n`;
-        code += `        file_path = os.path.join(validation_dir, filename)\n`;
-        code += `        mfccs = load_audio_data(file_path, augment=False)\n`;
-        code += `        X_test.append(mfccs)\n`;
-        code += `        y_test.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
-
-        code += `# Convert lists to numpy arrays\n`;
-        code += `X_train = np.array(X_train)\n`;
-        code += `y_train = np.array(y_train)\n`;
-        code += `X_test = np.array(X_test)\n`;
-        code += `y_test = np.array(y_test)\n\n`;
-
-        code += `# Reshape data for RNN input: (num_samples, timesteps, num_features)\n`;
-        code += `X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))\n`;
-        code += `X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))\n\n`;
-    } else if (data_type === 'video') {
-        code += `import random \n`;
-        code += `def augment_frame(frame):\n`;
-        code += `    if random.random() < 0.5:\n`;
-        code += `        frame = cv2.flip(frame, 1)  # Horizontal flip\n`;
-        code += `    if random.random() < 0.5:\n`;
-        code += `        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\n`;
-        code += `        frame[:, :, 2] = frame[:, :, 2] * (0.5 + random.random())\n`;
-        code += `        frame = cv2.cvtColor(frame, cv2.COLOR_HSV2BGR)\n`;
-        code += `    if random.random() < 0.5:\n`;
-        code += `        M = cv2.getRotationMatrix2D((frame.shape[1] / 2, frame.shape[0] / 2), random.uniform(-15, 15), 1)\n`;
-        code += `        frame = cv2.warpAffine(frame, M, (frame.shape[1], frame.shape[0]))\n`;
-        code += `    return frame\n\n`;
-
-        code += `def load_video_data(file_path, augment=False):\n`;
-        code += `    cap = cv2.VideoCapture(file_path)\n`;
-        code += `    frames = []\n`;
-        code += `    while cap.isOpened():\n`;
-        code += `        ret, frame = cap.read()\n`;
-        code += `        if not ret:\n`;
-        code += `            break\n`;
-        code += `        frame = cv2.resize(frame, (64, 64))\n`;
-        code += `        if augment:\n`;
-        code += `            frame = augment_frame(frame)\n`;
-        code += `        frames.append(frame)\n`;
-        code += `    cap.release()\n`;
-        if (use_augmentation) {
-            code += `    if augment:\n`;
-            code += `        frames = augment_video(frames)\n`;
-        }
-        code += `    return np.array(frames)\n\n`;
-
-        code += `X_train = []\n`;
-        code += `y_train = []\n`;
-        code += `X_test = []\n`;
-        code += `y_test = []\n\n`;
-
-        code += `# Load training data\n`;
-        code += `for filename in os.listdir(train_dir):\n`;
-        code += `    if filename.endswith(".mp4"):\n`;
-        code += `        file_path = os.path.join(train_dir, filename)\n`;
-        code += `        frames = load_video_data(file_path, augment=True)\n`;
-        code += `        X_train.append(frames)\n`;
-        code += `        y_train.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
-
-        code += `# Load test data\n`;
-        code += `for filename in os.listdir(validation_dir):\n`;
-        code += `    if filename.endswith(".mp4"):\n`;
-        code += `        file_path = os.path.join(validation_dir, filename)\n`;
-        code += `        frames = load_video_data(file_path, augment=False)\n`;
-        code += `        X_test.append(frames)\n`;
-        code += `        y_test.append(int(${placeholder_label}))  # Placeholder label, replace with your actual labels\n\n`;
-
-        code += `# Convert lists to numpy arrays\n`;
-        code += `X_train = np.array(X_train)\n`;
-        code += `y_train = np.array(y_train)\n`;
-        code += `X_test = np.array(X_test)\n`;
-        code += `y_test = np.array(y_test)\n\n`;
-
-        code += `# Reshape data for RNN input: (num_samples, timesteps, height, width, channels)\n`;
-        code += `x_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 64, 64, 3))\n`;
-        code += `x_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 64, 64, 3))\n\n`;
-    }
     
+    globalVocab_size= vocab_size;
+    globalMaxlen= maxlen;
+    globalVocabEmbeddingDim = embedding_dim;
+
     if(!layers){
         alert("Add layers block");
     }
@@ -4331,63 +4226,78 @@ Blockly.Python['rnn_model'] = function(block) {
     if(!fit){
         alert("Add fit block");
     }
+    var code = `
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.utils import to_categorical
+from sklearn.preprocessing import LabelEncoder\n`
 
-    if (layers) {
-        code += `model = Sequential([\n${layers}\n])\n`;
-    }
+if (layers && layersFlag.includes("Embedding")) { code += 'from tensorflow.keras.layers import Embedding\n'; }
+if (layers && layersFlag.includes("Simple_RNN")) { code += 'from tensorflow.keras.layers import SimpleRNN\n'; }
+if (layers && layersFlag.includes("LSTM")) { code += 'from tensorflow.keras.layers import LSTM\n'; }
+if (layers && layersFlag.includes("GRU")) { code += 'from tensorflow.keras.layers import GRU\n'; }
+if (layers && layersFlag.includes("Dense")) { code += 'from tensorflow.keras.layers import Dense\n'; }
+if (layers && layersFlag.includes("dropout")) { code += 'from tensorflow.keras.layers import Dropout\n'; }
+code+=
+`
+train_df = pd.read_csv('${trainPath}')
+test_df = pd.read_csv('${testPath}')
 
-    code += compile;
-    code += fit;
-    code += evaluate;
-    code += visualization;
 
-    // make sure that only correct visualization has been added
-    var wrong = [
-        "# Tree Visualization (Decision Tree Classification)",
-        "# Feature Importances (Random Forest Classification)",
-        "# Learning Curves for classical models",
-        "# Confusion Matrix for classical models",
-        "# ROC Curve for classical models",
-        "# Confusion Matrix for neural network models",
-        "# ROC Curve for neural network models",
-        "# Precision-Recall Curve for classical models",
-        "# Hyperparameter Heatmaps",
-        "# Loss and Accuracy Curves for neural network models",
-        "# Word Cloud",
-        "# Feature Importance from Ensemble Methods",
-        "# Out-of-Bag Error"
-    ];
+X_train = train_df['${inputColumn}'].values
+y_train = train_df['${targetColumn}'].values
+X_test = test_df['${inputColumn}'].values
+y_test = test_df['${targetColumn}'].values
 
-    function containsAnySentence(value, sentences) {
-    for (var i = 0; i < sentences.length; i++) {
-        if (value.includes(sentences[i])) {
-            return true;
-        }
-    }
-    return false;
-    }
-    
-    if (containsAnySentence(visualization, wrong)) {
-        alert("Only these visualizations can be used with RNN Model:\nScatter Plot, Histograms, Heatmaps, Box Plots\nfor neural network: Loss and accuracy curves, Learning Curves\nTSNE, PCA, Elbow Plot");
-    }
+label_encoder = LabelEncoder()
+y_train = label_encoder.fit_transform(y_train)
+y_test = label_encoder.transform(y_test)
 
+tokenizer = Tokenizer(num_words=${vocab_size})
+tokenizer.fit_on_texts(X_train)
+
+X_train = tokenizer.texts_to_sequences(X_train)
+X_test = tokenizer.texts_to_sequences(X_test)
+X_train = pad_sequences(X_train, maxlen=${maxlen})
+X_test = pad_sequences(X_test, maxlen=${maxlen})
+
+
+num_classes = len(np.unique(y_train))
+y_train = to_categorical(y_train, num_classes=num_classes)
+y_test = to_categorical(y_test, num_classes=num_classes)\n`;
+
+if(layers){
+    var layer =`model = Sequential([\n`
+    layer+= `${layers}`
+    layer +=`\n])\n`
+}
+
+code+= modifyLastRnnLayer(layer)
+code+=compile
+code+=fit
+code+=evaluation
+code+=visualization
     return code;
 };
 
+
 Blockly.Python['embedding'] = function(block) {
-    var input_dim = block.getFieldValue('input_dim');
-    var output_dim = block.getFieldValue('output_dim');
-    var input_length = block.getFieldValue('input_length');
-    var next_layer = Blockly.Python.valueToCode(block, 'Embedding', Blockly.Python.ORDER_ATOMIC) || '';
+
+    var next_layer = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
 
     if (!layersFlag.includes("Embedding")) {
         layersFlag.push("Embedding");
     }
 
-    var code = `Embedding(${input_dim}, ${output_dim}, input_length=${input_length})`;
+    var code = `Embedding(${globalVocab_size}, ${globalVocabEmbeddingDim}, input_length=${globalMaxlen})`;
     if (next_layer) {
         code += `,\n${next_layer}`;
     }
+
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
@@ -4396,14 +4306,13 @@ Blockly.Python['embedding'] = function(block) {
 Blockly.Python['gru'] = function(block) {
     var units = block.getFieldValue('units');
     var activation = block.getFieldValue('activation');
-    var return_sequences = block.getFieldValue('return_sequences') === 'TRUE';
-    var next_layer = Blockly.Python.valueToCode(block, 'GRU', Blockly.Python.ORDER_ATOMIC) || '';
+    var next_layer = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
 
     if (!layersFlag.includes("GRU")) {
         layersFlag.push("GRU");
     }
 
-    var code = `GRU(${units}, activation='${activation}', return_sequences=${return_sequences})`;
+    var code = `GRU(${units}, activation='${activation}',return_sequences=True)`;
     if (next_layer) {
         code += `,\n${next_layer}`;
     }
@@ -4415,14 +4324,13 @@ Blockly.Python['gru'] = function(block) {
 Blockly.Python['lstm'] = function(block) {
     var units = block.getFieldValue('units');
     var activation = block.getFieldValue('activation');
-    var return_sequences = block.getFieldValue('return_sequences') === 'TRUE';
-    var next_layer = Blockly.Python.valueToCode(block, 'LSTM', Blockly.Python.ORDER_ATOMIC) || '';
+    var next_layer = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
 
     if (!layersFlag.includes("LSTM")) {
         layersFlag.push("LSTM");
     }
 
-    var code = `LSTM(${units}, activation='${activation}', return_sequences=${return_sequences})`;
+    var code = `LSTM(${units}, activation='${activation}',return_sequences=True)`;
     if (next_layer) {
         code += `,\n${next_layer}`;
     }
@@ -4434,15 +4342,13 @@ Blockly.Python['lstm'] = function(block) {
 Blockly.Python['simple_rnn'] = function(block) {
     var units = block.getFieldValue('units');
     var activation = block.getFieldValue('activation');
-    var nextLayer = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
-
+    var input = Blockly.Python.valueToCode(block, 'nextLayer', Blockly.Python.ORDER_ATOMIC) || '';
+    var code = `SimpleRNN(${units}, activation='${activation}',return_sequences=True)`;
+    if (input) {
+        code += `,\n${input}`;
+    }
     if (!layersFlag.includes("Simple_RNN")) {
         layersFlag.push("Simple_RNN");
-    }
-    
-    var code = `SimpleRNN(${units}, activation='${activation}' , input_shape=(X_train.shape[1], X_train.shape[2]))`;
-    if (nextLayer) {
-        code += `,\n${nextLayer}`;
     }
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
