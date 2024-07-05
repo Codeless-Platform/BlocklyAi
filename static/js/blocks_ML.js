@@ -2167,8 +2167,11 @@ Blockly.defineBlocksWithJsonArray([
     Blockly.defineBlocksWithJsonArray([
          {
             "type": "rnn_model",
-            "message0": "Path for training dataset %1 %2 Path for test dataset %3 %4 Input column %5 Target column %6 %7 Vocabulary size : %8 , Max length : %9 %10 Embedding dimension  : %11 %12 Layers  %13 Model compile %14 Model fit %15 Model Evaluation %16 Visualization %17",
+            "message0": "Text Classifier %1 Path for training dataset %2 %3 Path for test dataset %4 %5 Input column %6 Target column %7 %8 Vocabulary size : %9 , Max length : %10 %11 Embedding dimension  : %12 %13 Layers  %14 Model compile %15 Model fit %16 Model Evaluation %17 Visualization %18",
             "args0": [
+              {
+                "type": "input_dummy"
+              },
               {
                 "type": "field_input",
                 "name": "trainPath",
